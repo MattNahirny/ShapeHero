@@ -170,10 +170,6 @@
 				ctx.lineTo(256,480);
 				ctx.stroke();
 				
-				ctx.fillStyle = "black";
-				ctx.font = "30px Comic Sans MS";
-				ctx.fillText("Score: " + window.count,180,460);
-				
 				// draw all shapes
 				var l = shapes.length;
 				for (var i = 0; i < l; i++) {
@@ -201,6 +197,20 @@
 				
 				// ** Add stuff you want drawn on top all the time here **
 				
+                ctx.rect(0,0,320,35);
+				ctx.fillStyle="white";
+				ctx.fill();
+                
+                ctx.strokeStyle="black";
+                ctx.beginPath();
+                ctx.moveTo(0,35);
+                ctx.lineTo(320,35);
+                ctx.stroke();
+                
+                ctx.fillStyle = "black";
+				ctx.font = "30px Comic Sans MS";
+				ctx.fillText("Score: " + window.count,0,30);
+                
 				this.valid = false;
 			  }
 			}
