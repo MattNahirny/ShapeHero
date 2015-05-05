@@ -211,6 +211,16 @@
 				ctx.font = "30px Comic Sans MS";
 				ctx.fillText("Score: " + window.count,0,30);
                 
+                ctx.rect(0,445,320,480);
+				ctx.fillStyle="white";
+				ctx.fill();
+                
+                ctx.strokeStyle="black";
+                ctx.beginPath();
+                ctx.moveTo(0,445);
+                ctx.lineTo(320,445);
+                ctx.stroke();
+                
 				this.valid = false;
 			  }
 			}
@@ -255,9 +265,15 @@
 			  s.addShape(new Shape(196,-60,56,56, "yellow"));
 			  s.addShape(new Shape(260,-60,56,56, "orange"));
 			}
-
+            
 			init();
 			// Now go make something amazing!
+            function pauseScreen() {
+                ctx.rect(0,35,320,480);
+				ctx.fillStyle='rgba(0,0,0,30)';
+				ctx.fill();
+            }
+            
 		</script>
     </body>
 </html>
