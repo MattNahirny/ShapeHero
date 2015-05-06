@@ -221,6 +221,12 @@
                 ctx.lineTo(320,445);
                 ctx.stroke();
                 
+                ctx.fillStyle = "black";
+				ctx.font = "30px Comic Sans MS";
+				ctx.fillText("Rules: ",0,475);
+                
+                pause(ctx);
+                
 				this.valid = false;
 			  }
 			}
@@ -268,12 +274,36 @@
             
 			init();
 			// Now go make something amazing!
-            function pauseScreen() {
-                ctx.rect(0,35,320,480);
-				ctx.fillStyle='rgba(0,0,0,30)';
+            function pause(ctx) {
+                ctx.rect(0,35,320,410);
+				ctx.fillStyle="rgba(0,0,0,.5)";
 				ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+				ctx.fill();
+                
+                ctx.fillStyle = "black";
+				ctx.font = "20px Comic Sans MS";
+				ctx.fillText("Current Rule: ",25,90);
+                
+                var menuButtonImg = new Image;
+                menuButtonImg.src = "img/mainmenu.png";
+                ctx.drawImage(menuButtonImg,20,250);
+                
+                var restartButtonImg = new Image;
+                restartButtonImg.src = "img/restart.png";
+                ctx.drawImage(restartButtonImg,160,250);
+                
+                var closeButtonImg = new Image;
+                closeButtonImg.src = "img/close.png";
+                ctx.drawImage(closeButtonImg,280,60);
             }
-            
+            //pauseScreen();
 		</script>
     </body>
 </html>
