@@ -14,87 +14,87 @@
             Your browser does not support the HTML5 canvas tag.
         </canvas>
         <script>
-	//Shape factory returns shape objects
-      function redCircle() {
-          this.colour = "red";
-      }
-      function blueCircle() {
-          this.colour = "blue";
-      }
-      function greenCircle() {
-          this.colour = "green";
-      }
-      function yellowCircle() {
-          this.colour = "yellow";
-      }
-      function redSquare() {
-          this.colour = "red";
-      }
-      function blueSquare() {
-          this.colour = "blue";
-      }
-      function greenSquare() {
-          this.colour = "green";
-      }
-      function yellowSquare() {
-          this.colour = "yellow";
-      }
-      function redTriangle() {
-          this.colour = "red";
-      }
-      function blueTriangle() {
-          this.colour = "blue";
-      }
-      function greenTriangle() {
-          this.colour = "green";
-      }
-      function yellowTriangle() {
-          this.colour = "yellow";
-      }
-      function Star() {
-          this.colour = "yellow";
-      }
+            //Shape factory returns shape objects
+            function redCircle() {
+                this.colour = "red";
+            }
+            function blueCircle() {
+                this.colour = "blue";
+            }
+            function greenCircle() {
+                this.colour = "green";
+            }
+            function yellowCircle() {
+                this.colour = "yellow";
+            }
+            function redSquare() {
+                this.colour = "red";
+            }
+            function blueSquare() {
+                this.colour = "blue";
+            }
+            function greenSquare() {
+                this.colour = "green";
+            }
+            function yellowSquare() {
+                this.colour = "yellow";
+            }
+            function redTriangle() {
+                this.colour = "red";
+            }
+            function blueTriangle() {
+                this.colour = "blue";
+            }
+            function greenTriangle() {
+                this.colour = "green";
+            }
+            function yellowTriangle() {
+                this.colour = "yellow";
+            }
+            function Star() {
+                this.colour = "yellow";
+            }
+            
+            function ShapeFactory() { }
+            ShapeFactory.prototype.createShape = function createShape(type) {
+                var Shape = null;
+                var Random = [redCircle, blueCircle, greenCircle, yellowCircle,
+                              redSquare, blueSquare, greenSquare, yellowSquare,
+                              redTriangle, blueTriangle, greenTriangle, yellowTriangle,
+                              Star];
 
-      function ShapeFactory() { }
-      ShapeFactory.prototype.createShape = function createShape(type) {
-          var Shape = null;
-          var Random = [redCircle, blueCircle, greenCircle, yellowCircle,
-                        redSquare, blueSquare, greenSquare, yellowSquare,
-                        redTriangle, blueTriangle, greenTriangle, yellowTriangle,
-                        Star];
-
-          if (type == "redCircle") {
-              Shape = redCircle;
-         } else if (type == "blueCircle") {
-              Shape = blueCircle;
-         } else if (type == "greenCircle") {
-              Shape = greenCircle;
-         } else if (type == "yellowCircle") {
-              Shape = yellowCircle;
-         } else if (type == "redSquare") {
-              Shape = redSquare;
-         } else if (type == "blueSquare") {
-              Shape = blueSquare;
-         } else if (type == "greenSquare") {
-              Shape = greenSquare;
-         } else if (type == "yellowSquare") {
-              Shape = yellowSquare;
-         } else if (type == "redTriangle") {
-              Shape = redTriangle;
-         } else if (type == "blueTriangle") {
-              Shape = blueTriangle;
-         } else if (type == "greenTriangle") {
-              Shape = greenTriangle;
-         } else if (type == "yellowTriangle") {
-              Shape = yellowTriangle;
-         } else if (type == "Star") {
-              Shape = Star;
-         } else if (type == "random") {
-              Shape = Random[Math.floor(Math.random()*13)];
-              }
-
-          return new Shape();
-      }
+                if (type == "redCircle") {
+                    Shape = redCircle;
+                } else if (type == "blueCircle") {
+                    Shape = blueCircle;
+                } else if (type == "greenCircle") {
+                    Shape = greenCircle;
+                } else if (type == "yellowCircle") {
+                    Shape = yellowCircle;
+                } else if (type == "redSquare") {
+                    Shape = redSquare;
+                } else if (type == "blueSquare") {
+                    Shape = blueSquare;
+                } else if (type == "greenSquare") {
+                    Shape = greenSquare;
+                } else if (type == "yellowSquare") {
+                    Shape = yellowSquare;
+                } else if (type == "redTriangle") {
+                    Shape = redTriangle;
+                } else if (type == "blueTriangle") {
+                    Shape = blueTriangle;
+                } else if (type == "greenTriangle") {
+                    Shape = greenTriangle;
+                } else if (type == "yellowTriangle") {
+                    Shape = yellowTriangle;
+                } else if (type == "Star") {
+                    Shape = Star;
+                } else if (type == "random") {
+                    Shape = Random[Math.floor(Math.random()*13)];
+                }
+                return new Shape();
+            }
+            
             function Shape(x, y, w, h, fill) {
                 // This is a very simple and unsafe constructor. All we're doing is checking if the values exist.
                 // "x || 0" just means "if there is a value for x, use that. Otherwise use 0."
@@ -233,8 +233,8 @@
                     
                     // ** Add stuff you want drawn in the background all the time here **
                     
-                    var backgroundImg = new Image;
-                    backgroundImg.src = "img/NebulaBackground.png";
+                    var backgroundImg = new Image();
+                    backgroundImg.src = "img/nebula_background.png";
                     ctx.drawImage(backgroundImg,0,0);
                     
                     ctx.strokeStyle="grey";
@@ -299,7 +299,7 @@
                     ctx.font = "30px Comic Sans MS";
                     ctx.fillText("Score: " + window.count,0,30);
                     
-                    var pauseButtonImg = new Image;
+                    var pauseButtonImg = new Image();
                     pauseButtonImg.src = "img/pause.png";
                     ctx.drawImage(pauseButtonImg,285,0);
                     
@@ -399,24 +399,24 @@
                 ctx.fillText("Background Music",70,195);
                 ctx.fillText("Sound Effects",70,235);
                 
-                var speakerImg = new Image;
+                var speakerImg = new Image();
                 speakerImg.src = "img/speaker.png";
                 
-                var muteImg = new Image;
+                var muteImg = new Image();
                 muteImg.src = "img/mute.png";
                 
                 ctx.drawImage(speakerImg,30,170);
                 ctx.drawImage(muteImg,30,210);
                 
-                var menuButtonImg = new Image;
+                var menuButtonImg = new Image();
                 menuButtonImg.src = "img/mainmenu.png";
                 ctx.drawImage(menuButtonImg,20,250);
                 
-                var restartButtonImg = new Image;
+                var restartButtonImg = new Image();
                 restartButtonImg.src = "img/restart.png";
                 ctx.drawImage(restartButtonImg,160,250);
                 
-                var closeButtonImg = new Image;
+                var closeButtonImg = new Image();
                 closeButtonImg.src = "img/close.png";
                 ctx.drawImage(closeButtonImg,280,60);
             }
@@ -435,15 +435,15 @@
             
             function testSFX1() {
                 if(sfx === true) {
-                    var error_sfx = new Audio('audio/valid.mp3');
-                    error_sfx.play();
+                    var new_sfx = new Audio('audio/valid.mp3');
+                    new_sfx.play();
                 }
             }
             
             function testSFX2() {
                 if(sfx === true) {
-                    var error_sfx = new Audio('audio/error.mp3');
-                    error_sfx.play();
+                    var new_sfx = new Audio('audio/error.mp3');
+                    new_sfx.play();
                 }
             }
             
@@ -486,11 +486,11 @@
                     ctx.fillText("Enter your name",40,190);
                 }
                 
-                var menuButtonImg = new Image;
+                var menuButtonImg = new Image();
                 menuButtonImg.src = "img/mainmenu.png";
                 ctx.drawImage(menuButtonImg,20,250);
                 
-                var restartButtonImg = new Image;
+                var restartButtonImg = new Image();
                 restartButtonImg.src = "img/restart.png";
                 ctx.drawImage(restartButtonImg,160,250);
             }
@@ -506,7 +506,7 @@
             }
         </script>
         <br /><button onclick="pause()" type="button">Pause Menu</button>
-        <br /><button onclick="gameOverTest()" type="button">Game Over Test Toggle</button>
+        <br /><button onclick="gameOverTest()" type="button">Game Over Test</button>
         <br /><button onclick="highScoreTest()" type="button">High Score Toggle</button>
         <br /><button onclick="toggleBGM()" type="button">Toggle BGM</button>
         <br /><button onclick="toggleSFX()" type="button">Toggle SFX</button>
