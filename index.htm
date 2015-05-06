@@ -227,52 +227,52 @@
                 
                 pause(ctx);
                 
-				this.valid = false;
-			  }
-			}
+                this.valid = false;
+              }
+            }
 
 
-			// Creates an object with x and y defined, set to the mouse position relative to the state's canvas
-			// If you wanna be super-correct this can be tricky, we have to worry about padding and borders
-			CanvasState.prototype.getMouse = function(e) {
-			  var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
-			  
-			  // Compute the total offset
-			  if (element.offsetParent !== undefined) {
-				do {
-				  offsetX += element.offsetLeft;
-				  offsetY += element.offsetTop;
-				} while ((element = element.offsetParent));
-			  }
+            // Creates an object with x and y defined, set to the mouse position relative to the state's canvas
+            // If you wanna be super-correct this can be tricky, we have to worry about padding and borders
+            CanvasState.prototype.getMouse = function(e) {
+              var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
+              
+              // Compute the total offset
+              if (element.offsetParent !== undefined) {
+                do {
+                  offsetX += element.offsetLeft;
+                  offsetY += element.offsetTop;
+                } while ((element = element.offsetParent));
+              }
 
-			  // Add padding and border style widths to offset
-			  // Also add the <html> offsets in case there's a position:fixed bar
-			  offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
-			  offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
+              // Add padding and border style widths to offset
+              // Also add the <html> offsets in case there's a position:fixed bar
+              offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
+              offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
 
-			  mx = e.pageX - offsetX;
-			  my = e.pageY - offsetY;
-			  
-			  // We return a simple javascript object (a hash) with x and y defined
-			  return {x: mx, y: my};
-			}
+              mx = e.pageX - offsetX;
+              my = e.pageY - offsetY;
+              
+              // We return a simple javascript object (a hash) with x and y defined
+              return {x: mx, y: my};
+            }
 
 			// If you dont want to use <body onLoad='init()'>
 			// You could uncomment this init() reference and place the script reference inside the body tag
 			//init();
 
-			function init() {
-			  window.count = 0;
-			  var s = new CanvasState(document.getElementById('canvas'));
-			  s.addShape(new Shape(4,-60,56,56, "red")); // The default is gray
-			  s.addShape(new Shape(68,-60,56,56, "blue"));
-			  // Lets make some partially transparent
-			  s.addShape(new Shape(132,-60,56,56, "green"));
-			  s.addShape(new Shape(196,-60,56,56, "yellow"));
-			  s.addShape(new Shape(260,-60,56,56, "orange"));
-			}
+            function init() {
+              window.count = 0;
+              var s = new CanvasState(document.getElementById('canvas'));
+              s.addShape(new Shape(4,-60,56,56, "red")); // The default is gray
+              s.addShape(new Shape(68,-60,56,56, "blue"));
+              // Lets make some partially transparent
+              s.addShape(new Shape(132,-60,56,56, "green"));
+              s.addShape(new Shape(196,-60,56,56, "yellow"));
+              s.addShape(new Shape(260,-60,56,56, "orange"));
+            }
             
-			init();
+            init();
 			// Now go make something amazing!
             function pause(ctx) {
                 ctx.rect(0,35,320,410);
@@ -285,11 +285,29 @@
                 ctx.rect(22,70,276,190);
                 ctx.stroke();
                 ctx.fillStyle="white";
-				ctx.fill();
+                ctx.fill();
                 
                 ctx.fillStyle = "black";
                 ctx.font = "20px Comic Sans MS";
                 ctx.fillText("Current Rule: ",25,90);
+                
+                ctx.beginPath();
+                ctx.lineWidth="2";
+                ctx.moveTo(30,165);
+                ctx.lineTo(290,165);
+                ctx.stroke();
+                
+                ctx.fillText("Background Music",70,195);
+                ctx.fillText("Sound Effects",70,235);
+                
+                var speakerImg = new Image;
+                speakerImg.src = "img/speaker.png";
+                
+                var muteImg = new Image;
+                muteImg.src = "img/mute.png";
+                
+                ctx.drawImage(speakerImg,30,170);
+                ctx.drawImage(muteImg,30,210);
                 
                 var menuButtonImg = new Image;
                 menuButtonImg.src = "img/mainmenu.png";
@@ -303,6 +321,6 @@
                 closeButtonImg.src = "img/close.png";
                 ctx.drawImage(closeButtonImg,280,60);
             }
-		</script>
+        </script>
     </body>
 </html>
