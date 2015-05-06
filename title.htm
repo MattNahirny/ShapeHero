@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shape Hero</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <canvas id="myCanvas" width="320" height="480">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
+        <script>
+            var img = new Image();
+            var img2 = new Image();
+            var img3 = new Image();
+            var img4 = new Image();
+            img.src = 'img/StarBackground.png';
+            img2.src = 'img/Playbutton.png';
+            img3.src = 'img/Leaderboardbutton.png';
+            img4.src = 'img/Optionsbutton.png';
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            img.onload = function(){
+                ctx.drawImage(img,0,0,320,480);
+                ctx.drawImage(img2,30,240);
+                ctx.drawImage(img3,30,320);
+                ctx.drawImage(img4,30,400);
+            };
+        </script>
+    </body>
+</html>
