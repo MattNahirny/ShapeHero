@@ -231,10 +231,6 @@
                     
                     // ** Add stuff you want drawn in the background all the time here **
                     
-                    //ctx.rect(0,0,320,480);
-                    //ctx.fillStyle="white";
-                    //ctx.fill();
-                    
                     var backgroundImg = new Image;
                     backgroundImg.src = "img/StarBackground.png";
                     ctx.drawImage(backgroundImg,0,0);
@@ -321,6 +317,10 @@
                     
                     if(paused === true) {
                         pauseScreen(ctx);
+                    }
+                    
+                    if(gameOver === true) {
+                        gameOverScreen(ctx);
                     }
                     
                     this.valid = false;
@@ -450,8 +450,44 @@
             function pause() {
                 paused = !paused;
             }
+            
+            //Game over overlay
+            function gameOverScreen(ctx) {
+                ctx.rect(0,0,320,480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Game Over",25,100);
+                
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Score: " + window.count,25,130);
+                
+                var menuButtonImg = new Image;
+                menuButtonImg.src = "img/mainmenu.png";
+                ctx.drawImage(menuButtonImg,20,250);
+                
+                var restartButtonImg = new Image;
+                restartButtonImg.src = "img/restart.png";
+                ctx.drawImage(restartButtonImg,160,250);
+            }
+            
+            var gameOver = false;
+            function gameOverTest() {
+                gameOver = !gameOver;
+            }
         </script>
         <br /><button onclick="pause()" type="button">Pause Menu</button>
+        <br /><button onclick="gameOverTest()" type="button">Game Over Test Toggle</button>
         <br /><button onclick="toggleBGM()" type="button">Toggle BGM</button>
         <br /><button onclick="toggleSFX()" type="button">Toggle SFX</button>
         <br /><button onclick="testSFX1()" type="button">Test SFX 1</button>
