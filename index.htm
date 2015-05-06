@@ -215,6 +215,10 @@
                     ctx.font = "30px Comic Sans MS";
                     ctx.fillText("Score: " + window.count,0,30);
                     
+                    var pauseButtonImg = new Image;
+                    pauseButtonImg.src = "img/pause.png";
+                    ctx.drawImage(pauseButtonImg,285,0);
+                    
                     ctx.rect(0,445,320,480);
                     ctx.fillStyle="white";
                     ctx.fill();
@@ -234,7 +238,6 @@
                     this.valid = false;
                 }
             }
-
 
             // Creates an object with x and y defined, set to the mouse position relative to the state's canvas
             // If you wanna be super-correct this can be tricky, we have to worry about padding and borders
@@ -345,8 +348,8 @@
                 }
             }
         </script>
-        <br /><button onclick="toggleBGM()" type="button">Temp Toggle BGM</button>
-        <br /><button onclick="toggleSFX()" type="button">Temp Toggle SFX</button>
+        <br /><button onclick="toggleBGM()" type="button">Toggle BGM</button>
+        <br /><button onclick="toggleSFX()" type="button">Toggle SFX</button>
         <br /><button onclick="testSFX()" type="button">Test SFX</button>
     </body>
 </html>
