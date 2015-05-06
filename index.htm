@@ -146,8 +146,8 @@
 				// ** Add stuff you want drawn in the background all the time here **
 				
 				ctx.rect(0,0,320,480);
-				ctx.fillStyle="white";
-				ctx.fill();
+                ctx.fillStyle="white";
+                ctx.fill();
 			
 				ctx.strokeStyle="black";
 				ctx.beginPath();
@@ -198,8 +198,8 @@
 				// ** Add stuff you want drawn on top all the time here **
 				
                 ctx.rect(0,0,320,35);
-				ctx.fillStyle="white";
-				ctx.fill();
+                ctx.fillStyle="white";
+                ctx.fill();
                 
                 ctx.strokeStyle="black";
                 ctx.beginPath();
@@ -208,12 +208,12 @@
                 ctx.stroke();
                 
                 ctx.fillStyle = "black";
-				ctx.font = "30px Comic Sans MS";
-				ctx.fillText("Score: " + window.count,0,30);
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Score: " + window.count,0,30);
                 
                 ctx.rect(0,445,320,480);
-				ctx.fillStyle="white";
-				ctx.fill();
+                ctx.fillStyle="white";
+                ctx.fill();
                 
                 ctx.strokeStyle="black";
                 ctx.beginPath();
@@ -222,8 +222,8 @@
                 ctx.stroke();
                 
                 ctx.fillStyle = "black";
-				ctx.font = "30px Comic Sans MS";
-				ctx.fillText("Rules: ",0,475);
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Rules: ",0,475);
                 
                 pause(ctx);
                 
@@ -276,8 +276,8 @@
 			// Now go make something amazing!
             function pause(ctx) {
                 ctx.rect(0,35,320,410);
-				ctx.fillStyle="rgba(0,0,0,.5)";
-				ctx.fill();
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
                 
                 ctx.beginPath();
                 ctx.lineWidth="4";
@@ -288,8 +288,8 @@
 				ctx.fill();
                 
                 ctx.fillStyle = "black";
-				ctx.font = "20px Comic Sans MS";
-				ctx.fillText("Current Rule: ",25,90);
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Current Rule: ",25,90);
                 
                 var menuButtonImg = new Image;
                 menuButtonImg.src = "img/mainmenu.png";
@@ -303,7 +303,6 @@
                 closeButtonImg.src = "img/close.png";
                 ctx.drawImage(closeButtonImg,280,60);
             }
-            //pauseScreen();
 		</script>
     </body>
 </html>
