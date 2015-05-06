@@ -472,6 +472,18 @@
                 ctx.font = "20px Comic Sans MS";
                 ctx.fillText("Score: " + window.count,25,130);
                 
+                if(newRecord === true) {
+                    ctx.rect(35,150,250,90);
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = "black";
+                    ctx.font = "20px Comic Sans MS";
+                    ctx.fillText("New High Score",40,170);
+                    
+                    ctx.font = "15px Comic Sans MS";
+                    ctx.fillText("Enter your name",40,190);
+                }
+                
                 var menuButtonImg = new Image;
                 menuButtonImg.src = "img/mainmenu.png";
                 ctx.drawImage(menuButtonImg,20,250);
@@ -485,9 +497,15 @@
             function gameOverTest() {
                 gameOver = !gameOver;
             }
+            
+            var newRecord = true;
+            function highScoreTest() {
+                newRecord = !newRecord;
+            }
         </script>
         <br /><button onclick="pause()" type="button">Pause Menu</button>
         <br /><button onclick="gameOverTest()" type="button">Game Over Test Toggle</button>
+        <br /><button onclick="highScoreTest()" type="button">High Score Toggle</button>
         <br /><button onclick="toggleBGM()" type="button">Toggle BGM</button>
         <br /><button onclick="toggleSFX()" type="button">Toggle SFX</button>
         <br /><button onclick="testSFX1()" type="button">Test SFX 1</button>
