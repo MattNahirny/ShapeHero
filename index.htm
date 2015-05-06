@@ -149,11 +149,15 @@
                     
                     // ** Add stuff you want drawn in the background all the time here **
                     
-                    ctx.rect(0,0,320,480);
-                    ctx.fillStyle="white";
-                    ctx.fill();
-
-                    ctx.strokeStyle="black";
+                    //ctx.rect(0,0,320,480);
+                    //ctx.fillStyle="white";
+                    //ctx.fill();
+                    
+                    var backgroundImg = new Image;
+                    backgroundImg.src = "img/StarBackground.png";
+                    ctx.drawImage(backgroundImg,0,0);
+                    
+                    ctx.strokeStyle="grey";
                     ctx.beginPath();
                     ctx.moveTo(64,0);
                     ctx.lineTo(64,480);
@@ -233,7 +237,7 @@
                     ctx.font = "30px Comic Sans MS";
                     ctx.fillText("Rules: ",0,475);
                     
-                    pause(ctx);
+                    //pause(ctx);
                     
                     this.valid = false;
                 }
