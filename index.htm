@@ -237,7 +237,9 @@
                     ctx.font = "30px Comic Sans MS";
                     ctx.fillText("Rules: ",0,475);
                     
-                    //pause(ctx);
+                    if(paused === true) {
+                        pauseScreen(ctx);
+                    }
                     
                     this.valid = false;
                 }
@@ -285,7 +287,9 @@
             
             init();
             // Now go make something amazing!
-            function pause(ctx) {
+            
+            //Pause menu drawing
+            function pauseScreen(ctx) {
                 ctx.rect(0,35,320,410);
                 ctx.fillStyle="rgba(0,0,0,.5)";
                 ctx.fill();
@@ -358,7 +362,14 @@
                     error_sfx.play();
                 }
             }
+            
+            //Pause menu toggle
+            var paused = false;
+            function pause() {
+                paused = !paused;
+            }
         </script>
+        <br /><button onclick="pause()" type="button">Pause Menu</button>
         <br /><button onclick="toggleBGM()" type="button">Toggle BGM</button>
         <br /><button onclick="toggleSFX()" type="button">Toggle SFX</button>
         <br /><button onclick="testSFX1()" type="button">Test SFX 1</button>
