@@ -345,7 +345,14 @@
                 sfx = !sfx;
             }
             
-            function testSFX() {
+            function testSFX1() {
+                if(sfx === true) {
+                    var error_sfx = new Audio('audio/valid.mp3');
+                    error_sfx.play();
+                }
+            }
+            
+            function testSFX2() {
                 if(sfx === true) {
                     var error_sfx = new Audio('audio/error.mp3');
                     error_sfx.play();
@@ -354,6 +361,7 @@
         </script>
         <br /><button onclick="toggleBGM()" type="button">Toggle BGM</button>
         <br /><button onclick="toggleSFX()" type="button">Toggle SFX</button>
-        <br /><button onclick="testSFX()" type="button">Test SFX</button>
+        <br /><button onclick="testSFX1()" type="button">Test SFX 1</button>
+        <br /><button onclick="testSFX2()" type="button">Test SFX 2</button>
     </body>
 </html>
