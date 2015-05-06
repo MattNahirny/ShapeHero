@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="myCanvas" width="320" height="480" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+var img = new Image()
+var img2 = new Image()
+var img3 = new Image()
+var img4 = new Image()
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+ctx.moveTo(0,0);
+img.onload = function(){
+ctx.drawImage(img,0,0,320,480);
+};
+img2.onload = function(){
+ctx.drawImage(img2,30,240);
+};
+img3.onload = function(){
+ctx.drawImage(img3,30,320);
+};
+img4.onload = function(){
+ctx.drawImage(img4,30,400);
+};
+img.src = 'http://ak6.picdn.net/shutterstock/videos/631903/preview/stock-footage-space-background-with-spinning-camera-cgi-loop-fps.jpg';
+img2.src = 'http://i.imgur.com/XTsGNWy.png';
+img3.src = 'http://i.imgur.com/1FI4Lsx.png';
+img4.src = 'http://i.imgur.com/EoYDXBH.png';
+</script>
+
+<div style="top: 200px; left: 30px; position: absolute; background-color: red;">
+</div>
+</body>
+</html>
