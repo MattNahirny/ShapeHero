@@ -16,10 +16,11 @@
             var img3 = new Image();
             var img4 = new Image();
             var img5 = new Image();
-            img.src = 'img/StarBackground.png';
-            img2.src = 'img/Playbutton.png';
-            img3.src = 'img/Leaderboardbutton.png';
-            img4.src = 'img/Optionsbutton.png';
+            img.src = "img/star_background.png";
+            img2.src = "img/play_button.png";
+            img3.src = "img/leaderboard_button.png";
+            img4.src = "img/options_button.png";
+            img5.src = "img/logo.png";
             var c = document.getElementById("myCanvas");
             var ctx = c.getContext("2d");
             img.onload = function(){
@@ -27,6 +28,7 @@
                 ctx.drawImage(img2,30,240);
                 ctx.drawImage(img3,30,320);
                 ctx.drawImage(img4,30,400);
+                ctx.drawImage(img5,0,60);
             };
         </script>
     </body>
