@@ -15,90 +15,141 @@
         </canvas>
         <script>
             //Shape factory returns shape objects
-            function Circle(colour) {
+            function Circle(x, y, z, xVelocity, yVelocity, colour) {
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
-                this.colour = colour || randomColour[Math.floor(Math.random()*4)];
-                if (this.colour === "red") {
+                this.shapeType = "Circle";
+                this.x = x || 0;
+                this.y = y || -60;
+                this.z = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0;                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
                     bodyImg.src = "img/shapes/circle/red_circle.png";
-                } else if (this.colour === "blue") {
+                } else if (this.colour == "blue") {
                     bodyImg.src = "img/shapes/circle/blue_circle.png";
-                } else if (this.colour === "green") {
+                } else if (this.colour == "green") {
                     bodyImg.src = "img/shapes/circle/green_circle.png";
-                } else if (this.colour === "yellow") {
+                } else if (this.colour == "yellow") {
                     bodyImg.src = "img/shapes/circle/yellow_circle.png";
                 }
+                
+                
             }
-            function Square(colour) {
+            
+            function Square(x, y, z, xVelocity, yVelocity, colour) {
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
-                this.colour = colour || randomColour[Math.floor(Math.random()*4)];
-                if (this.colour === "red") {
+                this.shapeType = "Square";
+                this.x = x || 0;
+                this.y = y || -60;
+                this.z = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0;
+                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
                     bodyImg.src = "img/shapes/square/red_square.png";
-                } else if (this.colour === "blue") {
+                } else if (this.colour == "blue") {
                     bodyImg.src = "img/shapes/square/blue_square.png";
-                } else if (this.colour === "green") {
+                } else if (this.colour == "green") {
                     bodyImg.src = "img/shapes/square/green_square.png";
-                } else if (this.colour === "yellow") {
+                } else if (this.colour == "yellow") {
                     bodyImg.src = "img/shapes/square/yellow_square.png";
                 }
             }
-            function Triangle(colour) {
+            
+            function Triangle(x, y, z, xVelocity, yVelocity, colour) {
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
-                this.colour = colour || randomColour[Math.floor(Math.random()*4)];
-                if (this.colour === "red") {
+                this.shapeType = "Triangle";
+                this.x = x || 0;
+                this.y = y || -60;
+                this.z = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0;
+                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
                     bodyImg.src = "img/shapes/triangle/red_triangle.png";
-                } else if (this.colour === "blue") {
+                } else if (this.colour == "blue") {
                     bodyImg.src = "img/shapes/triangle/blue_triangle.png";
-                } else if (this.colour === "green") {
+                } else if (this.colour == "green") {
                     bodyImg.src = "img/shapes/triangle/green_triangle.png";
-                } else if (this.colour === "yellow") {
+                } else if (this.colour == "yellow") {
                     bodyImg.src = "img/shapes/triangle/yellow_triangle.png";
                 }
+                
             }
-            function Star() {
+            function Star(x, y, z, xVelocity, yVelocity) {
                 var bodyImg = new Image();
+                this.shapeType = "Star";
                 this.colour = "yellow";
                 bodyImg.src = "img/shapes/star/star.png";  
+                this.x = x || 0;
+                this.y = y || -60;
+                this.z = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0;
+                
             }
-            
+            //The way that the factory works is you call createShape() with a parameter
+            //the parameter is a string of which shape to be created or random
+            //eg. ShapeFactory.createShape("blueCircle");
+            //or 
+            //ShapeFactory.createShape("random");
             function ShapeFactory() { }
             ShapeFactory.prototype.createShape = function createShape(type) {
                 var randomShape = [Circle, Square, Triangle];
-                if (type === "circle") {
-                    return new Circle();
-                } else if (type === "square") {
-                    return new Square();
-                } else if (type === "triangle") {
-                    return new Triangle();
-                } else if (type === "redCircle") {
-                    return new Circle("red");
-                } else if (type === "blueCircle") {
-                    return new Circle("blue");
-                } else if (type === "greenCircle") {
-                    return new Circle("green");
-                } else if (type === "yellowCircle") {
-                    return new Circle("yellow");
-                } else if (type === "redSquare") {
-                    return new Square("red");
-                } else if (type === "blueSquare") {
-                    return new Square("blue");
-                } else if (type === "greenSquare") {
-                    return new Square("green");
-                } else if (type === "yellowSquare") {
-                    return new Square("yellow");
-                } else if (type === "redTriangle") {
-                    return new Triangle("red");
-                } else if (type === "blueTriangle") {
-                    return new Triangle("blue");
-                } else if (type === "greenTriangle") {
-                    return new Triangle("green");
-                } else if (type === "yellowTriangle") {
-                    return new Triangle("yellow");
-                } else if (type === "Star") {
+                if (type == "circle") {
+                    return new Circle(null, null, null, null, null, "random");
+                } else if (type == "square") {
+                    return new Square(null, null, null, null, null, "random");
+                } else if (type == "triangle") {
+                    return new Triangle(null, null, null, null, null, "random");
+                } else if (type == "redCircle") {
+                    return new Circle(null, null, null, null, null, "red");
+                } else if (type == "blueCircle") {
+                    return new Circle(null, null, null, null, null, "blue");
+                } else if (type == "greenCircle") {
+                    return new Circle(null, null, null, null, null, "green");
+                } else if (type == "yellowCircle") {
+                    return new Circle(null, null, null, null, null, "yellow");
+                } else if (type == "redSquare") {
+                    return new Square(null, null, null, null, null, "red");
+                } else if (type == "blueSquare") {
+                    return new Square(null, null, null, null, null, "blue");
+                } else if (type == "greenSquare") {
+                    return new Square(null, null, null, null, null, "green");
+                } else if (type == "yellowSquare") {
+                    return new Square(null, null, null, null, null, "yellow");
+                } else if (type == "redTriangle") {
+                    return new Triangle(null, null, null, null, null, "red");
+                } else if (type == "blueTriangle") {
+                    return new Triangle(null, null, null, null, null, "blue");
+                } else if (type == "greenTriangle") {
+                    return new Triangle(null, null, null, null, null, "green");
+                } else if (type == "yellowTriangle") {
+                    return new Triangle(null, null, null, null, null, "yellow");
+                } else if (type == "Star") {
                     return new Star();
-                } else if (type === "random") {
+                } else if (type == "random") {
                     return new randomShape[Math.floor(Math.random()*3)];
                 }
                 return;
