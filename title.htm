@@ -7,28 +7,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
-        <canvas id="myCanvas" width="320" height="480">
+        <canvas id="canvas" width="320" height="480">
             Your browser does not support the HTML5 canvas tag.
         </canvas>
         <script>
-            var img = new Image();
-            var img2 = new Image();
-            var img3 = new Image();
-            var img4 = new Image();
-            var img5 = new Image();
-            img.src = "img/star_background.png";
-            img2.src = "img/play_button.png";
-            img3.src = "img/leaderboard_button.png";
-            img4.src = "img/options_button.png";
-            img5.src = "img/logo.png";
-            var c = document.getElementById("myCanvas");
+            var backgroundImage = new Image();
+            backgroundImage.src = "img/star_background.png";
+            var logo = new Image();
+            logo.src = "img/logo.png";
+            var playButton = new Image();
+            playButton.src = "img/play_button.png";
+            var leaderboardButton = new Image();
+            leaderboardButton.src = "img/leaderboard_button.png";
+            var optionsButton = new Image();
+            optionsButton.src = "img/options_button.png";
+            
+            var c = document.getElementById("canvas");
             var ctx = c.getContext("2d");
-            img.onload = function(){
-                ctx.drawImage(img,0,0,320,480);
-                ctx.drawImage(img2,30,240);
-                ctx.drawImage(img3,30,320);
-                ctx.drawImage(img4,30,400);
-                ctx.drawImage(img5,0,60);
+            backgroundImage.onload = function() {
+                ctx.drawImage(backgroundImage,0,0,320,480);
+                ctx.drawImage(logo,0,60);
+                ctx.drawImage(playButton,30,240);
+                ctx.drawImage(leaderboardButton,30,320);
+                ctx.drawImage(optionsButton,30,400);
             };
         </script>
     </body>
