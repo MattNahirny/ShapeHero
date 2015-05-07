@@ -325,6 +325,10 @@
                         gameOverScreen(ctx);
                     }
                     
+                    if(options === true) {
+                        optionsScreen(ctx);
+                    }
+                    
                     this.valid = false;
                 }
             }
@@ -516,10 +520,60 @@
             function highScoreTest() {
                 newRecord = !newRecord;
             }
+            
+            //Options Screen
+            function optionsScreen(ctx) {
+                ctx.rect(0,0,320,480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Options",25,100);
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Background Music",70,135);
+                ctx.fillText("Sound Effects",70,175);
+                
+                var speakerImg = new Image();
+                speakerImg.src = "img/speaker.png";
+                
+                var muteImg = new Image();
+                muteImg.src = "img/mute.png";
+                
+                if(bgm.muted === false) {
+                    ctx.drawImage(speakerImg,30,110);
+                } else {
+                    ctx.drawImage(muteImg,30,110);
+                }
+                
+                if(sfx === true) {
+                    ctx.drawImage(speakerImg,30,150);
+                } else {
+                    ctx.drawImage(muteImg,30,150);
+                }
+                
+                var closeButtonImg = new Image();
+                closeButtonImg.src = "img/close.png";
+                ctx.drawImage(closeButtonImg,280,60);
+            }
+            
+            var options = false;
+            function optionsTest() {
+                options = !options;
+            }
         </script>
         <br /><button onclick="pause()" type="button">Pause Menu</button>
         <br /><button onclick="gameOverTest()" type="button">Game Over Test</button>
         <br /><button onclick="highScoreTest()" type="button">High Score Toggle</button>
+        <br /><button onclick="optionsTest()" type="button">Options Test</button>
         <br /><button onclick="toggleBGM()" type="button">Toggle BGM</button>
         <br /><button onclick="toggleSFX()" type="button">Toggle SFX</button>
         <br /><button onclick="testSFX1()" type="button">Test SFX 1</button>
