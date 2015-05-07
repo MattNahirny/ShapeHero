@@ -359,6 +359,10 @@
                     ctx.font = "30px Comic Sans MS";
                     ctx.fillText("Score: " + window.count,0,30);
                     
+                    ctx.textAlign="end";
+                    ctx.fillText(window.combo + "x",280,30);
+                    ctx.textAlign="start";
+                    
                     var pauseButtonImg = new Image();
                     pauseButtonImg.src = "img/pause.png";
                     ctx.drawImage(pauseButtonImg,285,0);
@@ -424,6 +428,7 @@
 
             function init() {
                 window.count = 0;
+                window.combo = 1;
                 var s = new CanvasState(document.getElementById('canvas'));
                 s.addShape(new Shape(4,-60,56,56, "red")); // The default is gray
                 s.addShape(new Shape(68,-60,56,56, "blue"));
