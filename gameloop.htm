@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html>
-	<head>
+<html><head>
 		<title>Shape Hero</title>
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body style="background-color:black;">
         <canvas id="canvas" width="320" height="480"></canvas>
 		<script>
 			var ctx = document.getElementById("canvas").getContext("2d"),
-			fpsDisplay = document.getElementById('fpsDisplay'),
-			boxPos = 10,
-			boxLastPos = 10,
-			boxVelocity = 0.1,
 			limit = 300,
 			lastFrameTimeMs = 0,
 			maxFPS = 60,
@@ -25,13 +20,16 @@
 			running = false,
 			started = false,
 			frameID = 0;
+			entities = 0;
 			
-			
-			function Button(x, y, layer, width, height) {
-				
-			}
-			
-			function Shape(x, y, z, xVelocity, yVelocity) {
+			var updateBuffer = [];
+			updateBuffer.push(new Shape(0, 0, 0, 0.1, 0.1, 10, 10, "yellow"));
+			updateBuffer.push(new Shape(20, 20, 0, 0.1, 0, 10, 10, "blue"));
+			updateBuffer.push(new Shape(30, 30, 3, 0, 0.1, 10, 10, "green"));
+			updateBuffer.push(new Shape(30, 30, 2, 0, 0.1, 10, 10, "red"));
+			var layerBuffer = [];
+			updateBuffer.push(new Shape(30, 30, 1, 0, 0.1, 10, 10, "orange"));
+			function Shape(x, y, z, xVelocity, yVelocity, width, height, color) {
 				this.xCurrent = x || 0;
 				this.xPrevious = this.xCurrent;
 				this.yCurrent = y || 0;
@@ -39,47 +37,61 @@
 				this.zCurrent = z || 0;
 				this.xVelocity = xVelocity || 0;
 				this.yVelocity = yVelocity || 0;
+				this.width = width;
+				this.height = height;
+				this.color = color;
+				entities++;
 			}
 			
-			Shape.prototype.draw = function(ctx) {
-			  ctx.fillStyle = this.fill;
-			  ctx.fillRect(this.x, this.y, this.w, this.h);
+			Shape.prototype.offScreen = function() {
+				return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
 			}
 			
-			var zBuffer = [];
-			zBuffer.push(new Shape(0, 10, 0, 0.1, 0));
-			zBuffer.push(new Shape(0, 30, 0, 0.2, 0));
-			//var s1 = new Shape(0, 10, 0, 0.1, 0);
+			Shape.prototype.update = function(delta) {
+					this.xPrevious = this.xCurrent;
+					this.yPrevious = this.yCurrent;
+					this.xCurrent += this.xVelocity * delta;
+					this.yCurrent += this.yVelocity * delta;
+			}
+			
+			Shape.prototype.draw = function(interp) {
+				ctx.fillStyle = this.color;
+				ctx.fillRect(this.xPrevious + (this.xCurrent - this.xPrevious) * interp,
+							 this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 
+							 this.width, this.height);
+			}
+			
+			
 			
 			function update(delta) {
-				var l = zBuffer.length;
+				var l = updateBuffer.length,
+				s = 0;
 				for (var i = 0; i < l; i++) {
-					zBuffer[i].xPrevious = zBuffer[i].xCurrent;
-					zBuffer[i].yPrevious = zBuffer[i].yCurrent;
-					zBuffer[i].xCurrent += zBuffer[i].xVelocity * delta;
-					zBuffer[i].yCurrent += zBuffer[i].yVelocity * delta;
+					if(updateBuffer[i - s].offScreen()) {
+						updateBuffer.splice(i - s, 1);
+						s++;
+						entities--;
+						updateBuffer.push(new Shape(30, 30, 3, 0, 0.1, 10, 10, "green"));
+						updateBuffer.push(new Shape(30, 30, 1, 0.1, 0.1, 10, 10, "orange"));
+					} else {
+						updateBuffer[i - s].update(delta);
+						layerBuffer.push(updateBuffer[i - s]);
+					}	
 				}
-				/*s1.xPrevious = s1.xCurrent;
-				s1.xCurrent += s1.xVelocity * delta;
-				boxLastPos = boxPos;
-				boxPos += boxVelocity * delta;
-				if (boxPos >= limit || boxPos <= 0) boxVelocity = -boxVelocity;*/
+				layerBuffer.sort(function(a, b) {
+					return b.zCurrent - a.zCurrent;
+				});
 			}
 
 			function draw(interp) {
 				ctx.clearRect(0, 0, canvas.width, canvas.height);
-				var l = zBuffer.length;
+				var l = layerBuffer.length;
 				for (var i = 0; i < l; i++) {
-					ctx.fillStyle="red";
-					ctx.fillRect(zBuffer[i].xPrevious + (zBuffer[i].xCurrent - zBuffer[i].xPrevious) * interp, 10, 10, 10);
+					layerBuffer[i].draw(interp);
 				}
-				ctx.fillStyle="red";
-				/*ctx.fillRect(objects[0].xPrevious + (objects[0].xCurrent - objects[0].xPrevious) * interp, 10, 10, 10);*/
-				//ctx.fillRect(s1.xPrevious, 10, 10, 10);
-				
+				layerBuffer = [];
+				ctx.fillText("Entities: " + entities, 180, 480);
 				ctx.fillText("FPS: " + Math.round(fps),180,460);
-				//ctx.fillText( s1.xCurrent + " " + s1.xVelocity, 100, 100);
-				
 			}
 
 			function panic() {
@@ -92,6 +104,7 @@
 
 			function end(fps) {
 				if (fps < 25) {
+					stop();
 				}
 				else if (fps > 30) {
 				}
@@ -155,6 +168,6 @@
 
 			start();			
 		</script>
-    </body>
+    
 
-</html>
+</body></html>
