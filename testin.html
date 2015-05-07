@@ -85,42 +85,60 @@
                     var mx = mouse.x;
                     var my = mouse.y;
                     var shapes = myState.shapes;
-                    if (shapes[0].contains(mx, my)) {
-						var mySel = shapes[0];
-						// Keep track of where in the object we clicked
-						// so we can move it smoothly (see mousemove)
-						myState.dragoffx = mx - mySel.x;
-						myState.dragoffy = my - mySel.y;
-						myState.dragging = true;
-						myState.selection = mySel;
-						myState.valid = false;
-						//THIS IS TRANSITION TO PLAY SCREEN
-						return;
-					}
-					if (shapes[1].contains(mx, my)) {
-						var mySel = shapes[1];
-						// Keep track of where in the object we clicked
-						// so we can move it smoothly (see mousemove)
-						myState.dragoffx = mx - mySel.x;
-						myState.dragoffy = my - mySel.y;
-						myState.dragging = true;
-						myState.selection = mySel;
-						myState.valid = false;
-						//THIS IS TRANSITION TO LEADERBOARD
-						return;
-					}
-					if (shapes[2].contains(mx, my)) {
-						var mySel = shapes[2];
-						// Keep track of where in the object we clicked
-						// so we can move it smoothly (see mousemove)
-						myState.dragoffx = mx - mySel.x;
-						myState.dragoffy = my - mySel.y;
-						myState.dragging = true;
-						myState.selection = mySel;
-						myState.valid = false;
-						//THIS IS TRANSITION TO OPTION MENU
-						return;
-					}
+                    if(options === false) {
+                        if (shapes[0].contains(mx, my)) {
+                            var mySel = shapes[0];
+                            // Keep track of where in the object we clicked
+                            // so we can move it smoothly (see mousemove)
+                            myState.dragoffx = mx - mySel.x;
+                            myState.dragoffy = my - mySel.y;
+                            myState.dragging = true;
+                            myState.selection = mySel;
+                            myState.valid = false;
+                            //THIS IS TRANSITION TO PLAY SCREEN
+                            this.clear();
+                            return;
+                        }
+                        if (shapes[1].contains(mx, my)) {
+                            var mySel = shapes[1];
+                            // Keep track of where in the object we clicked
+                            // so we can move it smoothly (see mousemove)
+                            myState.dragoffx = mx - mySel.x;
+                            myState.dragoffy = my - mySel.y;
+                            myState.dragging = true;
+                            myState.selection = mySel;
+                            myState.valid = false;
+                            //THIS IS TRANSITION TO LEADERBOARD
+                            return;
+                        }
+                        if (shapes[2].contains(mx, my)) {
+                            var mySel = shapes[2];
+                            // Keep track of where in the object we clicked
+                            // so we can move it smoothly (see mousemove)
+                            myState.dragoffx = mx - mySel.x;
+                            myState.dragoffy = my - mySel.y;
+                            myState.dragging = true;
+                            myState.selection = mySel;
+                            myState.valid = false;
+                            //THIS IS TRANSITION TO OPTION MENU
+                            optionsTest();
+                            return;
+                        }
+                    } else if (options === true) {
+                        if (shapes[3].contains(mx, my)) {
+                            var mySel = shapes[3];
+                            // Keep track of where in the object we clicked
+                            // so we can move it smoothly (see mousemove)
+                            myState.dragoffx = mx - mySel.x;
+                            myState.dragoffy = my - mySel.y;
+                            myState.dragging = true;
+                            myState.selection = mySel;
+                            myState.valid = false;
+                            //THIS IS TRANSITION TO OPTION MENU
+                            optionsTest();
+                            return;
+                        }
+                    }
                     // havent returned means we have failed to select anything.
                     // If there was an object selected, we deselect it
                     if (myState.selection) {
@@ -175,11 +193,11 @@
 					var c = document.getElementById("canvas");
 					var ctx = c.getContext("2d");
                     
-                    ctx.drawImage(backgroundImage,0,0,320,480);
+                    ctx.drawImage(backgroundImage,0,0);
                     ctx.drawImage(logo,0,60);
-                    ctx.drawImage(playButton,30,240);
-                    ctx.drawImage(leaderboardButton,30,320);
-                    ctx.drawImage(optionsButton,30,400);
+                    ctx.drawImage(playButton,28,240);
+                    ctx.drawImage(leaderboardButton,28,320);
+                    ctx.drawImage(optionsButton,28,400);
                     
                     // draw all shapes
                     var l = shapes.length;
@@ -199,6 +217,11 @@
                       var mySel = this.selection;
                       ctx.strokeRect(mySel.x,mySel.y,mySel.w,mySel.h);
                     }
+                    
+                    if(options === true) {
+                        optionsScreen(ctx);
+                    }
+                    
 					this.valid = false;
                 }
             }
@@ -235,13 +258,63 @@
             function init() {
                 window.count = 0;
                 var s = new CanvasState(document.getElementById('canvas'));
-				s.addShape(new Shape(30,240,260,50, 'rgba(0, 0, 0, 0)'));
-				s.addShape(new Shape(30,320,260,50, 'rgba(0, 0, 0, 0)'));
-				s.addShape(new Shape(30,400,260,50, 'rgba(0, 0, 0, 0)'));
+				s.addShape(new Shape(28,240,264,54, 'rgba(0, 0, 0, 0)'));
+				s.addShape(new Shape(28,320,264,54, 'rgba(0, 0, 0, 0)'));
+				s.addShape(new Shape(28,400,264,54, 'rgba(0, 0, 0, 0)'));
+                
+                s.addShape(new Shape(280,60,30,30, 'rgba(0, 0, 0, 0)'));
             }
             
             init();
 			
+            //Options Screen
+            function optionsScreen(ctx) {
+                ctx.rect(0,0,320,480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Options",25,100);
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Background Music",70,135);
+                ctx.fillText("Sound Effects",70,175);
+                
+                var speakerImg = new Image();
+                speakerImg.src = "img/speaker.png";
+                
+                var muteImg = new Image();
+                muteImg.src = "img/mute.png";
+                
+                //if(bgm.muted === false) {
+                    ctx.drawImage(speakerImg,30,110);
+                //} else {
+                //    ctx.drawImage(muteImg,30,110);
+                //}
+                
+                //if(sfx === true) {
+                    ctx.drawImage(speakerImg,30,150);
+                //} else {
+                //    ctx.drawImage(muteImg,30,150);
+                //}
+                
+                var closeButtonImg = new Image();
+                closeButtonImg.src = "img/close.png";
+                ctx.drawImage(closeButtonImg,280,60);
+            }
+            
+            var options = false;
+            function optionsTest() {
+                options = !options;
+            }
 	</script>
 	</body>
 </html>
