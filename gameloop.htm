@@ -23,6 +23,242 @@
 			entities = 0;
 			pause = false;
 			
+            //---------------------------------------
+            //Shape factory returns shape objects
+            //---------------------------------------
+            function Circle(x, y, z, xVelocity, yVelocity, colour) {
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
+                this.shapeType = "Circle";
+                this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -60;
+                this.yPrevious = this.yCurrent;
+                this.layer = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0.1;   
+                entities++;                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
+                    bodyImg.src = "img/shapes/circle/red_circle.png";
+                } else if (this.colour == "blue") {
+                    bodyImg.src = "img/shapes/circle/blue_circle.png";
+                } else if (this.colour == "green") {
+                    bodyImg.src = "img/shapes/circle/green_circle.png";
+                } else if (this.colour == "yellow") {
+                    bodyImg.src = "img/shapes/circle/yellow_circle.png";
+                }
+                
+                this.draw = function(interp) {
+                    ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
+                }
+                this.update = function() {
+                    this.xPrevious = this.xCurrent;
+					this.yPrevious = this.yCurrent;
+					this.xCurrent += this.xVelocity * delta;
+					this.yCurrent += this.yVelocity * delta;
+                }
+                this.offScreen = function() {
+				return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                }
+                
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (xCurrent <= mx) && (xCurrent + 64 >= mx) &&
+                        (yCurrent <= my) && (yCurrent + 64 >= my);
+            }
+            }
+            
+            function Square(x, y, z, xVelocity, yVelocity, colour) {
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
+                this.shapeType = "Square";
+                this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -60;
+                this.yPrevious = this.yCurrent;
+                this.layer = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0.1;
+                entities++;  
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
+                    bodyImg.src = "img/shapes/square/red_square.png";
+                } else if (this.colour == "blue") {
+                    bodyImg.src = "img/shapes/square/blue_square.png";
+                } else if (this.colour == "green") {
+                    bodyImg.src = "img/shapes/square/green_square.png";
+                } else if (this.colour == "yellow") {
+                    bodyImg.src = "img/shapes/square/yellow_square.png";
+                }
+                
+                this.draw = function(interp) {
+                    ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
+                }
+                this.update = function() {
+                    this.xPrevious = this.xCurrent;
+					this.yPrevious = this.yCurrent;
+					this.xCurrent += this.xVelocity * delta;
+					this.yCurrent += this.yVelocity * delta;
+                }
+                this.offScreen = function() {
+				return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (xCurrent <= mx) && (xCurrent + 64 >= mx) &&
+                        (yCurrent <= my) && (yCurrent + 64 >= my);
+            }
+            }
+            
+            function Triangle(x, y, z, xVelocity, yVelocity, colour) {
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
+                this.shapeType = "Triangle";
+                this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -60;
+                this.yPrevious = this.yCurrent;
+                this.layer = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0.1;
+                entities++; 
+                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
+                    bodyImg.src = "img/shapes/triangle/red_triangle.png";
+                } else if (this.colour == "blue") {
+                    bodyImg.src = "img/shapes/triangle/blue_triangle.png";
+                } else if (this.colour == "green") {
+                    bodyImg.src = "img/shapes/triangle/green_triangle.png";
+                } else if (this.colour == "yellow") {
+                    bodyImg.src = "img/shapes/triangle/yellow_triangle.png";
+                }
+                
+                this.draw = function(interp) {
+                    ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
+                }
+                this.update = function() {
+                    this.xPrevious = this.xCurrent;
+					this.yPrevious = this.yCurrent;
+					this.xCurrent += this.xVelocity * delta;
+					this.yCurrent += this.yVelocity * delta;
+                }
+                this.offScreen = function() {
+				return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (xCurrent <= mx) && (xCurrent + 64 >= mx) &&
+                        (yCurrent <= my) && (yCurrent + 64 >= my);
+            }
+                
+            }
+            function Star(x, y, z, xVelocity, yVelocity) {
+                var bodyImg = new Image();
+                this.shapeType = "Star";
+                this.colour = "yellow";
+                bodyImg.src = "img/shapes/star/star.png";  
+                this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -60;
+                this.yPrevious = this.yCurrent;
+                this.layer = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0.1;
+                entities++;
+                this.draw = function(interp) {
+                    ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
+                }
+                this.update = function() {
+                    this.xPrevious = this.xCurrent;
+					this.yPrevious = this.yCurrent;
+					this.xCurrent += this.xVelocity * delta;
+					this.yCurrent += this.yVelocity * delta;
+                }
+                this.offScreen = function() {
+				return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (xCurrent <= mx) && (xCurrent + 64 >= mx) &&
+                        (yCurrent <= my) && (yCurrent + 64 >= my);
+            }
+            }
+            
+            //The way that the factory works is you call createShape() with a parameter
+            //the parameter is a string of which shape to be created or random
+            //eg. ShapeFactory.createShape("blueCircle");
+            //or 
+            //ShapeFactory.createShape("random");
+            function ShapeFactory() { }
+            ShapeFactory.prototype.createShape = function createShape(type) {
+                var randomShape = ["Circle", "Square", "Triangle"];
+                var lane = [0, 64, 128, 192, 256];
+                if (type == "circle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                } else if (type == "square") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                } else if (type == "triangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                } else if (type == "redCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                } else if (type == "blueCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                } else if (type == "greenCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                } else if (type == "yellowCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                } else if (type == "redSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                } else if (type == "blueSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                } else if (type == "greenSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                } else if (type == "yellowSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                } else if (type == "redTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                } else if (type == "blueTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                } else if (type == "greenTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                } else if (type == "yellowTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                } else if (type == "star") {
+                    return new Star(lane[Math.floor(Math.random()*5)], -60, null, null, null);
+                } else if (type == "random") {
+                    var rs = randomShape[Math.floor(Math.random()*3)];
+                    
+                    if (rs == "Circle") {
+                        return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    } else if(rs == "Square") {
+                        return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    } else if (rs == "Triangle") {
+                        return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    }
+                }
+                return;
+            };
 			canvas.addEventListener('mousedown', function(e) {
 				if(pause == false) {
 					pause = true;
@@ -34,50 +270,22 @@
 			}, true);
 			
 			var updateBuffer = [];
-			updateBuffer.push(new Shape(0, 0, 0, 0.1, 0.1, 10, 10, "yellow"));
-			updateBuffer.push(new Shape(20, 20, 0, 0.1, 0, 10, 10, "blue"));
-			updateBuffer.push(new Shape(30, 30, 3, 0, 0.1, 10, 10, "green"));
-			updateBuffer.push(new Shape(30, 30, 2, 0, 0.1, 10, 10, "red"));
-			var layerBuffer = [];
-			updateBuffer.push(new Shape(30, 30, 1, 0, 0.1, 10, 10, "orange"));
-			function Shape(x, y, layer, xVelocity, yVelocity, width, height, color) {
-				this.xCurrent = x || 0;
-				this.xPrevious = this.xCurrent;
-				this.yCurrent = y || 0;
-				this.yPrevious = this.yCurrent; 
-				this.layer = layer || 0;
-				this.xVelocity = xVelocity || 0;
-				this.yVelocity = yVelocity || 0;
-				this.width = width;
-				this.height = height;
-				this.color = color;
-				entities++;
-			}
+            
+            var sf = new ShapeFactory();
+            var layerBuffer = [];
+			updateBuffer.push(sf.createShape("random"));
+			updateBuffer.push(sf.createShape("random"));
+			updateBuffer.push(sf.createShape("random"));
+			updateBuffer.push(sf.createShape("random"));
+			updateBuffer.push(sf.createShape("random"));
 			
-			Shape.prototype.offScreen = function() {
-				return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
-			}
-			
-			Shape.prototype.update = function(delta) {
-					this.xPrevious = this.xCurrent;
-					this.yPrevious = this.yCurrent;
-					this.xCurrent += this.xVelocity * delta;
-					this.yCurrent += this.yVelocity * delta;
-			}
-			
-			Shape.prototype.draw = function(interp) {
-				ctx.fillStyle = this.color;
-				ctx.fillRect(this.xPrevious + (this.xCurrent - this.xPrevious) * interp,
-							 this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 
-							 this.width, this.height);
-			}
-			
-			Shape.prototype.hit = function(mouse) {
-				mx = getMouse(mouse).x;
-				my = getMouse(mouse).y;
-				ctx.fillText("x: " + x, 180, 480);
-				ctx.fillText("y: " + entities, 180, 480);
-			}
+            //TODO WTF?
+			//Shape.prototype.hit = function(mouse) {
+			//	mx = getMouse(mouse).x;
+			//	my = getMouse(mouse).y;
+			//	ctx.fillText("x: " + x, 180, 480);
+			//	ctx.fillText("y: " + entities, 180, 480);
+			//}
 			
 			getMouse = function(mouseEvent) {
                 var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
@@ -103,8 +311,6 @@
 						updateBuffer.splice(i - s, 1);
 						s++;
 						entities--;
-						updateBuffer.push(new Shape(30, 30, 3, 0, 0.1, 10, 10, "green"));
-						updateBuffer.push(new Shape(30, 30, 1, 0.1, 0.1, 10, 10, "orange"));
 					} else {
 						updateBuffer[i - s].update(delta);
 						layerBuffer.push(updateBuffer[i - s]);
@@ -122,6 +328,7 @@
 					layerBuffer[i].draw(interp);
 				}
 				layerBuffer = [];
+                ctx.fillStyle ="white";
 				ctx.fillText("Entities: " + entities, 180, 480);
 				ctx.fillText("FPS: " + Math.round(fps),180,460);
 			}
