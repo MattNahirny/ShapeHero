@@ -15,85 +15,93 @@
         </canvas>
         <script>
             //Shape factory returns shape objects
-            function redCircle() {
-                this.colour = "red";
+            function Circle(colour) {
+			var randomColour = ["red", "blue", "green", "yellow"];
+			var bodyImg = new Image();
+                this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+				if (this.colour === "red") {
+					bodyImg.src = "img/shapes/circle/red_circle.png";
+				} else if (this.colour === "blue") {
+					bodyImg.src = "img/shapes/circle/blue_circle.png";
+				} else if (this.colour === "green") {
+					bodyImg.src = "img/shapes/circle/green_circle.png";
+				} else if (this.colour === "yellow"){
+					bodyImg.src = "img/shapes/circle/yellow_circle.png";
+				}
             }
-            function blueCircle() {
-                this.colour = "blue";
+            function Square(colour) {
+			var randomColour = ["red", "blue", "green", "yellow"];
+            var bodyImg = new Image();
+                this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+				if (this.colour === "red") {
+					bodyImg.src = "img/shapes/square/red_square.png";
+				} else if (this.colour === "blue") {
+					bodyImg.src = "img/shapes/square/blue_square.png";
+				} else if (this.colour === "green") {
+					bodyImg.src = "img/shapes/square/green_square.png";
+				} else if (this.colour === "yellow"){
+					bodyImg.src = "img/shapes/square/yellow_square.png";
+				}
             }
-            function greenCircle() {
-                this.colour = "green";
-            }
-            function yellowCircle() {
-                this.colour = "yellow";
-            }
-            function redSquare() {
-                this.colour = "red";
-            }
-            function blueSquare() {
-                this.colour = "blue";
-            }
-            function greenSquare() {
-                this.colour = "green";
-            }
-            function yellowSquare() {
-                this.colour = "yellow";
-            }
-            function redTriangle() {
-                this.colour = "red";
-            }
-            function blueTriangle() {
-                this.colour = "blue";
-            }
-            function greenTriangle() {
-                this.colour = "green";
-            }
-            function yellowTriangle() {
-                this.colour = "yellow";
+            function Triangle(colour) {
+			var randomColour = ["red", "blue", "green", "yellow"];
+            var bodyImg = new Image();
+                this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+				if (this.colour === "red") {
+					bodyImg.src = "img/shapes/triangle/red_triangle.png";
+				} else if (this.colour === "blue") {
+					bodyImg.src = "img/shapes/triangle/blue_triangle.png";
+				} else if (this.colour === "green") {
+					bodyImg.src = "img/shapes/triangle/green_triangle.png";
+				} else if (this.colour === "yellow"){
+					bodyImg.src = "img/shapes/triangle/yellow_triangle.png";
+				}
             }
             function Star() {
-                this.colour = "yellow";
+			var bodyImg = new Image();
+            this.colour = "yellow";
+			bodyImg.src = "img/shapes/star/star.png";
+				
             }
             
             function ShapeFactory() { }
             ShapeFactory.prototype.createShape = function createShape(type) {
-                var Shape = null;
-                var Random = [redCircle, blueCircle, greenCircle, yellowCircle,
-                              redSquare, blueSquare, greenSquare, yellowSquare,
-                              redTriangle, blueTriangle, greenTriangle, yellowTriangle,
-                              Star];
 
-                if (type == "redCircle") {
-                    Shape = redCircle;
-                } else if (type == "blueCircle") {
-                    Shape = blueCircle;
-                } else if (type == "greenCircle") {
-                    Shape = greenCircle;
-                } else if (type == "yellowCircle") {
-                    Shape = yellowCircle;
-                } else if (type == "redSquare") {
-                    Shape = redSquare;
-                } else if (type == "blueSquare") {
-                    Shape = blueSquare;
-                } else if (type == "greenSquare") {
-                    Shape = greenSquare;
-                } else if (type == "yellowSquare") {
-                    Shape = yellowSquare;
-                } else if (type == "redTriangle") {
-                    Shape = redTriangle;
-                } else if (type == "blueTriangle") {
-                    Shape = blueTriangle;
-                } else if (type == "greenTriangle") {
-                    Shape = greenTriangle;
-                } else if (type == "yellowTriangle") {
-                    Shape = yellowTriangle;
-                } else if (type == "Star") {
-                    Shape = Star;
-                } else if (type == "random") {
-                    Shape = Random[Math.floor(Math.random()*13)];
+				if (type === "circle") {
+				return new Circle();
+				} else if (type === "square") {
+				return new Square();
+				} else if (type === "triangle") {
+				return new Triangle();
+				} else if (type === "redCircle") {
+                    return new Circle("red");
+                } else if (type === "blueCircle") {
+                    return new Circle("blue");
+                } else if (type === "greenCircle") {
+                    return new Circle("green");
+                } else if (type === "yellowCircle") {
+                    return new Circle("yellow");
+                } else if (type === "redSquare") {
+                    return new Square("red");
+                } else if (type === "blueSquare") {
+                    return new Square("blue");
+                } else if (type === "greenSquare") {
+                    return new Square("green");
+                } else if (type === "yellowSquare") {
+                    return new Square("yellow");
+                } else if (type === "redTriangle") {
+                    return new Triangle("red");
+                } else if (type === "blueTriangle") {
+                    return new Triangle("blue");
+                } else if (type === "greenTriangle") {
+                    return new Triangle("green");
+                } else if (type === "yellowTriangle") {
+                    return new Triangle("yellow");
+                } else if (type === "Star") {
+                    return new Star();
                 }
-                return new Shape();
-            }
+                return;
+            };
             
             function Shape(x, y, w, h, fill) {
                 // This is a very simple and unsafe constructor. All we're doing is checking if the values exist.
