@@ -174,13 +174,12 @@
 					
 					var c = document.getElementById("canvas");
 					var ctx = c.getContext("2d");
-					backgroundImage.onload = function() {
-						ctx.drawImage(backgroundImage,0,0,320,480);
-						ctx.drawImage(logo,0,60);
-						ctx.drawImage(playButton,30,240);
-						ctx.drawImage(leaderboardButton,30,320);
-						ctx.drawImage(optionsButton,30,400);
-					};
+                    
+                    ctx.drawImage(backgroundImage,0,0,320,480);
+                    ctx.drawImage(logo,0,60);
+                    ctx.drawImage(playButton,30,240);
+                    ctx.drawImage(leaderboardButton,30,320);
+                    ctx.drawImage(optionsButton,30,400);
                     
                     // draw all shapes
                     var l = shapes.length;
@@ -200,7 +199,7 @@
                       var mySel = this.selection;
                       ctx.strokeRect(mySel.x,mySel.y,mySel.w,mySel.h);
                     }
-					this.valid = true;
+					this.valid = false;
                 }
             }
 
