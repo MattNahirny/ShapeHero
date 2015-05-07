@@ -16,64 +16,63 @@
         <script>
             //Shape factory returns shape objects
             function Circle(colour) {
-			var randomColour = ["red", "blue", "green", "yellow"];
-			var bodyImg = new Image();
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
                 this.colour = colour || randomColour[Math.floor(Math.random()*4)];
-				if (this.colour === "red") {
-					bodyImg.src = "img/shapes/circle/red_circle.png";
-				} else if (this.colour === "blue") {
-					bodyImg.src = "img/shapes/circle/blue_circle.png";
-				} else if (this.colour === "green") {
-					bodyImg.src = "img/shapes/circle/green_circle.png";
-				} else if (this.colour === "yellow"){
-					bodyImg.src = "img/shapes/circle/yellow_circle.png";
-				}
+                if (this.colour === "red") {
+                    bodyImg.src = "img/shapes/circle/red_circle.png";
+                } else if (this.colour === "blue") {
+                    bodyImg.src = "img/shapes/circle/blue_circle.png";
+                } else if (this.colour === "green") {
+                    bodyImg.src = "img/shapes/circle/green_circle.png";
+                } else if (this.colour === "yellow") {
+                    bodyImg.src = "img/shapes/circle/yellow_circle.png";
+                }
             }
             function Square(colour) {
-			var randomColour = ["red", "blue", "green", "yellow"];
-            var bodyImg = new Image();
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
                 this.colour = colour || randomColour[Math.floor(Math.random()*4)];
-				if (this.colour === "red") {
-					bodyImg.src = "img/shapes/square/red_square.png";
-				} else if (this.colour === "blue") {
-					bodyImg.src = "img/shapes/square/blue_square.png";
-				} else if (this.colour === "green") {
-					bodyImg.src = "img/shapes/square/green_square.png";
-				} else if (this.colour === "yellow"){
-					bodyImg.src = "img/shapes/square/yellow_square.png";
-				}
+                if (this.colour === "red") {
+                    bodyImg.src = "img/shapes/square/red_square.png";
+                } else if (this.colour === "blue") {
+                    bodyImg.src = "img/shapes/square/blue_square.png";
+                } else if (this.colour === "green") {
+                    bodyImg.src = "img/shapes/square/green_square.png";
+                } else if (this.colour === "yellow") {
+                    bodyImg.src = "img/shapes/square/yellow_square.png";
+                }
             }
             function Triangle(colour) {
-			var randomColour = ["red", "blue", "green", "yellow"];
-            var bodyImg = new Image();
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
                 this.colour = colour || randomColour[Math.floor(Math.random()*4)];
-				if (this.colour === "red") {
-					bodyImg.src = "img/shapes/triangle/red_triangle.png";
-				} else if (this.colour === "blue") {
-					bodyImg.src = "img/shapes/triangle/blue_triangle.png";
-				} else if (this.colour === "green") {
-					bodyImg.src = "img/shapes/triangle/green_triangle.png";
-				} else if (this.colour === "yellow"){
-					bodyImg.src = "img/shapes/triangle/yellow_triangle.png";
-				}
+                if (this.colour === "red") {
+                    bodyImg.src = "img/shapes/triangle/red_triangle.png";
+                } else if (this.colour === "blue") {
+                    bodyImg.src = "img/shapes/triangle/blue_triangle.png";
+                } else if (this.colour === "green") {
+                    bodyImg.src = "img/shapes/triangle/green_triangle.png";
+                } else if (this.colour === "yellow") {
+                    bodyImg.src = "img/shapes/triangle/yellow_triangle.png";
+                }
             }
             function Star() {
-			var bodyImg = new Image();
-            this.colour = "yellow";
-			bodyImg.src = "img/shapes/star/star.png";
-				
+                var bodyImg = new Image();
+                this.colour = "yellow";
+                bodyImg.src = "img/shapes/star/star.png";  
             }
             
             function ShapeFactory() { }
             ShapeFactory.prototype.createShape = function createShape(type) {
-			var randomShape = [Circle, Square, Triangle];
-				if (type === "circle") {
-				return new Circle();
-				} else if (type === "square") {
-				return new Square();
-				} else if (type === "triangle") {
-				return new Triangle();
-				} else if (type === "redCircle") {
+                var randomShape = [Circle, Square, Triangle];
+                if (type === "circle") {
+                    return new Circle();
+                } else if (type === "square") {
+                    return new Square();
+                } else if (type === "triangle") {
+                    return new Triangle();
+                } else if (type === "redCircle") {
                     return new Circle("red");
                 } else if (type === "blueCircle") {
                     return new Circle("blue");
@@ -100,8 +99,8 @@
                 } else if (type === "Star") {
                     return new Star();
                 } else if (type === "random") {
-					return new randomShape[Math.floor(Math.random()*3)];
-				}
+                    return new randomShape[Math.floor(Math.random()*3)];
+                }
                 return;
             };
             
