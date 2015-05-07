@@ -21,6 +21,17 @@
 			started = false,
 			frameID = 0;
 			entities = 0;
+			pause = false;
+			
+			canvas.addEventListener('mousedown', function(e) {
+				if(pause == false) {
+					pause = true;
+					stop();
+				} else {
+					pause = false;
+					start();
+				}
+			}, true);
 			
 			var updateBuffer = [];
 			updateBuffer.push(new Shape(0, 0, 0, 0.1, 0.1, 10, 10, "yellow"));
@@ -29,12 +40,12 @@
 			updateBuffer.push(new Shape(30, 30, 2, 0, 0.1, 10, 10, "red"));
 			var layerBuffer = [];
 			updateBuffer.push(new Shape(30, 30, 1, 0, 0.1, 10, 10, "orange"));
-			function Shape(x, y, z, xVelocity, yVelocity, width, height, color) {
+			function Shape(x, y, layer, xVelocity, yVelocity, width, height, color) {
 				this.xCurrent = x || 0;
 				this.xPrevious = this.xCurrent;
 				this.yCurrent = y || 0;
 				this.yPrevious = this.yCurrent; 
-				this.zCurrent = z || 0;
+				this.layer = layer || 0;
 				this.xVelocity = xVelocity || 0;
 				this.yVelocity = yVelocity || 0;
 				this.width = width;
@@ -61,6 +72,27 @@
 							 this.width, this.height);
 			}
 			
+			Shape.prototype.hit = function(mouse) {
+				mx = getMouse(mouse).x;
+				my = getMouse(mouse).y;
+				ctx.fillText("x: " + x, 180, 480);
+				ctx.fillText("y: " + entities, 180, 480);
+			}
+			
+			getMouse = function(mouseEvent) {
+                var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
+                if (element.offsetParent !== undefined) {
+                    do {
+                        offsetX += element.offsetLeft;
+                        offsetY += element.offsetTop;
+                    } while ((element = element.offsetParent));
+                }
+                offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
+                offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
+                mx = mouseEvent.pageX - offsetX;
+                my = mouseEvent.pageY - offsetY;
+                return {x: mx, y: my};
+            }
 			
 			
 			function update(delta) {
@@ -79,7 +111,7 @@
 					}	
 				}
 				layerBuffer.sort(function(a, b) {
-					return b.zCurrent - a.zCurrent;
+					return b.layer - a.layer;
 				});
 			}
 
@@ -104,9 +136,8 @@
 
 			function end(fps) {
 				if (fps < 25) {
-					stop();
-				}
-				else if (fps > 30) {
+					entities = 0;
+					updateBuffer = [];
 				}
 			}
 
