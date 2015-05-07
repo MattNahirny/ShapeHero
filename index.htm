@@ -405,8 +405,17 @@
                 var muteImg = new Image();
                 muteImg.src = "img/mute.png";
                 
-                ctx.drawImage(speakerImg,30,170);
-                ctx.drawImage(muteImg,30,210);
+                if(bgm.muted === false) {
+                    ctx.drawImage(speakerImg,30,170);
+                } else {
+                    ctx.drawImage(muteImg,30,170);
+                }
+                
+                if(sfx === true) {
+                    ctx.drawImage(speakerImg,30,210);
+                } else {
+                    ctx.drawImage(muteImg,30,210);
+                }
                 
                 var menuButtonImg = new Image();
                 menuButtonImg.src = "img/mainmenu.png";
