@@ -28,6 +28,7 @@
             entities = 0;
             mainMenuScreen = false;
             mainMenuOptions = false;
+            gameOver = false;
             pause = false;
             window.count = 0;
             window.combo = 0;
@@ -307,6 +308,12 @@
                     } else if(mx >= 28 && mx <= 292 && my >= 400 && my <= 454) {
                         optionsScreen();
                     }
+                } else if(gameOver === true) {
+                    if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
+                        mainMenu();
+                    } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
+                        newGame();
+                    }
                 } else if(pause === true) {
                     if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
                         pause = false;
@@ -418,6 +425,7 @@
                     ctx.drawImage(backgroundImg,0,0);
                     
                     ctx.strokeStyle="grey";
+                    ctx.lineWidth="2";
                     ctx.beginPath();
                     ctx.moveTo(64,0);
                     ctx.lineTo(64,480);
@@ -714,6 +722,47 @@
                 }
                 
                 ctx.drawImage(closeButtonImg,280,60);
+            }
+            
+            //Game over screen
+            function gameOverScreen() {
+                ctx.rect(0,0,320,480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Game Over",25,100);
+                
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Score: " + window.count,25,130);
+                
+                var newRecord = true;
+                if(newRecord === true) {
+                    ctx.beginPath();
+                    ctx.rect(35,150,250,90);
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = "black";
+                    ctx.font = "20px Comic Sans MS";
+                    ctx.fillText("New High Score",40,170);
+                    
+                    ctx.font = "15px Comic Sans MS";
+                    ctx.fillText("Enter your name",40,190);
+                } else {
+                    ctx.fillText("High Score: 9001",40,170);
+                }
+                
+                ctx.drawImage(menuButtonImg,20,250);
+                ctx.drawImage(restartButtonImg,160,250);
             }
         </script>
     </body>
