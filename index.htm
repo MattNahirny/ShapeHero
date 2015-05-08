@@ -406,7 +406,8 @@
                     if(updateBuffer[i - s].offScreen()) {
                         updateBuffer.splice(i - s, 1);
                         s++;
-                        window.combo = 0;
+                        //window.combo = 0;
+                        gameOver = true;
                         entities--;
                         updateBuffer.push(sf.createShape("random"));
                     } else if (updateBuffer[i - s].clicked === true) {
@@ -566,10 +567,14 @@
                 }
 
                 draw(delta / timestep);
-
+                
                 end(fps);
-
+                
                 frameID = requestAnimationFrame(mainLoop);
+                
+                if(gameOver === true) {
+                    gameOverScreen();
+                }
             }
 
             start();
@@ -781,6 +786,5 @@
                 ctx.drawImage(restartButtonImg,160,250);
             }
         </script>
-        <br /><button onclick="gameOverScreen()" type="button">Game Over Test</button>
     </body>
 </html>
