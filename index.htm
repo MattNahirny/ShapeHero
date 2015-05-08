@@ -578,13 +578,8 @@
             }
             
             //start();
-            mainMenuScreen = true;
             window.onload = function() {
-                ctx.drawImage(backgroundImage,0,0);
-                ctx.drawImage(logo,0,60);
-                ctx.drawImage(playButton,28,240);
-                ctx.drawImage(leaderboardButton,28,320);
-                ctx.drawImage(optionsButton,28,400);
+                mainMenu();
             };
             
             var backgroundImage = new Image();
