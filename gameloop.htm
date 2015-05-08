@@ -271,11 +271,11 @@
                 var mouse = getMouse(e);
                 var mx = mouse.x;
                 var my = mouse.y;
+                console.log(mouse.x, mouse.y);
                 var l = updateBuffer.length;
 				for (var i = 0; i < l; i++) {
                         if (updateBuffer[i].contains(mx, my)) {
-                            var mySel = updateBuffer[i];
-                            mySel.clicked = true;
+                            updateBuffer[i].clicked = true;
                             // Keep track of where in the object we clicked
                             // so we can move it smoothly (see mousemove)
                             window.count++;
@@ -314,10 +314,10 @@
                         offsetY += element.offsetTop;
                     } while ((element = element.offsetParent));
                 }
-                offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
-                offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
-                mx = mouseEvent.pageX - offsetX;
-                my = mouseEvent.pageY - offsetY;
+                //offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
+                //offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
+                mx = mouseEvent.pageX;// - offsetX;
+                my = mouseEvent.pageY;// - offsetY;
                 return {x: mx, y: my};
             }
 			
