@@ -85,7 +85,7 @@
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
                 }
             }
-			
+            
             //---------------------------------------
             //Constructor for a Square
             //---------------------------------------
@@ -137,7 +137,7 @@
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
             }
             }
-			
+            
             //---------------------------------------
             //Constructor for a Triangle
             //---------------------------------------
@@ -181,18 +181,18 @@
                     this.yCurrent += this.yVelocity * delta;
                 }
                 this.offScreen = function() {
-                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                    return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
                 }
                 this.contains = function(mx, my) {
                 // All we have to do is make sure the Mouse X,Y fall in the area between
                 // the shape's X and (X + Width) and its Y and (Y + Height)
                 return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
-				}
+                }
                 
             }
-			
-			//---------------------------------------
+            
+            //---------------------------------------
             //Constructor for a Star
             //---------------------------------------
             function Star(x, y, z, xVelocity, yVelocity) {
@@ -348,8 +348,6 @@
                         newGame();
                     }
                 } else if(pause === false && mx >= 290 && my <= 30) {
-                    pause = true;
-                    stop();
                     pauseScreen();
                 } else if(pause === false) {
                     for (var i = 0; i < l; i++) {
@@ -599,6 +597,9 @@
             
             //Pause menu drawing
             function pauseScreen() {
+                pause = true;
+                stop();
+                
                 ctx.rect(0,35,320,410);
                 ctx.fillStyle="rgba(0,0,0,.5)";
                 ctx.fill();
@@ -691,6 +692,8 @@
                 frameID = 0;
                 entities = 0;
                 mainMenuScreen = false;
+                mainMenuOptions = false;
+                gameOver = false;
                 pause = false;
                 window.count = 0;
                 window.combo = 0;
@@ -736,6 +739,9 @@
             
             //Game over screen
             function gameOverScreen() {
+                gameOver = true;
+                stop();
+                
                 ctx.rect(0,0,320,480);
                 ctx.fillStyle="rgba(0,0,0,.5)";
                 ctx.fill();
@@ -775,5 +781,6 @@
                 ctx.drawImage(restartButtonImg,160,250);
             }
         </script>
+        <br /><button onclick="gameOverScreen()" type="button">Game Over Test</button>
     </body>
 </html>
