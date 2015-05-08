@@ -578,7 +578,14 @@
             }
             
             //start();
-            mainMenu();
+            mainMenuScreen = true;
+            window.onload = function() {
+                ctx.drawImage(backgroundImage,0,0);
+                ctx.drawImage(logo,0,60);
+                ctx.drawImage(playButton,28,240);
+                ctx.drawImage(leaderboardButton,28,320);
+                ctx.drawImage(optionsButton,28,400);
+            };
             
             var backgroundImage = new Image();
             backgroundImage.src = "img/star_background.png";
@@ -679,13 +686,11 @@
             //Main Menu
             function mainMenu() {
                 mainMenuScreen = true;
-                window.onload = function() {
-                    ctx.drawImage(backgroundImage,0,0);
-                    ctx.drawImage(logo,0,60);
-                    ctx.drawImage(playButton,28,240);
-                    ctx.drawImage(leaderboardButton,28,320);
-                    ctx.drawImage(optionsButton,28,400);
-                };
+                ctx.drawImage(backgroundImage,0,0);
+                ctx.drawImage(logo,0,60);
+                ctx.drawImage(playButton,28,240);
+                ctx.drawImage(leaderboardButton,28,320);
+                ctx.drawImage(optionsButton,28,400);
             }
             
             //New game aka restart
@@ -770,7 +775,8 @@
                 ctx.font = "20px Comic Sans MS";
                 ctx.fillText("Score: " + window.count,25,130);
                 
-                var newRecord = true;
+                //Temporary variable, actually check in later iteration.
+                var newRecord = false;
                 if(newRecord === true) {
                     ctx.beginPath();
                     ctx.rect(35,150,250,90);
