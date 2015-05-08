@@ -9,7 +9,9 @@
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
         </audio>
-        <canvas id="canvas" width="320" height="480"></canvas>
+        <canvas id="canvas" width="320" height="480">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
         <script>
             var ctx = document.getElementById("canvas").getContext("2d"),
             limit = 300,
@@ -25,6 +27,7 @@
             frameID = 0;
             entities = 0;
             mainMenuScreen = false;
+            mainMenuOptions = false;
             pause = false;
             window.count = 0;
             window.combo = 0;
@@ -277,13 +280,32 @@
                 console.log(mouse.x, mouse.y);
                 var l = updateBuffer.length;
                 
-                if(mainMenuScreen === true){
+                if(mainMenuOptions === true) {
+                    if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
+                        mainMenuOptions = false;
+                        mainMenu();
+                    } else if(mx >= 30 && mx <= 65 && my >= 110 && my <= 145) {
+                        toggleBGM();
+                        if(bgm.muted === false) {
+                            ctx.drawImage(speakerImg,30,110);
+                        } else {
+                            ctx.drawImage(muteImg,30,110);
+                        }
+                    } else if(mx >= 30 && mx <= 65 && my >= 150 && my <= 185) {
+                        toggleSFX();
+                        if(sfx === true) {
+                            ctx.drawImage(speakerImg,30,150);
+                        } else {
+                            ctx.drawImage(muteImg,30,150);
+                        }
+                    }
+                } else if(mainMenuScreen === true){
                     if(mx >= 28 && mx <= 292 && my >= 240 && my <= 294) {
                         newGame();
                     } else if(mx >= 28 && mx <= 292 && my >= 320 && my <= 374){ 
                         //Leaderboard
                     } else if(mx >= 28 && mx <= 292 && my >= 400 && my <= 454) {
-                        //Options
+                        optionsScreen();
                     }
                 } else if(pause === true) {
                     if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
@@ -311,7 +333,7 @@
                 } else if(pause === false && mx >= 290 && my <= 30) {
                     pause = true;
                     stop();
-                    pauseScreen(ctx);
+                    pauseScreen();
                 } else if(pause === false) {
                     for (var i = 0; i < l; i++) {
                         if (updateBuffer[i].contains(mx, my)) {
@@ -558,7 +580,7 @@
             muteImg.src = "img/mute.png";
             
             //Pause menu drawing
-            function pauseScreen(ctx) {
+            function pauseScreen() {
                 ctx.rect(0,35,320,410);
                 ctx.fillStyle="rgba(0,0,0,.5)";
                 ctx.fill();
@@ -655,6 +677,43 @@
                 window.count = 0;
                 window.combo = 0;
                 start();
+            }
+            
+            //Main menu options screen
+            function optionsScreen() {
+                mainMenuOptions = true;
+                ctx.rect(0,0,320,480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Options",25,100);
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Background Music",70,135);
+                ctx.fillText("Sound Effects",70,175);
+                
+                if(bgm.muted === false) {
+                    ctx.drawImage(speakerImg,30,110);
+                } else {
+                    ctx.drawImage(muteImg,30,110);
+                }
+                
+                if(sfx === true) {
+                    ctx.drawImage(speakerImg,30,150);
+                } else {
+                    ctx.drawImage(muteImg,30,150);
+                }
+                
+                ctx.drawImage(closeButtonImg,280,60);
             }
         </script>
     </body>
