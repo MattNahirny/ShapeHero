@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Shape Hero</title>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+    </head>
+    <body>
+        <audio id="background_audio" autoplay="autoplay" loop="loop">
+            <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
+        </audio>
+        <canvas id="canvas" width="320" height="480">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
+        <script>
+            //Shape factory returns shape objects
+            function Circle(x, y, z, xVelocity, yVelocity, colour) {
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
+                this.shapeType = "Circle";
+                this.x = x || 0;
+                this.y = y || -60;
+                this.z = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0;                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
+                    bodyImg.src = "img/shapes/circle/red_circle.png";
+                } else if (this.colour == "blue") {
+                    bodyImg.src = "img/shapes/circle/blue_circle.png";
+                } else if (this.colour == "green") {
+                    bodyImg.src = "img/shapes/circle/green_circle.png";
+                } else if (this.colour == "yellow") {
+                    bodyImg.src = "img/shapes/circle/yellow_circle.png";
+                }
+                
+                this.draw = function(ctx) {
+                    ctx.drawImage(bodyImg, x, y);
+                }
+                this.update = function() {
+                if(y <= 540) {
+                    y += 5;
+                } else {
+                    y = -60;
+                }
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (x <= mx) && (x + 64 >= mx) &&
+                        (y <= my) && (y + 64 >= my);
+            }
+            }
+            
+            function Square(x, y, z, xVelocity, yVelocity, colour) {
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
+                this.shapeType = "Square";
+                this.x = x || 0;
+                this.y = y || -60;
+                this.z = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0;
+                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
+                    bodyImg.src = "img/shapes/square/red_square.png";
+                } else if (this.colour == "blue") {
+                    bodyImg.src = "img/shapes/square/blue_square.png";
+                } else if (this.colour == "green") {
+                    bodyImg.src = "img/shapes/square/green_square.png";
+                } else if (this.colour == "yellow") {
+                    bodyImg.src = "img/shapes/square/yellow_square.png";
+                }
+                
+                this.draw = function(ctx) {
+                    ctx.drawImage(bodyImg, x, y);
+                }
+                this.update = function() {
+                if(y <= 540) {
+                    y += 5;
+                } else {
+                    y = -60;
+                }
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (x <= mx) && (x + 64 >= mx) &&
+                        (y <= my) && (y + 64 >= my);
+            }
+            }
+            
+            function Triangle(x, y, z, xVelocity, yVelocity, colour) {
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
+                this.shapeType = "Triangle";
+                this.x = x || 0;
+                this.y = y || -60;
+                this.z = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0;
+                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
+                    bodyImg.src = "img/shapes/triangle/red_triangle.png";
+                } else if (this.colour == "blue") {
+                    bodyImg.src = "img/shapes/triangle/blue_triangle.png";
+                } else if (this.colour == "green") {
+                    bodyImg.src = "img/shapes/triangle/green_triangle.png";
+                } else if (this.colour == "yellow") {
+                    bodyImg.src = "img/shapes/triangle/yellow_triangle.png";
+                }
+                
+                this.draw = function(ctx) {
+                    ctx.drawImage(bodyImg, x, y);
+                }
+                this.update = function() {
+                if(y <= 540) {
+                    y += 5;
+                } else {
+                    y = -60;
+                }
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (x <= mx) && (x + 64 >= mx) &&
+                        (y <= my) && (y + 64 >= my);
+            }
+                
+            }
+            function Star(x, y, z, xVelocity, yVelocity) {
+                var bodyImg = new Image();
+                this.shapeType = "Star";
+                this.colour = "yellow";
+                bodyImg.src = "img/shapes/star/star.png";  
+                this.x = x || 0;
+                this.y = y || -60;
+                this.z = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0;
+                this.draw = function(ctx) {
+                    ctx.drawImage(bodyImg, x, y);
+                }
+                this.update = function() {
+                if(y <= 540) {
+                    y += 5;
+                } else {
+                    y = -60;
+                }
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (x <= mx) && (x + 64 >= mx) &&
+                        (y <= my) && (y + 64 >= my);
+            }
+            }
+            
+            //The way that the factory works is you call createShape() with a parameter
+            //the parameter is a string of which shape to be created or random
+            //eg. ShapeFactory.createShape("blueCircle");
+            //or 
+            //ShapeFactory.createShape("random");
+            function ShapeFactory() { }
+            ShapeFactory.prototype.createShape = function createShape(type) {
+                var randomShape = ["Circle", "Square", "Triangle"];
+                var lane = [0, 64, 128, 192, 256];
+                if (type == "circle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                } else if (type == "square") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                } else if (type == "triangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                } else if (type == "redCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                } else if (type == "blueCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                } else if (type == "greenCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                } else if (type == "yellowCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                } else if (type == "redSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                } else if (type == "blueSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                } else if (type == "greenSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                } else if (type == "yellowSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                } else if (type == "redTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                } else if (type == "blueTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                } else if (type == "greenTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                } else if (type == "yellowTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                } else if (type == "star") {
+                    return new Star(lane[Math.floor(Math.random()*5)], -60, null, null, null);
+                } else if (type == "random") {
+                    var rs = randomShape[Math.floor(Math.random()*3)];
+                    
+                    if (rs == "Circle") {
+                        return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    } else if(rs == "Square") {
+                        return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    } else if (rs == "Triangle") {
+                        return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    }
+                }
+                return;
+            };
+            
+            function CanvasState(canvas) {
+                // **** First some setup! ****
+
+                this.canvas = canvas;
+                this.width = canvas.width;
+                this.height = canvas.height;
+                this.ctx = canvas.getContext('2d');
+                // This complicates things a little but but fixes mouse co-ordinate problems
+                // when there's a border or padding. See getMouse for more detail
+                var stylePaddingLeft, stylePaddingTop, styleBorderLeft, styleBorderTop;
+                if (document.defaultView && document.defaultView.getComputedStyle) {
+                    this.stylePaddingLeft = parseInt(document.defaultView.getComputedStyle(canvas, null)['paddingLeft'], 10)      || 0;
+                    this.stylePaddingTop  = parseInt(document.defaultView.getComputedStyle(canvas, null)['paddingTop'], 10)       || 0;
+                    this.styleBorderLeft  = parseInt(document.defaultView.getComputedStyle(canvas, null)['borderLeftWidth'], 10)  || 0;
+                    this.styleBorderTop   = parseInt(document.defaultView.getComputedStyle(canvas, null)['borderTopWidth'], 10)   || 0;
+                }
+                // Some pages have fixed-position bars (like the stumbleupon bar) at the top or left of the page
+                // They will mess up mouse coordinates and this fixes that
+                var html = document.body.parentNode;
+                this.htmlTop = html.offsetTop;
+                this.htmlLeft = html.offsetLeft;
+
+                // **** Keep track of state! ****
+
+                this.valid = false; // when set to false, the canvas will redraw everything
+                this.shapes = [];  // the collection of things to be drawn
+                this.dragging = false; // Keep track of when we are dragging
+                // the current selected object. In the future we could turn this into an array for multiple selection
+                this.selection = null;
+                this.dragoffx = 0; // See mousedown and mousemove events for explanation
+                this.dragoffy = 0;
+              
+                // **** Then events! ****
+
+                // This is an example of a closure!
+                // Right here "this" means the CanvasState. But we are making events on the Canvas itself,
+                // and when the events are fired on the canvas the variable "this" is going to mean the canvas!
+                // Since we still want to use this particular CanvasState in the events we have to save a reference to it.
+                // This is our reference!
+                var myState = this;
+
+                //fixes a problem where double clicking causes text to get selected on the canvas
+                canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
+                // Up, down, and move are for dragging
+                canvas.addEventListener('mousedown', function(e) {
+                    var mouse = myState.getMouse(e);
+                    var mx = mouse.x;
+                    var my = mouse.y;
+                    var shapes = myState.shapes;
+                    var l = shapes.length;
+                    for (var i = l-1; i >= 0; i--) {
+                        if (shapes[i].contains(mx, my)) {
+                            var mySel = shapes[i];
+                            // Keep track of where in the object we clicked
+                            // so we can move it smoothly (see mousemove)
+                            myState.dragoffx = mx - mySel.x;
+                            myState.dragoffy = my - mySel.y;
+                            myState.dragging = true;
+                            myState.selection = mySel;
+                            myState.valid = false;
+                            window.count++;
+                            testSFX1();
+                            return;
+                        }
+                    }
+                    // havent returned means we have failed to select anything.
+                    // If there was an object selected, we deselect it
+                    if (myState.selection) {
+                        myState.selection = null;
+                        myState.valid = false; // Need to clear the old selection border
+                    }
+                }, true);
+              
+                canvas.addEventListener('mouseup', function(e) {
+                    myState.dragging = false;
+                }, true);
+
+                // **** Options! ****
+
+                this.selectionColor = '#CC0000';
+                this.selectionWidth = 2;  
+                this.interval = 30;
+                setInterval(function() { myState.draw(); }, myState.interval);
+            }
+
+            CanvasState.prototype.addShape = function(shape) {
+                this.shapes.push(shape);
+                this.valid = false;
+            }
+
+            CanvasState.prototype.clear = function() {
+                this.ctx.clearRect(0, 0, this.width, this.height);
+            }
+
+            // While draw is called as often as the INTERVAL variable demands,
+            // It only ever does something if the canvas gets invalidated by our code
+            CanvasState.prototype.draw = function() {
+                // if our state is invalid, redraw and validate!
+                if (!this.valid) {
+                    var ctx = this.ctx;
+                    var shapes = this.shapes;
+                    this.clear();
+                    
+                    // ** Add stuff you want drawn in the background all the time here **
+                    
+                    var backgroundImg = new Image();
+                    backgroundImg.src = "img/nebula_background.png";
+                    ctx.drawImage(backgroundImg,0,0);
+                    
+                    ctx.strokeStyle="grey";
+                    ctx.beginPath();
+                    ctx.moveTo(64,0);
+                    ctx.lineTo(64,480);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(128,0);
+                    ctx.lineTo(128,480);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(192,0);
+                    ctx.lineTo(192,480);
+                    ctx.stroke();
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(256,0);
+                    ctx.lineTo(256,480);
+                    ctx.stroke();
+                    
+                    // draw all shapes
+                    var l = shapes.length;
+                    for (var i = 0; i < l; i++) {
+                      var shape = shapes[i];
+                      // We can skip the drawing of elements that have moved off the screen:
+                      if (shape.x > this.width || shape.y > this.height ||
+                          shape.x + shape.w < 0 || shape.y + shape.h < 0) continue;
+                      shapes[i].draw(ctx);
+                    }
+                    
+                    // draw selection
+                    // right now this is just a stroke along the edge of the selected Shape
+                    if (this.selection != null) {
+                      ctx.strokeStyle = this.selectionColor;
+                      ctx.lineWidth = this.selectionWidth;
+                      var mySel = this.selection;
+                      ctx.strokeRect(mySel.x,mySel.y,mySel.w,mySel.h);
+                    }
+                    
+                    //update
+                    for (var i = 0; i < l; i++) {
+                      var shape = shapes[i];
+                      shapes[i].update();
+                    }
+                    
+                    // ** Add stuff you want drawn on top all the time here **
+                    ctx.rect(0,0,320,35);
+                    ctx.fillStyle="white";
+                    ctx.fill();
+                    
+                    ctx.strokeStyle="black";
+                    ctx.beginPath();
+                    ctx.moveTo(0,35);
+                    ctx.lineTo(320,35);
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = "black";
+                    ctx.font = "30px Comic Sans MS";
+                    ctx.fillText("Score: " + window.count,0,30);
+                    
+                    ctx.textAlign="end";
+                    ctx.fillText(window.combo + "x",280,30);
+                    ctx.textAlign="start";
+                    
+                    var pauseButtonImg = new Image();
+                    pauseButtonImg.src = "img/pause.png";
+                    ctx.drawImage(pauseButtonImg,285,0);
+                    
+                    ctx.rect(0,445,320,480);
+                    ctx.fillStyle="white";
+                    ctx.fill();
+                    
+                    ctx.strokeStyle="black";
+                    ctx.beginPath();
+                    ctx.moveTo(0,445);
+                    ctx.lineTo(320,445);
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = "black";
+                    ctx.font = "30px Comic Sans MS";
+                    ctx.fillText("Rules: ",0,475);
+                    
+                    if(paused === true) {
+                        pauseScreen(ctx);
+                    }
+                    
+                    if(gameOver === true) {
+                        gameOverScreen(ctx);
+                    }
+                    
+                    if(options === true) {
+                        optionsScreen(ctx);
+                    }
+                    
+                    this.valid = false;
+                }
+            }
+
+            // Creates an object with x and y defined, set to the mouse position relative to the state's canvas
+            // If you wanna be super-correct this can be tricky, we have to worry about padding and borders
+            CanvasState.prototype.getMouse = function(e) {
+                var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
+
+                // Compute the total offset
+                if (element.offsetParent !== undefined) {
+                    do {
+                        offsetX += element.offsetLeft;
+                        offsetY += element.offsetTop;
+                    } while ((element = element.offsetParent));
+                }
+
+                // Add padding and border style widths to offset
+                // Also add the <html> offsets in case there's a position:fixed bar
+                offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
+                offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
+
+                mx = e.pageX - offsetX;
+                my = e.pageY - offsetY;
+
+                // We return a simple javascript object (a hash) with x and y defined
+                return {x: mx, y: my};
+            }
+
+            // If you dont want to use <body onLoad='init()'>
+            // You could uncomment this init() reference and place the script reference inside the body tag
+            //init();
+
+            function init() {
+                window.count = 0;
+                window.combo = 1;
+                var s = new CanvasState(document.getElementById('canvas'));
+                var sf = new ShapeFactory();
+                
+                s.addShape(sf.createShape("random"));
+            }
+            
+            init();
+            // Now go make something amazing!
+            
+            //Pause menu drawing
+            function pauseScreen(ctx) {
+                ctx.rect(0,35,320,410);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Current Rule: ",25,90);
+                
+                ctx.beginPath();
+                ctx.lineWidth="2";
+                ctx.moveTo(30,165);
+                ctx.lineTo(290,165);
+                ctx.stroke();
+                
+                ctx.fillText("Background Music",70,195);
+                ctx.fillText("Sound Effects",70,235);
+                
+                var speakerImg = new Image();
+                speakerImg.src = "img/speaker.png";
+                
+                var muteImg = new Image();
+                muteImg.src = "img/mute.png";
+                
+                if(bgm.muted === false) {
+                    ctx.drawImage(speakerImg,30,170);
+                } else {
+                    ctx.drawImage(muteImg,30,170);
+                }
+                
+                if(sfx === true) {
+                    ctx.drawImage(speakerImg,30,210);
+                } else {
+                    ctx.drawImage(muteImg,30,210);
+                }
+                
+                var menuButtonImg = new Image();
+                menuButtonImg.src = "img/mainmenu.png";
+                ctx.drawImage(menuButtonImg,20,250);
+                
+                var restartButtonImg = new Image();
+                restartButtonImg.src = "img/restart.png";
+                ctx.drawImage(restartButtonImg,160,250);
+                
+                var closeButtonImg = new Image();
+                closeButtonImg.src = "img/close.png";
+                ctx.drawImage(closeButtonImg,280,60);
+            }
+            
+            //BGM toggle variable and function
+            var bgm = document.getElementById('background_audio');
+            function toggleBGM() { 
+                bgm.muted = !bgm.muted;
+            }
+            
+            //SFX toggle function, don't play sounds if false.
+            var sfx = true;
+            function toggleSFX() { 
+                sfx = !sfx;
+            }
+            
+            function testSFX1() {
+                if(sfx === true) {
+                    var new_sfx = new Audio('audio/valid.mp3');
+                    new_sfx.play();
+                }
+            }
+            
+            function testSFX2() {
+                if(sfx === true) {
+                    var new_sfx = new Audio('audio/error.mp3');
+                    new_sfx.play();
+                }
+            }
+            
+            //Pause menu toggle
+            var paused = false;
+            function pause() {
+                paused = !paused;
+            }
+            
+            //Game over overlay
+            function gameOverScreen(ctx) {
+                ctx.rect(0,0,320,480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Game Over",25,100);
+                
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Score: " + window.count,25,130);
+                
+                if(newRecord === true) {
+                    ctx.beginPath();
+                    ctx.rect(35,150,250,90);
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = "black";
+                    ctx.font = "20px Comic Sans MS";
+                    ctx.fillText("New High Score",40,170);
+                    
+                    ctx.font = "15px Comic Sans MS";
+                    ctx.fillText("Enter your name",40,190);
+                } else {
+                    ctx.fillText("High Score: 9001",40,170);
+                }
+                
+                var menuButtonImg = new Image();
+                menuButtonImg.src = "img/mainmenu.png";
+                ctx.drawImage(menuButtonImg,20,250);
+                
+                var restartButtonImg = new Image();
+                restartButtonImg.src = "img/restart.png";
+                ctx.drawImage(restartButtonImg,160,250);
+            }
+            
+            var gameOver = false;
+            function gameOverTest() {
+                gameOver = !gameOver;
+            }
+            
+            var newRecord = true;
+            function highScoreTest() {
+                newRecord = !newRecord;
+            }
+            
+            //Options Screen
+            function optionsScreen(ctx) {
+                ctx.rect(0,0,320,480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Options",25,100);
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Background Music",70,135);
+                ctx.fillText("Sound Effects",70,175);
+                
+                var speakerImg = new Image();
+                speakerImg.src = "img/speaker.png";
+                
+                var muteImg = new Image();
+                muteImg.src = "img/mute.png";
+                
+                if(bgm.muted === false) {
+                    ctx.drawImage(speakerImg,30,110);
+                } else {
+                    ctx.drawImage(muteImg,30,110);
+                }
+                
+                if(sfx === true) {
+                    ctx.drawImage(speakerImg,30,150);
+                } else {
+                    ctx.drawImage(muteImg,30,150);
+                }
+                
+                var closeButtonImg = new Image();
+                closeButtonImg.src = "img/close.png";
+                ctx.drawImage(closeButtonImg,280,60);
+            }
+            
+            var options = false;
+            function optionsTest() {
+                options = !options;
+            }
+        </script>
+        <br /><button onclick="pause()" type="button">Pause Menu</button>
+        <br /><button onclick="gameOverTest()" type="button">Game Over Test</button>
+        <br /><button onclick="highScoreTest()" type="button">High Score Toggle</button>
+        <br /><button onclick="optionsTest()" type="button">Options Test</button>
+        <br /><button onclick="toggleBGM()" type="button">Toggle BGM</button>
+        <br /><button onclick="toggleSFX()" type="button">Toggle SFX</button>
+        <br /><button onclick="testSFX1()" type="button">Test SFX 1</button>
+        <br /><button onclick="testSFX2()" type="button">Test SFX 2</button>
+    </body>
+</html>
