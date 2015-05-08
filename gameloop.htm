@@ -24,6 +24,7 @@
             started = false,
             frameID = 0;
             entities = 0;
+            mainMenuScreen = false;
             pause = false;
             window.count = 0;
             window.combo = 0;
@@ -276,7 +277,15 @@
                 console.log(mouse.x, mouse.y);
                 var l = updateBuffer.length;
                 
-                if(pause === true) {
+                if(mainMenuScreen === true){
+                    if(mx >= 28 && mx <= 292 && my >= 240 && my <= 294) {
+                        newGame();
+                    } else if(mx >= 28 && mx <= 292 && my >= 320 && my <= 374){ 
+                        //Leaderboard
+                    } else if(mx >= 28 && mx <= 292 && my >= 400 && my <= 454) {
+                        //Options
+                    }
+                } else if(pause === true) {
                     if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
                         pause = false;
                         start();
@@ -297,7 +306,7 @@
                     } else if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
                         mainMenu();
                     } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
-                        restart();
+                        newGame();
                     }
                 } else if(pause === false && mx >= 290 && my <= 30) {
                     pause = true;
@@ -363,7 +372,7 @@
                         window.combo = 0;
                         entities--;
                         updateBuffer.push(sf.createShape("random"));
-                    } else if (updateBuffer[i - s].clicked == true) {
+                    } else if (updateBuffer[i - s].clicked === true) {
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
@@ -527,7 +536,16 @@
 
             start();
             
-            
+            var backgroundImage = new Image();
+            backgroundImage.src = "img/star_background.png";
+            var logo = new Image();
+            logo.src = "img/logo.png";
+            var playButton = new Image();
+            playButton.src = "img/play_button.png";
+            var leaderboardButton = new Image();
+            leaderboardButton.src = "img/leaderboard_button.png";
+            var optionsButton = new Image();
+            optionsButton.src = "img/options_button.png";
             var menuButtonImg = new Image();
             menuButtonImg.src = "img/mainmenu.png";
             var restartButtonImg = new Image();
@@ -613,11 +631,16 @@
             
             //Main Menu
             function mainMenu() {
-                
+                mainMenuScreen = true;
+                ctx.drawImage(backgroundImage,0,0);
+                ctx.drawImage(logo,0,60);
+                ctx.drawImage(playButton,28,240);
+                ctx.drawImage(leaderboardButton,28,320);
+                ctx.drawImage(optionsButton,28,400);
             }
             
-            //Restart
-            function restart() {
+            //New game aka restart
+            function newGame() {
                 updateBuffer = [];
                 layerBuffer = [];
                 updateBuffer.push(sf.createShape("random"));
@@ -627,6 +650,7 @@
                 updateBuffer.push(sf.createShape("random"));
                 frameID = 0;
                 entities = 0;
+                mainMenuScreen = false;
                 pause = false;
                 window.count = 0;
                 window.combo = 0;
