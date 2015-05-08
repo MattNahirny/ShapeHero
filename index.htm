@@ -34,7 +34,7 @@
             window.combo = 0;
             
             //---------------------------------------
-            //Shape factory returns shape objects
+            //Constructor for a Circle
             //---------------------------------------
             function Circle(x, y, z, xVelocity, yVelocity, colour) {
                 var randomColour = ["red", "blue", "green", "yellow"];
@@ -85,7 +85,10 @@
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
                 }
             }
-            
+			
+            //---------------------------------------
+            //Constructor for a Square
+            //---------------------------------------
             function Square(x, y, z, xVelocity, yVelocity, colour) {
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
@@ -134,7 +137,10 @@
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
             }
             }
-            
+			
+            //---------------------------------------
+            //Constructor for a Triangle
+            //---------------------------------------
             function Triangle(x, y, z, xVelocity, yVelocity, colour) {
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
@@ -182,9 +188,13 @@
                 // the shape's X and (X + Width) and its Y and (Y + Height)
                 return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
-            }
+				}
                 
             }
+			
+			//---------------------------------------
+            //Constructor for a Star
+            //---------------------------------------
             function Star(x, y, z, xVelocity, yVelocity) {
                 var bodyImg = new Image();
                 this.shapeType = "Star";
