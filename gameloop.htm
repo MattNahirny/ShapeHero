@@ -294,6 +294,10 @@
                         } else {
                             ctx.drawImage(muteImg,30,210);
                         }
+                    } else if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
+                        mainMenu();
+                    } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
+                        restart();
                     }
                 } else if(pause === false && mx >= 290 && my <= 30) {
                     pause = true;
@@ -315,10 +319,9 @@
             
             canvas.addEventListener('mouseup', function(e) {
                 }, true);
-                
+             
+            var sf = new ShapeFactory();             
             var updateBuffer = [];
-            
-            var sf = new ShapeFactory();
             var layerBuffer = [];
             updateBuffer.push(sf.createShape("random"));
             updateBuffer.push(sf.createShape("random"));
@@ -410,8 +413,8 @@
                 }
                 layerBuffer = [];
                 ctx.fillStyle ="white";
-                ctx.fillText("Entities: " + entities, 180, 480);
-                ctx.fillText("FPS: " + Math.round(fps),180,420);
+                ctx.fillText("FPS: " + Math.round(fps),180,410);
+                //ctx.fillText("Entities: " + entities,180,440);
                 
                 // ** Add stuff you want drawn on top all the time here **
                     ctx.rect(0,0,320,35);
@@ -606,6 +609,28 @@
                     var new_sfx = new Audio('audio/error.mp3');
                     new_sfx.play();
                 }
+            }
+            
+            //Main Menu
+            function mainMenu() {
+                
+            }
+            
+            //Restart
+            function restart() {
+                updateBuffer = [];
+                layerBuffer = [];
+                updateBuffer.push(sf.createShape("random"));
+                updateBuffer.push(sf.createShape("random"));
+                updateBuffer.push(sf.createShape("random"));
+                updateBuffer.push(sf.createShape("random"));
+                updateBuffer.push(sf.createShape("random"));
+                frameID = 0;
+                entities = 0;
+                pause = false;
+                window.count = 0;
+                window.combo = 0;
+                start();
             }
         </script>
     </body>
