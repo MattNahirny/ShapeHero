@@ -93,7 +93,7 @@
                 this.xVelocity = xVelocity || 0;
                 this.yVelocity = yVelocity || 0.1;
                 this.clicked = false;
-                entities++;  
+                entities++;
                 if (colour == "random") {
                     this.colour = randomColour[Math.floor(Math.random()*4)];
                 } else {
@@ -305,7 +305,7 @@
                             updateBuffer[i].clicked = true;
                             // Keep track of where in the object we clicked
                             // so we can move it smoothly (see mousemove)
-                            window.count++;
+                            window.count += ++window.combo;
                             validSFX();
                             return;
                         }
@@ -354,7 +354,13 @@
                 var l = updateBuffer.length,
                 s = 0;
                 for (var i = 0; i < l; i++) {
-                    if(updateBuffer[i - s].offScreen() || updateBuffer[i - s].clicked == true) {
+                    if(updateBuffer[i - s].offScreen()) {
+                        updateBuffer.splice(i - s, 1);
+                        s++;
+                        window.combo = 0;
+                        entities--;
+                        updateBuffer.push(sf.createShape("random"));
+                    } else if (updateBuffer[i - s].clicked == true) {
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
@@ -590,6 +596,14 @@
             function validSFX() {
                 if(sfx === true) {
                     var new_sfx = new Audio('audio/valid.mp3');
+                    new_sfx.play();
+                }
+            }
+            
+            //Error SFX
+            function errorSFX() {
+                if(sfx === true) {
+                    var new_sfx = new Audio('audio/error.mp3');
                     new_sfx.play();
                 }
             }
