@@ -288,7 +288,6 @@
                 var mouse = getMouse(e);
                 var mx = mouse.x;
                 var my = mouse.y;
-                console.log(mouse.x, mouse.y);
                 var l = updateBuffer.length;
                 
                 if(mainMenuOptions === true) {
@@ -310,10 +309,10 @@
                             ctx.drawImage(muteImg,30,150);
                         }
                     }
-                } else if(mainMenuScreen === true){
+                } else if(mainMenuScreen === true) {
                     if(mx >= 28 && mx <= 292 && my >= 240 && my <= 294) {
                         newGame();
-                    } else if(mx >= 28 && mx <= 292 && my >= 320 && my <= 374){ 
+                    } else if(mx >= 28 && mx <= 292 && my >= 320 && my <= 374) { 
                         //Leaderboard
                     } else if(mx >= 28 && mx <= 292 && my >= 400 && my <= 454) {
                         optionsScreen();
@@ -328,7 +327,7 @@
                     if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
                         pause = false;
                         start();
-                    } else if(mx >= 30 && mx <= 65 && my >= 170 && my <= 205){ 
+                    } else if(mx >= 30 && mx <= 65 && my >= 170 && my <= 205) { 
                         toggleBGM();
                         if(bgm.muted === false) {
                             ctx.drawImage(speakerImg,30,170);
@@ -353,8 +352,6 @@
                     for (var i = 0; i < l; i++) {
                         if (updateBuffer[i].contains(mx, my)) {
                             updateBuffer[i].clicked = true;
-                            // Keep track of where in the object we clicked
-                            // so we can move it smoothly (see mousemove)
                             window.count += ++window.combo;
                             validSFX();
                             return;
@@ -363,8 +360,7 @@
                 }
             }, true);
             
-            canvas.addEventListener('mouseup', function(e) {
-                }, true);
+            canvas.addEventListener('mouseup', function(e) {}, true);
              
             var sf = new ShapeFactory();             
             var updateBuffer = [];
@@ -375,13 +371,13 @@
             updateBuffer.push(sf.createShape("random"));
             updateBuffer.push(sf.createShape("random"));
             
-            //TODO WTF?
-            //Shape.prototype.hit = function(mouse) {
-            //  mx = getMouse(mouse).x;
-            //  my = getMouse(mouse).y;
-            //  ctx.fillText("x: " + x, 180, 480);
-            //  ctx.fillText("y: " + entities, 180, 480);
-            //}
+            /*TODO WTF?
+            Shape.prototype.hit = function(mouse) {
+                mx = getMouse(mouse).x;
+                my = getMouse(mouse).y;
+                ctx.fillText("x: " + x, 180, 480);
+                ctx.fillText("y: " + entities, 180, 480);
+            }*/
             
             getMouse = function(mouseEvent) {
                 var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
@@ -429,31 +425,31 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 // ** Add stuff you want drawn in the background all the time here **
                     
-                    var backgroundImg = new Image();
-                    backgroundImg.src = "img/nebula_background.png";
-                    ctx.drawImage(backgroundImg,0,0);
-                    
-                    ctx.strokeStyle="grey";
-                    ctx.lineWidth="2";
-                    ctx.beginPath();
-                    ctx.moveTo(64,0);
-                    ctx.lineTo(64,480);
-                    ctx.stroke();
-                    
-                    ctx.beginPath();
-                    ctx.moveTo(128,0);
-                    ctx.lineTo(128,480);
-                    ctx.stroke();
-                    
-                    ctx.beginPath();
-                    ctx.moveTo(192,0);
-                    ctx.lineTo(192,480);
-                    ctx.stroke();
-                    
-                    ctx.beginPath();
-                    ctx.moveTo(256,0);
-                    ctx.lineTo(256,480);
-                    ctx.stroke();
+                var backgroundImg = new Image();
+                backgroundImg.src = "img/nebula_background.png";
+                ctx.drawImage(backgroundImg,0,0);
+                
+                ctx.strokeStyle="grey";
+                ctx.lineWidth="2";
+                ctx.beginPath();
+                ctx.moveTo(64,0);
+                ctx.lineTo(64,480);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(128,0);
+                ctx.lineTo(128,480);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(192,0);
+                ctx.lineTo(192,480);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(256,0);
+                ctx.lineTo(256,480);
+                ctx.stroke();
                 
                 var l = layerBuffer.length;
                 for (var i = 0; i < l; i++) {
@@ -465,41 +461,41 @@
                 //ctx.fillText("Entities: " + entities,180,440);
                 
                 // ** Add stuff you want drawn on top all the time here **
-                    ctx.rect(0,0,320,35);
-                    ctx.fillStyle="white";
-                    ctx.fill();
-                    
-                    ctx.strokeStyle="black";
-                    ctx.beginPath();
-                    ctx.moveTo(0,35);
-                    ctx.lineTo(320,35);
-                    ctx.stroke();
-                    
-                    ctx.fillStyle = "black";
-                    ctx.font = "30px Comic Sans MS";
-                    ctx.fillText("Score: " + window.count,0,30);
-                    
-                    ctx.textAlign="end";
-                    ctx.fillText(window.combo + "x",280,30);
-                    ctx.textAlign="start";
-                    
-                    var pauseButtonImg = new Image();
-                    pauseButtonImg.src = "img/pause.png";
-                    ctx.drawImage(pauseButtonImg,285,0);
-                    
-                    ctx.rect(0,445,320,480);
-                    ctx.fillStyle="white";
-                    ctx.fill();
-                    
-                    ctx.strokeStyle="black";
-                    ctx.beginPath();
-                    ctx.moveTo(0,445);
-                    ctx.lineTo(320,445);
-                    ctx.stroke();
-                    
-                    ctx.fillStyle = "black";
-                    ctx.font = "30px Comic Sans MS";
-                    ctx.fillText("Rules: ",0,475);
+                ctx.rect(0,0,320,35);
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.strokeStyle="black";
+                ctx.beginPath();
+                ctx.moveTo(0,35);
+                ctx.lineTo(320,35);
+                ctx.stroke();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Score: " + window.count,0,30);
+                
+                ctx.textAlign="end";
+                ctx.fillText(window.combo + "x",280,30);
+                ctx.textAlign="start";
+                
+                var pauseButtonImg = new Image();
+                pauseButtonImg.src = "img/pause.png";
+                ctx.drawImage(pauseButtonImg,285,0);
+                
+                ctx.rect(0,445,320,480);
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.strokeStyle="black";
+                ctx.beginPath();
+                ctx.moveTo(0,445);
+                ctx.lineTo(320,445);
+                ctx.stroke();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Rules: ",0,475);
             }
 
             function panic() {
@@ -550,7 +546,7 @@
 
                 if (timestamp > lastFpsUpdate + 1000) {
                     fps = 0.25 * framesThisSecond + 0.75 * fps;
-
+                    
                     lastFpsUpdate = timestamp;
                     framesThisSecond = 0;
                 }
@@ -770,7 +766,7 @@
                 ctx.font = "20px Comic Sans MS";
                 ctx.fillText("Score: " + window.count,25,130);
                 
-                //Temporary variable, actually check in later iteration.
+                //Temporary variable, actually check in later iteration instead.
                 var newRecord = false;
                 if(newRecord === true) {
                     ctx.beginPath();
