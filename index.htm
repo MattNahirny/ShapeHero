@@ -576,8 +576,9 @@
                     gameOverScreen();
                 }
             }
-
-            start();
+            
+            //start();
+            mainMenu();
             
             var backgroundImage = new Image();
             backgroundImage.src = "img/star_background.png";
@@ -678,11 +679,13 @@
             //Main Menu
             function mainMenu() {
                 mainMenuScreen = true;
-                ctx.drawImage(backgroundImage,0,0);
-                ctx.drawImage(logo,0,60);
-                ctx.drawImage(playButton,28,240);
-                ctx.drawImage(leaderboardButton,28,320);
-                ctx.drawImage(optionsButton,28,400);
+                window.onload = function() {
+                    ctx.drawImage(backgroundImage,0,0);
+                    ctx.drawImage(logo,0,60);
+                    ctx.drawImage(playButton,28,240);
+                    ctx.drawImage(leaderboardButton,28,320);
+                    ctx.drawImage(optionsButton,28,400);
+                };
             }
             
             //New game aka restart
@@ -745,6 +748,7 @@
             //Game over screen
             function gameOverScreen() {
                 gameOver = true;
+                errorSFX();
                 stop();
                 
                 ctx.rect(0,0,320,480);
