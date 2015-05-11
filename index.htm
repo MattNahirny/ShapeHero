@@ -135,7 +135,7 @@
                 // the shape's X and (X + Width) and its Y and (Y + Height)
                 return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
-            }
+                }
             }
             
             //---------------------------------------
@@ -352,7 +352,7 @@
                     for (var i = 0; i < l; i++) {
                         if (updateBuffer[i].contains(mx, my)) {
                             updateBuffer[i].clicked = true;
-                            window.count += ++window.combo;
+                            window.count += Math.floor(++window.combo/3) + 1;
                             validSFX();
                             return;
                         }
@@ -476,7 +476,7 @@
                 ctx.fillText("Score: " + window.count,0,30);
                 
                 ctx.textAlign="end";
-                ctx.fillText(window.combo + "x",280,30);
+                ctx.fillText(Math.floor(window.combo/3) + 1 + "x",280,30);
                 ctx.textAlign="start";
                 
                 var pauseButtonImg = new Image();
