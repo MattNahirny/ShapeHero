@@ -283,6 +283,33 @@
                 }
                 return;
             };
+			//--------------------------------------------
+			//Rule Logic
+			//--------------------------------------------
+			function Rule(type) {
+				this.type = type;
+
+				Rule.prototype.toString = function ruleToString() {
+					var ret = this.type + "\n";
+					return ret;
+				};
+			}
+
+			function RuleSet() {
+				this.rules = new Array();
+				this.availableRules = ["red", "noRed", "blue", "noBlue", "green", "noGreen", "yellow", "noYellow", "circle", "noCircle", "square", "noSquare", "triangle", "noTriangle"];
+				this.newRule = function () {
+					var rand = Math.floor(Math.random() * this.availableRules.length);
+					this.rules.push(new Rule(this.availableRules[rand]));
+
+					if (rand % 2 === 0) {
+						this.availableRules.splice(rand, 2);
+					} else {
+						this.availableRules.splice(rand - 1, 2);
+					}
+				};
+
+			}
             
             canvas.addEventListener('mousedown', function(e) {
                 var mouse = getMouse(e);
