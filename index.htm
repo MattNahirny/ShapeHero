@@ -32,7 +32,7 @@
             pause = false;
             window.count = 0;
             window.combo = 0;
-            
+
             //---------------------------------------
             //Constructor for a Circle
             //---------------------------------------
@@ -48,13 +48,13 @@
                 this.xVelocity = xVelocity || 0;
                 this.yVelocity = yVelocity || 0.1;
                 this.clicked = false;
-                entities++;                
+                entities++;
                 if (colour == "random") {
-                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                    this.colour = randomColour[Math.floor(Math.random() * 4)];
                 } else {
-                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                    this.colour = colour || randomColour[Math.floor(Math.random() * 4)];
                 }
-                
+
                 if (this.colour == "red") {
                     bodyImg.src = "img/shapes/circle/red_circle.png";
                 } else if (this.colour == "blue") {
@@ -64,28 +64,28 @@
                 } else if (this.colour == "yellow") {
                     bodyImg.src = "img/shapes/circle/yellow_circle.png";
                 }
-                
-                this.draw = function(interp) {
+
+                this.draw = function (interp) {
                     ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
                 }
-                this.update = function() {
+                this.update = function () {
                     this.xPrevious = this.xCurrent;
                     this.yPrevious = this.yCurrent;
                     this.xCurrent += this.xVelocity * delta;
                     this.yCurrent += this.yVelocity * delta;
                 }
-                this.offScreen = function() {
-                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                this.offScreen = function () {
+                    return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
                 }
-                
-                this.contains = function(mx, my) {
-                // All we have to do is make sure the Mouse X,Y fall in the area between
-                // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
+
+                this.contains = function (mx, my) {
+                    // All we have to do is make sure the Mouse X,Y fall in the area between
+                    // the shape's X and (X + Width) and its Y and (Y + Height)
+                    return (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
                 }
             }
-            
+
             //---------------------------------------
             //Constructor for a Square
             //---------------------------------------
@@ -103,11 +103,11 @@
                 this.clicked = false;
                 entities++;
                 if (colour == "random") {
-                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                    this.colour = randomColour[Math.floor(Math.random() * 4)];
                 } else {
-                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                    this.colour = colour || randomColour[Math.floor(Math.random() * 4)];
                 }
-                
+
                 if (this.colour == "red") {
                     bodyImg.src = "img/shapes/square/red_square.png";
                 } else if (this.colour == "blue") {
@@ -117,27 +117,27 @@
                 } else if (this.colour == "yellow") {
                     bodyImg.src = "img/shapes/square/yellow_square.png";
                 }
-                
-                this.draw = function(interp) {
+
+                this.draw = function (interp) {
                     ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
                 }
-                this.update = function() {
+                this.update = function () {
                     this.xPrevious = this.xCurrent;
                     this.yPrevious = this.yCurrent;
                     this.xCurrent += this.xVelocity * delta;
                     this.yCurrent += this.yVelocity * delta;
                 }
-                this.offScreen = function() {
-                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                this.offScreen = function () {
+                    return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
                 }
-                this.contains = function(mx, my) {
-                // All we have to do is make sure the Mouse X,Y fall in the area between
-                // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
+                this.contains = function (mx, my) {
+                    // All we have to do is make sure the Mouse X,Y fall in the area between
+                    // the shape's X and (X + Width) and its Y and (Y + Height)
+                    return (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
                 }
             }
-            
+
             //---------------------------------------
             //Constructor for a Triangle
             //---------------------------------------
@@ -153,14 +153,14 @@
                 this.xVelocity = xVelocity || 0;
                 this.yVelocity = yVelocity || 0.1;
                 this.clicked = false;
-                entities++; 
-                
+                entities++;
+
                 if (colour == "random") {
-                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                    this.colour = randomColour[Math.floor(Math.random() * 4)];
                 } else {
-                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                    this.colour = colour || randomColour[Math.floor(Math.random() * 4)];
                 }
-                
+
                 if (this.colour == "red") {
                     bodyImg.src = "img/shapes/triangle/red_triangle.png";
                 } else if (this.colour == "blue") {
@@ -170,28 +170,28 @@
                 } else if (this.colour == "yellow") {
                     bodyImg.src = "img/shapes/triangle/yellow_triangle.png";
                 }
-                
-                this.draw = function(interp) {
+
+                this.draw = function (interp) {
                     ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
                 }
-                this.update = function() {
+                this.update = function () {
                     this.xPrevious = this.xCurrent;
                     this.yPrevious = this.yCurrent;
                     this.xCurrent += this.xVelocity * delta;
                     this.yCurrent += this.yVelocity * delta;
                 }
-                this.offScreen = function() {
+                this.offScreen = function () {
                     return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
                 }
-                this.contains = function(mx, my) {
-                // All we have to do is make sure the Mouse X,Y fall in the area between
-                // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
+                this.contains = function (mx, my) {
+                    // All we have to do is make sure the Mouse X,Y fall in the area between
+                    // the shape's X and (X + Width) and its Y and (Y + Height)
+                    return (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
                 }
-                
+
             }
-            
+
             //---------------------------------------
             //Constructor for a Star
             //---------------------------------------
@@ -199,7 +199,7 @@
                 var bodyImg = new Image();
                 this.shapeType = "Star";
                 this.colour = "yellow";
-                bodyImg.src = "img/shapes/star/star.png";  
+                bodyImg.src = "img/shapes/star/star.png";
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -60;
@@ -209,26 +209,26 @@
                 this.yVelocity = yVelocity || 0.1;
                 this.clicked = false;
                 entities++;
-                this.draw = function(interp) {
+                this.draw = function (interp) {
                     ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
                 }
-                this.update = function() {
+                this.update = function () {
                     this.xPrevious = this.xCurrent;
                     this.yPrevious = this.yCurrent;
                     this.xCurrent += this.xVelocity * delta;
                     this.yCurrent += this.yVelocity * delta;
                 }
-                this.offScreen = function() {
-                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                this.offScreen = function () {
+                    return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
                 }
-                this.contains = function(mx, my) {
-                // All we have to do is make sure the Mouse X,Y fall in the area between
-                // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
+                this.contains = function (mx, my) {
+                    // All we have to do is make sure the Mouse X,Y fall in the area between
+                    // the shape's X and (X + Width) and its Y and (Y + Height)
+                    return (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
+                }
             }
-            }
-            
+
             //The way that the factory works is you call createShape() with a parameter
             //the parameter is a string of which shape to be created or random
             //eg. ShapeFactory.createShape("blueCircle");
@@ -239,130 +239,158 @@
                 var randomShape = ["Circle", "Square", "Triangle"];
                 var lane = [0, 64, 128, 192, 256];
                 if (type == "circle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "random");
                 } else if (type == "square") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "random");
                 } else if (type == "triangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "random");
                 } else if (type == "redCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "red");
                 } else if (type == "blueCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "blue");
                 } else if (type == "greenCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "green");
                 } else if (type == "yellowCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "yellow");
                 } else if (type == "redSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "red");
                 } else if (type == "blueSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "blue");
                 } else if (type == "greenSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "green");
                 } else if (type == "yellowSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "yellow");
                 } else if (type == "redTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "red");
                 } else if (type == "blueTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "blue");
                 } else if (type == "greenTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "green");
                 } else if (type == "yellowTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "yellow");
                 } else if (type == "star") {
-                    return new Star(lane[Math.floor(Math.random()*5)], -60, null, null, null);
+                    return new Star(lane[Math.floor(Math.random() * 5)], -60, null, null, null);
                 } else if (type == "random") {
-                    var rs = randomShape[Math.floor(Math.random()*3)];
-                    
+                    var rs = randomShape[Math.floor(Math.random() * 3)];
+
                     if (rs == "Circle") {
-                        return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
-                    } else if(rs == "Square") {
-                        return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                        return new Circle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "random");
+                    } else if (rs == "Square") {
+                        return new Square(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "random");
                     } else if (rs == "Triangle") {
-                        return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                        return new Triangle(lane[Math.floor(Math.random() * 5)], -60, null, null, null, "random");
                     }
                 }
                 return;
             };
-            
-            canvas.addEventListener('mousedown', function(e) {
+
+            //---------------------------------------------
+            //Rule Logic by Matt
+            //---------------------------------------------
+            function Rule(type) {
+                this.type = type;
+
+                Rule.prototype.toString = function ruleToString() {
+                    var ret = this.type + "\n";
+                    return ret;
+                };
+            }
+
+            function RuleSet() {
+                this.rules = new Array();
+                this.availableRules = ["red", "noRed", "blue", "noBlue", "green", "noGreen", "yellow", "noYellow", "circle", "noCircle", "square", "noSquare", "triangle", "noTriangle"];
+                this.newRule = function () {
+                    var rand = Math.floor(Math.random() * this.availableRules.length);
+                    this.rules.push(new Rule(this.availableRules[rand]));
+
+                    if (rand % 2 === 0) {
+                        this.availableRules.splice(rand, 2);
+                    } else {
+                        this.availableRules.splice(rand - 1, 2);
+                    }
+                };
+
+            }
+
+            canvas.addEventListener('mousedown', function (e) {
                 var mouse = getMouse(e);
                 var mx = mouse.x;
                 var my = mouse.y;
                 var l = updateBuffer.length;
-                
-                if(mainMenuOptions === true) {
-                    if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
+
+                if (mainMenuOptions === true) {
+                    if (mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
                         mainMenuOptions = false;
                         mainMenu();
-                    } else if(mx >= 30 && mx <= 65 && my >= 110 && my <= 145) {
+                    } else if (mx >= 30 && mx <= 65 && my >= 110 && my <= 145) {
                         toggleBGM();
-                        if(bgm.muted === false) {
-                            ctx.drawImage(speakerImg,30,110);
+                        if (bgm.muted === false) {
+                            ctx.drawImage(speakerImg, 30, 110);
                         } else {
-                            ctx.drawImage(muteImg,30,110);
+                            ctx.drawImage(muteImg, 30, 110);
                         }
-                    } else if(mx >= 30 && mx <= 65 && my >= 150 && my <= 185) {
+                    } else if (mx >= 30 && mx <= 65 && my >= 150 && my <= 185) {
                         toggleSFX();
-                        if(sfx === true) {
-                            ctx.drawImage(speakerImg,30,150);
+                        if (sfx === true) {
+                            ctx.drawImage(speakerImg, 30, 150);
                         } else {
-                            ctx.drawImage(muteImg,30,150);
+                            ctx.drawImage(muteImg, 30, 150);
                         }
                     }
-                } else if(mainMenuScreen === true) {
-                    if(mx >= 28 && mx <= 292 && my >= 240 && my <= 294) {
+                } else if (mainMenuScreen === true) {
+                    if (mx >= 28 && mx <= 292 && my >= 240 && my <= 294) {
                         newGame();
-                    } else if(mx >= 28 && mx <= 292 && my >= 320 && my <= 374) { 
+                    } else if (mx >= 28 && mx <= 292 && my >= 320 && my <= 374) {
                         //Leaderboard
-                    } else if(mx >= 28 && mx <= 292 && my >= 400 && my <= 454) {
+                    } else if (mx >= 28 && mx <= 292 && my >= 400 && my <= 454) {
                         optionsScreen();
                     }
-                } else if(gameOver === true) {
-                    if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
+                } else if (gameOver === true) {
+                    if (mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
                         mainMenu();
-                    } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
+                    } else if (mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
                         newGame();
                     }
-                } else if(pause === true) {
-                    if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
+                } else if (pause === true) {
+                    if (mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
                         pause = false;
                         start();
-                    } else if(mx >= 30 && mx <= 65 && my >= 170 && my <= 205) { 
+                    } else if (mx >= 30 && mx <= 65 && my >= 170 && my <= 205) {
                         toggleBGM();
-                        if(bgm.muted === false) {
-                            ctx.drawImage(speakerImg,30,170);
+                        if (bgm.muted === false) {
+                            ctx.drawImage(speakerImg, 30, 170);
                         } else {
-                            ctx.drawImage(muteImg,30,170);
+                            ctx.drawImage(muteImg, 30, 170);
                         }
-                    } else if(mx >= 30 && mx <= 65 && my >= 210 && my <= 245) {
+                    } else if (mx >= 30 && mx <= 65 && my >= 210 && my <= 245) {
                         toggleSFX();
-                        if(sfx === true) {
-                            ctx.drawImage(speakerImg,30,210);
+                        if (sfx === true) {
+                            ctx.drawImage(speakerImg, 30, 210);
                         } else {
-                            ctx.drawImage(muteImg,30,210);
+                            ctx.drawImage(muteImg, 30, 210);
                         }
-                    } else if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
+                    } else if (mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
                         mainMenu();
-                    } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
+                    } else if (mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
                         newGame();
                     }
-                } else if(pause === false && mx >= 290 && my <= 30) {
+                } else if (pause === false && mx >= 290 && my <= 30) {
                     pauseScreen();
-                } else if(pause === false) {
+                } else if (pause === false) {
                     for (var i = 0; i < l; i++) {
                         if (updateBuffer[i].contains(mx, my)) {
                             updateBuffer[i].clicked = true;
-                            window.count += Math.ceil(++window.combo/3);
+                            window.count += Math.ceil(++window.combo / 3);
                             validSFX();
                             return;
                         }
                     }
                 }
             }, true);
-            
-            canvas.addEventListener('mouseup', function(e) {}, true);
-             
-            var sf = new ShapeFactory();             
+
+            canvas.addEventListener('mouseup', function (e) { }, true);
+
+            var sf = new ShapeFactory();
             var updateBuffer = [];
             var layerBuffer = [];
             updateBuffer.push(sf.createShape("random"));
@@ -370,16 +398,16 @@
             updateBuffer.push(sf.createShape("random"));
             updateBuffer.push(sf.createShape("random"));
             updateBuffer.push(sf.createShape("random"));
-            
+
             /*TODO WTF?
             Shape.prototype.hit = function(mouse) {
-                mx = getMouse(mouse).x;
-                my = getMouse(mouse).y;
-                ctx.fillText("x: " + x, 180, 480);
-                ctx.fillText("y: " + entities, 180, 480);
+            mx = getMouse(mouse).x;
+            my = getMouse(mouse).y;
+            ctx.fillText("x: " + x, 180, 480);
+            ctx.fillText("y: " + entities, 180, 480);
             }*/
-            
-            getMouse = function(mouseEvent) {
+
+            getMouse = function (mouseEvent) {
                 var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
                 if (element.offsetParent !== undefined) {
                     do {
@@ -389,17 +417,17 @@
                 }
                 //offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
                 //offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
-                mx = mouseEvent.pageX;// - offsetX;
-                my = mouseEvent.pageY;// - offsetY;
-                return {x: mx, y: my};
+                mx = mouseEvent.pageX; // - offsetX;
+                my = mouseEvent.pageY; // - offsetY;
+                return { x: mx, y: my };
             }
-            
-            
+
+
             function update(delta) {
                 var l = updateBuffer.length,
                 s = 0;
                 for (var i = 0; i < l; i++) {
-                    if(updateBuffer[i - s].offScreen()) {
+                    if (updateBuffer[i - s].offScreen()) {
                         updateBuffer.splice(i - s, 1);
                         s++;
                         //window.combo = 0;
@@ -416,7 +444,7 @@
                         layerBuffer.push(updateBuffer[i - s]);
                     }
                 }
-                layerBuffer.sort(function(a, b) {
+                layerBuffer.sort(function (a, b) {
                     return b.layer - a.layer;
                 });
             }
@@ -424,93 +452,93 @@
             function draw(interp) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 // ** Add stuff you want drawn in the background all the time here **
-                    
+
                 var backgroundImg = new Image();
                 backgroundImg.src = "img/nebula_background.png";
-                ctx.drawImage(backgroundImg,0,0);
-                
-                ctx.strokeStyle="grey";
-                ctx.lineWidth="2";
+                ctx.drawImage(backgroundImg, 0, 0);
+
+                ctx.strokeStyle = "grey";
+                ctx.lineWidth = "2";
                 ctx.beginPath();
-                ctx.moveTo(64,0);
-                ctx.lineTo(64,480);
+                ctx.moveTo(64, 0);
+                ctx.lineTo(64, 480);
                 ctx.stroke();
-                
+
                 ctx.beginPath();
-                ctx.moveTo(128,0);
-                ctx.lineTo(128,480);
+                ctx.moveTo(128, 0);
+                ctx.lineTo(128, 480);
                 ctx.stroke();
-                
+
                 ctx.beginPath();
-                ctx.moveTo(192,0);
-                ctx.lineTo(192,480);
+                ctx.moveTo(192, 0);
+                ctx.lineTo(192, 480);
                 ctx.stroke();
-                
+
                 ctx.beginPath();
-                ctx.moveTo(256,0);
-                ctx.lineTo(256,480);
+                ctx.moveTo(256, 0);
+                ctx.lineTo(256, 480);
                 ctx.stroke();
-                
+
                 var l = layerBuffer.length;
                 for (var i = 0; i < l; i++) {
                     layerBuffer[i].draw(interp);
                 }
                 layerBuffer = [];
-                ctx.fillStyle ="white";
-                ctx.fillText("FPS: " + Math.round(fps),180,410);
+                ctx.fillStyle = "white";
+                ctx.fillText("FPS: " + Math.round(fps), 180, 410);
                 //ctx.fillText("Entities: " + entities,180,440);
-                
+
                 // ** Add stuff you want drawn on top all the time here **
-                ctx.rect(0,0,320,35);
-                var grd=ctx.createLinearGradient(0,0,0,35);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+                ctx.rect(0, 0, 320, 35);
+                var grd = ctx.createLinearGradient(0, 0, 0, 35);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
-                ctx.strokeStyle="black";
+
+                ctx.strokeStyle = "black";
                 ctx.beginPath();
-                ctx.moveTo(0,35);
-                ctx.lineTo(320,35);
+                ctx.moveTo(0, 35);
+                ctx.lineTo(320, 35);
                 ctx.stroke();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = "30px Calibri";
-                ctx.fillText("Score: " + window.count,0,30);
-                
-                ctx.textAlign="end";
-                ctx.fillText(Math.ceil(window.combo/3) + "x",280,30);
-                ctx.textAlign="start";
-                
+                ctx.fillText("Score: " + window.count, 0, 30);
+
+                ctx.textAlign = "end";
+                ctx.fillText(Math.ceil(window.combo / 3) + "x", 280, 30);
+                ctx.textAlign = "start";
+
                 var pauseButtonImg = new Image();
                 pauseButtonImg.src = "img/pause.png";
-                ctx.drawImage(pauseButtonImg,285,0);
-                
-                ctx.rect(0,445,320,480);
-                var grd=ctx.createLinearGradient(0,445,0,480);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+                ctx.drawImage(pauseButtonImg, 285, 0);
+
+                ctx.rect(0, 445, 320, 480);
+                var grd = ctx.createLinearGradient(0, 445, 0, 480);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
-                ctx.strokeStyle="black";
+
+                ctx.strokeStyle = "black";
                 ctx.beginPath();
-                ctx.moveTo(0,445);
-                ctx.lineTo(320,445);
+                ctx.moveTo(0, 445);
+                ctx.lineTo(320, 445);
                 ctx.stroke();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = "30px Calibri";
-                ctx.fillText("Rules: ",0,475);
+                ctx.fillText("Rules: ", 0, 475);
             }
 
             function panic() {
                 delta = 0;
-                ctx.fillText("Panic",100,200);
+                ctx.fillText("Panic", 100, 200);
             }
 
             //function begin() {
@@ -532,7 +560,7 @@
             function start() {
                 if (!started) {
                     started = true;
-                    frameID = requestAnimationFrame(function(timestamp) {
+                    frameID = requestAnimationFrame(function (timestamp) {
                         draw(1);
                         running = true;
                         lastFrameTimeMs = timestamp;
@@ -556,7 +584,7 @@
 
                 if (timestamp > lastFpsUpdate + 1000) {
                     fps = 0.25 * framesThisSecond + 0.75 * fps;
-                    
+
                     lastFpsUpdate = timestamp;
                     framesThisSecond = 0;
                 }
@@ -573,20 +601,20 @@
                 }
 
                 draw(delta / timestep);
-                
+
                 end(fps);
-                
+
                 frameID = requestAnimationFrame(mainLoop);
-                
-                if(gameOver === true) {
+
+                if (gameOver === true) {
                     gameOverScreen();
                 }
             }
-            
-            window.onload = function() {
+
+            window.onload = function () {
                 mainMenu();
             };
-            
+
             var backgroundImage = new Image();
             backgroundImage.src = "img/star_background.png";
             var logo = new Image();
@@ -607,98 +635,98 @@
             speakerImg.src = "img/speaker.png";
             var muteImg = new Image();
             muteImg.src = "img/mute.png";
-            
+
             //Pause menu drawing
             function pauseScreen() {
                 pause = true;
                 stop();
-                
-                ctx.rect(0,35,320,410);
-                ctx.fillStyle="rgba(0,0,0,.5)";
+
+                ctx.rect(0, 35, 320, 410);
+                ctx.fillStyle = "rgba(0,0,0,.5)";
                 ctx.fill();
-                
+
                 ctx.beginPath();
-                ctx.lineWidth="4";
-                ctx.strokeStyle="black";
-                ctx.rect(22,70,276,190);
+                ctx.lineWidth = "4";
+                ctx.strokeStyle = "black";
+                ctx.rect(22, 70, 276, 190);
                 ctx.stroke();
-                
-                var grd=ctx.createLinearGradient(0,70,0,260);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+
+                var grd = ctx.createLinearGradient(0, 70, 0, 260);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = "20px Calibri";
-                ctx.fillText("Current Rule: ",25,90);
-                
+                ctx.fillText("Current Rule: ", 25, 90);
+
                 ctx.beginPath();
-                ctx.lineWidth="2";
-                ctx.moveTo(30,165);
-                ctx.lineTo(290,165);
+                ctx.lineWidth = "2";
+                ctx.moveTo(30, 165);
+                ctx.lineTo(290, 165);
                 ctx.stroke();
-                
-                ctx.fillText("Background Music",70,195);
-                ctx.fillText("Sound Effects",70,235);
-                
-                if(bgm.muted === false) {
-                    ctx.drawImage(speakerImg,30,170);
+
+                ctx.fillText("Background Music", 70, 195);
+                ctx.fillText("Sound Effects", 70, 235);
+
+                if (bgm.muted === false) {
+                    ctx.drawImage(speakerImg, 30, 170);
                 } else {
-                    ctx.drawImage(muteImg,30,170);
+                    ctx.drawImage(muteImg, 30, 170);
                 }
-                
-                if(sfx === true) {
-                    ctx.drawImage(speakerImg,30,210);
+
+                if (sfx === true) {
+                    ctx.drawImage(speakerImg, 30, 210);
                 } else {
-                    ctx.drawImage(muteImg,30,210);
+                    ctx.drawImage(muteImg, 30, 210);
                 }
-                
-                ctx.drawImage(menuButtonImg,20,250);
-                ctx.drawImage(restartButtonImg,160,250);
-                ctx.drawImage(closeButtonImg,280,60);
+
+                ctx.drawImage(menuButtonImg, 20, 250);
+                ctx.drawImage(restartButtonImg, 160, 250);
+                ctx.drawImage(closeButtonImg, 280, 60);
             }
-            
+
             //BGM toggle variable and function
             var bgm = document.getElementById('background_audio');
-            function toggleBGM() { 
+            function toggleBGM() {
                 bgm.muted = !bgm.muted;
             }
-            
+
             //SFX toggle function, don't play sounds if false.
             var sfx = true;
-            function toggleSFX() { 
+            function toggleSFX() {
                 sfx = !sfx;
             }
-            
+
             //Valid SFX
             function validSFX() {
-                if(sfx === true) {
+                if (sfx === true) {
                     var new_sfx = new Audio('audio/valid.mp3');
                     new_sfx.play();
                 }
             }
-            
+
             //Error SFX
             function errorSFX() {
-                if(sfx === true) {
+                if (sfx === true) {
                     var new_sfx = new Audio('audio/error.mp3');
                     new_sfx.play();
                 }
             }
-            
+
             //Main Menu
             function mainMenu() {
                 mainMenuScreen = true;
-                ctx.drawImage(backgroundImage,0,0);
-                ctx.drawImage(logo,0,60);
-                ctx.drawImage(playButton,28,240);
-                ctx.drawImage(leaderboardButton,28,320);
-                ctx.drawImage(optionsButton,28,400);
+                ctx.drawImage(backgroundImage, 0, 0);
+                ctx.drawImage(logo, 0, 60);
+                ctx.drawImage(playButton, 28, 240);
+                ctx.drawImage(leaderboardButton, 28, 320);
+                ctx.drawImage(optionsButton, 28, 400);
             }
-            
+
             //New game aka restart
             function newGame() {
                 updateBuffer = [];
@@ -718,100 +746,100 @@
                 window.combo = 0;
                 start();
             }
-            
+
             //Main menu options screen
             function optionsScreen() {
                 mainMenuOptions = true;
-                ctx.rect(0,0,320,480);
-                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.rect(0, 0, 320, 480);
+                ctx.fillStyle = "rgba(0,0,0,.5)";
                 ctx.fill();
-                
+
                 ctx.beginPath();
-                ctx.lineWidth="4";
-                ctx.strokeStyle="black";
-                ctx.rect(22,70,276,190);
+                ctx.lineWidth = "4";
+                ctx.strokeStyle = "black";
+                ctx.rect(22, 70, 276, 190);
                 ctx.stroke();
-                
-                var grd=ctx.createLinearGradient(0,70,0,260);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+
+                var grd = ctx.createLinearGradient(0, 70, 0, 260);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = "30px Calibri";
-                ctx.fillText("Options",25,100);
+                ctx.fillText("Options", 25, 100);
                 ctx.font = "20px Calibri";
-                ctx.fillText("Background Music",70,135);
-                ctx.fillText("Sound Effects",70,175);
-                
-                if(bgm.muted === false) {
-                    ctx.drawImage(speakerImg,30,110);
+                ctx.fillText("Background Music", 70, 135);
+                ctx.fillText("Sound Effects", 70, 175);
+
+                if (bgm.muted === false) {
+                    ctx.drawImage(speakerImg, 30, 110);
                 } else {
-                    ctx.drawImage(muteImg,30,110);
+                    ctx.drawImage(muteImg, 30, 110);
                 }
-                
-                if(sfx === true) {
-                    ctx.drawImage(speakerImg,30,150);
+
+                if (sfx === true) {
+                    ctx.drawImage(speakerImg, 30, 150);
                 } else {
-                    ctx.drawImage(muteImg,30,150);
+                    ctx.drawImage(muteImg, 30, 150);
                 }
-                
-                ctx.drawImage(closeButtonImg,280,60);
+
+                ctx.drawImage(closeButtonImg, 280, 60);
             }
-            
+
             //Game over screen
             function gameOverScreen() {
                 gameOver = true;
                 errorSFX();
                 stop();
-                
-                ctx.rect(0,0,320,480);
-                ctx.fillStyle="rgba(0,0,0,.5)";
+
+                ctx.rect(0, 0, 320, 480);
+                ctx.fillStyle = "rgba(0,0,0,.5)";
                 ctx.fill();
-                
+
                 ctx.beginPath();
-                ctx.lineWidth="4";
-                ctx.strokeStyle="black";
-                ctx.rect(22,70,276,190);
+                ctx.lineWidth = "4";
+                ctx.strokeStyle = "black";
+                ctx.rect(22, 70, 276, 190);
                 ctx.stroke();
-                
-                var grd=ctx.createLinearGradient(0,70,0,260);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+
+                var grd = ctx.createLinearGradient(0, 70, 0, 260);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = "30px Calibri";
-                ctx.fillText("Game Over",25,100);
-                
+                ctx.fillText("Game Over", 25, 100);
+
                 ctx.font = "20px Calibri";
-                ctx.fillText("Score: " + window.count,25,130);
-                
+                ctx.fillText("Score: " + window.count, 25, 130);
+
                 //Temporary variable, actually check in later iteration instead.
                 var newRecord = false;
-                if(newRecord === true) {
+                if (newRecord === true) {
                     ctx.beginPath();
-                    ctx.rect(35,150,250,90);
+                    ctx.rect(35, 150, 250, 90);
                     ctx.stroke();
-                    
+
                     ctx.fillStyle = "black";
                     ctx.font = "20px Calibri";
-                    ctx.fillText("New High Score",40,170);
-                    
+                    ctx.fillText("New High Score", 40, 170);
+
                     ctx.font = "15px Calibri";
-                    ctx.fillText("Enter your name",40,190);
+                    ctx.fillText("Enter your name", 40, 190);
                 } else {
-                    ctx.fillText("High Score: 9001",40,170);
+                    ctx.fillText("High Score: 9001", 40, 170);
                 }
-                
-                ctx.drawImage(menuButtonImg,20,250);
-                ctx.drawImage(restartButtonImg,160,250);
+
+                ctx.drawImage(menuButtonImg, 20, 250);
+                ctx.drawImage(restartButtonImg, 160, 250);
             }
         </script>
     </body>
