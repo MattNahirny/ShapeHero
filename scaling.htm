@@ -10,6 +10,8 @@
         <canvas id="canvas" width="320" height="480"></canvas>
 		<script>
 			var ctx = document.getElementById("canvas").getContext("2d");
+			var image = new Image();
+			image.src = "img/shapes/triangle/red_triangle.png";
 			
 			window.addEventListener("resize", function() {
 				ctx.canvas.width = window.innerWidth;
@@ -30,32 +32,23 @@
 				ctx.fillStyle = "black";
 				ctx.fill();
 				
-				ctx.strokeStyle="grey";
-				ctx.beginPath();
-				ctx.moveTo(ctx.canvas.width / 5, 0);
-				ctx.lineTo(ctx.canvas.width / 5, ctx.canvas.height);
-				ctx.stroke();
 				
-				ctx.beginPath();
-				ctx.moveTo(2 * (ctx.canvas.width / 5), 0);
-				ctx.lineTo(2 * (ctx.canvas.width / 5), ctx.canvas.height);
-				ctx.stroke();
-				
-				ctx.beginPath();
-				ctx.moveTo(3 * (ctx.canvas.width / 5), 0);
-				ctx.lineTo(3 * (ctx.canvas.width / 5), ctx.canvas.height);
-				ctx.stroke();
-				
-				ctx.beginPath();
-				ctx.moveTo(4 * (ctx.canvas.width / 5), 0);
-				ctx.lineTo(4 * (ctx.canvas.width / 5), ctx.canvas.height);
-				ctx.stroke();
 				
 				ctx.fillStyle = "red";
 				if(ctx.canvas.width > ctx.canvas.height) {
-					ctx.font = 'italic bold 30px sans-serif';
+					ctx.font = 'italic bold ' + ctx.canvas.width * (10 / 320) + 'px ' + 'sans-serif';
 					ctx.textBaseline = 'bottom';
-					ctx.fillText('please put your screen to portrait', 50, 100);
+					ctx.fillText('please put your screen to portrait', ctx.canvas.width * (50 / 320), ctx.canvas.height * (100 / 480));
+				
+				} else {
+					ctx.strokeStyle="grey";
+					ctx.lineWidth="2";
+					ctx.beginPath();
+					ctx.moveTo(ctx.canvas.width * (64 / 320), ctx.canvas.height * (0 / 480));
+					ctx.lineTo(ctx.canvas.width * (64 / 320), ctx.canvas.height * (480 / 480));
+					ctx.stroke();
+					
+					ctx.drawImage(image, ctx.canvas.width * (0 / 320), ctx.canvas.height * (0 / 480), ctx.canvas.width * (64 / 320), ctx.canvas.width * (64 / 320));
 				}
 			}
 		</script>
