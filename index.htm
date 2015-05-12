@@ -5,7 +5,7 @@
         <link type="text/css" rel="stylesheet" href="css/style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
-    <body style="background-color:black;">
+    <body>
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
         </audio>
@@ -313,7 +313,7 @@
 
             function RuleSet() {
                 this.rules = new Array();
-                this.availableRules = ["red", "noRed", "blue", "noBlue", "green", "noGreen", "yellow", "noYellow", "Circle", "noCircle", "Square", "noSquare", "Triangle", "noTriangle"];
+                this.availableRules = ["red", "nored", "blue", "noblue", "green", "nogreen", "yellow", "noyellow", "Circle", "noCircle", "Square", "noSquare", "Triangle", "noTriangle"];
                 this.newRule = function () {
                     var rand = Math.floor(Math.random() * this.availableRules.length);
                     this.rules.push(new Rule(this.availableRules[rand]));
@@ -324,7 +324,6 @@
                         this.availableRules.splice(rand - 1, 2);
                     }
                 };
-
             }
             
             canvas.addEventListener('mousedown', function(e) {
@@ -453,6 +452,10 @@
                         for(var j = 0; j < currentRules.rules.length; j++) {
                             if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
                                 gameOver = true;
+                            } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
+                                //Do nothing, should pass
+                            } else if(currentRules.rules[j].type.slice(0,2) === "no") {
+                                gameOver = true;
                             }
                         }
                         updateBuffer.splice(i - s, 1);
@@ -460,8 +463,15 @@
                         entities--;
                         updateBuffer.push(sf.createShape("random"));
                     } else if (updateBuffer[i - s].clicked === true) {
+                        console.log(currentRules.rules[0].type.slice(0,2));
                         for(var j = 0; j < currentRules.rules.length; j++) {
                             if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                                window.count += Math.ceil(++window.combo/3);
+                                validSFX();
+                            } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
+                                window.combo = 0;
+                                errorSFX();
+                            } else if(currentRules.rules[j].type.slice(0,2) === "no") {
                                 window.count += Math.ceil(++window.combo/3);
                                 validSFX();
                             } else {
@@ -570,7 +580,7 @@
                 
                 ctx.fillStyle = "black";
                 ctx.font = "30px Calibri";
-                ctx.fillText("Rules: ",0,475);
+                ctx.fillText("Rules: " + currentRules.rules[0],0,475);
             }
 
             function panic() {
@@ -768,7 +778,6 @@
             function newGame() {
                 currentRules = new RuleSet();
                 currentRules.newRule();
-                console.log(currentRules.rules[0]);
                 updateBuffer = [];
                 layerBuffer = [];
                 updateBuffer.push(sf.createShape("random"));
