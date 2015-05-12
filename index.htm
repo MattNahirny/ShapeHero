@@ -462,7 +462,12 @@
                 
                 // ** Add stuff you want drawn on top all the time here **
                 ctx.rect(0,0,320,35);
-                ctx.fillStyle="white";
+                var grd=ctx.createLinearGradient(0,0,0,35);
+                grd.addColorStop(0,"grey");
+                grd.addColorStop(0.2,"lightgrey");
+                grd.addColorStop(0.8,"lightgrey");
+                grd.addColorStop(1,"grey");
+                ctx.fillStyle=grd;
                 ctx.fill();
                 
                 ctx.strokeStyle="black";
@@ -484,7 +489,12 @@
                 ctx.drawImage(pauseButtonImg,285,0);
                 
                 ctx.rect(0,445,320,480);
-                ctx.fillStyle="white";
+                var grd=ctx.createLinearGradient(0,445,0,480);
+                grd.addColorStop(0,"grey");
+                grd.addColorStop(0.2,"lightgrey");
+                grd.addColorStop(0.8,"lightgrey");
+                grd.addColorStop(1,"grey");
+                ctx.fillStyle=grd;
                 ctx.fill();
                 
                 ctx.strokeStyle="black";
@@ -612,7 +622,13 @@
                 ctx.strokeStyle="black";
                 ctx.rect(22,70,276,190);
                 ctx.stroke();
-                ctx.fillStyle="white";
+                
+                var grd=ctx.createLinearGradient(0,70,0,260);
+                grd.addColorStop(0,"grey");
+                grd.addColorStop(0.2,"lightgrey");
+                grd.addColorStop(0.8,"lightgrey");
+                grd.addColorStop(1,"grey");
+                ctx.fillStyle=grd;
                 ctx.fill();
                 
                 ctx.fillStyle = "black";
@@ -715,7 +731,13 @@
                 ctx.strokeStyle="black";
                 ctx.rect(22,70,276,190);
                 ctx.stroke();
-                ctx.fillStyle="white";
+                
+                var grd=ctx.createLinearGradient(0,70,0,260);
+                grd.addColorStop(0,"grey");
+                grd.addColorStop(0.2,"lightgrey");
+                grd.addColorStop(0.8,"lightgrey");
+                grd.addColorStop(1,"grey");
+                ctx.fillStyle=grd;
                 ctx.fill();
                 
                 ctx.fillStyle = "black";
@@ -755,7 +777,13 @@
                 ctx.strokeStyle="black";
                 ctx.rect(22,70,276,190);
                 ctx.stroke();
-                ctx.fillStyle="white";
+                
+                var grd=ctx.createLinearGradient(0,70,0,260);
+                grd.addColorStop(0,"grey");
+                grd.addColorStop(0.2,"lightgrey");
+                grd.addColorStop(0.8,"lightgrey");
+                grd.addColorStop(1,"grey");
+                ctx.fillStyle=grd;
                 ctx.fill();
                 
                 ctx.fillStyle = "black";
