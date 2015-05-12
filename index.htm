@@ -458,6 +458,7 @@
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
+                        updateBuffer.push(sf.createShape("random"));
                     } else if (updateBuffer[i - s].clicked === true) {
                         for(var j = 0; j < currentRules.rules.length; j++) {
                             if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
