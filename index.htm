@@ -42,12 +42,13 @@
                 this.shapeType = "Circle";
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
-                this.yCurrent = y || -60;
+                this.yCurrent = y || -64;
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
                 this.yVelocity = yVelocity || 0.1;
                 this.clicked = false;
+                this.checked = false;
                 entities++;                
                 if (colour == "random") {
                     this.colour = randomColour[Math.floor(Math.random()*4)];
@@ -95,12 +96,13 @@
                 this.shapeType = "Square";
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
-                this.yCurrent = y || -60;
+                this.yCurrent = y || -64;
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
                 this.yVelocity = yVelocity || 0.1;
                 this.clicked = false;
+                this.checked = false;
                 entities++;
                 if (colour == "random") {
                     this.colour = randomColour[Math.floor(Math.random()*4)];
@@ -147,12 +149,13 @@
                 this.shapeType = "Triangle";
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
-                this.yCurrent = y || -60;
+                this.yCurrent = y || -64;
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
                 this.yVelocity = yVelocity || 0.1;
                 this.clicked = false;
+                this.checked = false;
                 entities++; 
                 
                 if (colour == "random") {
@@ -202,12 +205,13 @@
                 bodyImg.src = "img/shapes/star/star.png";  
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
-                this.yCurrent = y || -60;
+                this.yCurrent = y || -64;
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
                 this.yVelocity = yVelocity || 0.1;
                 this.clicked = false;
+                this.checked = false;
                 entities++;
                 this.draw = function(interp) {
                     ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
@@ -235,50 +239,61 @@
             //or 
             //ShapeFactory.createShape("random");
             function ShapeFactory() { }
+            
+            //---------------------
+            //spawnCheck method
+            //---------------------
+            ShapeFactory.prototype.spawnCheck = function spawnCheck(shape) {
+                var spawnBox = 0;
+                
+            };
+            //---------------------
+            //createShape method
+            //---------------------
             ShapeFactory.prototype.createShape = function createShape(type) {
                 var randomShape = ["Circle", "Square", "Triangle"];
                 var lane = [0, 64, 128, 192, 256];
                 if (type == "circle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
                 } else if (type == "square") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
                 } else if (type == "triangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
                 } else if (type == "redCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "red");
                 } else if (type == "blueCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "blue");
                 } else if (type == "greenCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "green");
                 } else if (type == "yellowCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "yellow");
                 } else if (type == "redSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "red");
                 } else if (type == "blueSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "blue");
                 } else if (type == "greenSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "green");
                 } else if (type == "yellowSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "yellow");
                 } else if (type == "redTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "red");
                 } else if (type == "blueTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "blue");
                 } else if (type == "greenTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "green");
                 } else if (type == "yellowTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "yellow");
                 } else if (type == "star") {
-                    return new Star(lane[Math.floor(Math.random()*5)], -60, null, null, null);
+                    return new Star(lane[Math.floor(Math.random()*5)], -64, null, null, null);
                 } else if (type == "random") {
                     var rs = randomShape[Math.floor(Math.random()*3)];
                     
                     if (rs == "Circle") {
-                        return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                        return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
                     } else if(rs == "Square") {
-                        return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                        return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
                     } else if (rs == "Triangle") {
-                        return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                        return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
                     }
                 }
                 return;
@@ -389,14 +404,11 @@
             
             canvas.addEventListener('mouseup', function(e) {}, true);
              
-            var sf = new ShapeFactory();             
+            var sf = new ShapeFactory();
+            var rs = new RuleSet();
             var updateBuffer = [];
             var layerBuffer = [];
-            updateBuffer.push(sf.createShape("random"));
-            updateBuffer.push(sf.createShape("random"));
-            updateBuffer.push(sf.createShape("random"));
-            updateBuffer.push(sf.createShape("random"));
-            updateBuffer.push(sf.createShape("random"));
+            
             
             /*TODO WTF?
             Shape.prototype.hit = function(mouse) {
@@ -421,18 +433,29 @@
                 return {x: mx, y: my};
             }
             
-            
+            //------------------------------------------
+            //UPDATE BUFFER
+            //------------------------------------------
             function update(delta) {
                 var l = updateBuffer.length,
                 s = 0;
                 for (var i = 0; i < l; i++) {
+                
+                if (updateBuffer[i - s] instanceof Circle ||
+                            updateBuffer[i - s] instanceof Square ||
+                            updateBuffer[i - s] instanceof Triangle ||
+                            updateBuffer[i - s] instanceof Star) {
+                                if (updateBuffer[i - s].checked === false && 
+                                sf.spawnCheck(updateBuffer[i - s]) === true) {
+                                    updateBuffer.push(sf.createShape("random"));
+                                }
+                        }
                     if(updateBuffer[i - s].offScreen()) {
                         updateBuffer.splice(i - s, 1);
                         s++;
                         //window.combo = 0;
                         gameOver = true;
                         entities--;
-                        updateBuffer.push(sf.createShape("random"));
                     } else if (updateBuffer[i - s].clicked === true) {
                         updateBuffer.splice(i - s, 1);
                         s++;
@@ -448,6 +471,9 @@
                 });
             }
 
+            //----------------------------------------------------------
+            //Draw
+            //----------------------------------------------------------
             function draw(interp) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 // ** Add stuff you want drawn in the background all the time here **
