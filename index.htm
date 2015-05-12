@@ -30,6 +30,7 @@
             mainMenuOptions = false;
             gameOver = false;
             pause = false;
+            var currentRules = null;
             window.count = 0;
             window.combo = 0;
             
@@ -283,33 +284,33 @@
                 }
                 return;
             };
-			//--------------------------------------------
-			//Rule Logic
-			//--------------------------------------------
-			function Rule(type) {
-				this.type = type;
+            //--------------------------------------------
+            //Rule Logic
+            //--------------------------------------------
+            function Rule(type) {
+                this.type = type;
 
-				Rule.prototype.toString = function ruleToString() {
-					var ret = this.type + "\n";
-					return ret;
-				};
-			}
+                Rule.prototype.toString = function ruleToString() {
+                    var ret = this.type + "\n";
+                    return ret;
+                };
+            }
 
-			function RuleSet() {
-				this.rules = new Array();
-				this.availableRules = ["red", "noRed", "blue", "noBlue", "green", "noGreen", "yellow", "noYellow", "circle", "noCircle", "square", "noSquare", "triangle", "noTriangle"];
-				this.newRule = function () {
-					var rand = Math.floor(Math.random() * this.availableRules.length);
-					this.rules.push(new Rule(this.availableRules[rand]));
+            function RuleSet() {
+                this.rules = new Array();
+                this.availableRules = ["red", "noRed", "blue", "noBlue", "green", "noGreen", "yellow", "noYellow", "Circle", "noCircle", "Square", "noSquare", "Triangle", "noTriangle"];
+                this.newRule = function () {
+                    var rand = Math.floor(Math.random() * this.availableRules.length);
+                    this.rules.push(new Rule(this.availableRules[rand]));
 
-					if (rand % 2 === 0) {
-						this.availableRules.splice(rand, 2);
-					} else {
-						this.availableRules.splice(rand - 1, 2);
-					}
-				};
+                    if (rand % 2 === 0) {
+                        this.availableRules.splice(rand, 2);
+                    } else {
+                        this.availableRules.splice(rand - 1, 2);
+                    }
+                };
 
-			}
+            }
             
             canvas.addEventListener('mousedown', function(e) {
                 var mouse = getMouse(e);
@@ -379,8 +380,6 @@
                     for (var i = 0; i < l; i++) {
                         if (updateBuffer[i].contains(mx, my)) {
                             updateBuffer[i].clicked = true;
-                            window.count += Math.ceil(++window.combo/3);
-                            validSFX();
                             return;
                         }
                     }
@@ -421,19 +420,30 @@
                 return {x: mx, y: my};
             }
             
-            
             function update(delta) {
                 var l = updateBuffer.length,
                 s = 0;
                 for (var i = 0; i < l; i++) {
                     if(updateBuffer[i - s].offScreen()) {
+                        for(var j = 0; j < currentRules.rules.length; j++) {
+                            if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                                gameOver = true;
+                            }
+                        }
                         updateBuffer.splice(i - s, 1);
                         s++;
-                        //window.combo = 0;
-                        gameOver = true;
                         entities--;
                         updateBuffer.push(sf.createShape("random"));
                     } else if (updateBuffer[i - s].clicked === true) {
+                        for(var j = 0; j < currentRules.rules.length; j++) {
+                            if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                                window.count += Math.ceil(++window.combo/3);
+                                validSFX();
+                            } else {
+                                window.combo = 0;
+                                errorSFX();
+                            }
+                        }
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
@@ -539,10 +549,10 @@
                 delta = 0;
                 ctx.fillText("Panic",100,200);
             }
-
+            
             //function begin() {
             //}
-
+            
             function end(fps) {
                 if (fps < 25) {
                     entities = 0;
@@ -728,6 +738,9 @@
             
             //New game aka restart
             function newGame() {
+                currentRules = new RuleSet();
+                currentRules.newRule();
+                console.log(currentRules.rules[0]);
                 updateBuffer = [];
                 layerBuffer = [];
                 updateBuffer.push(sf.createShape("random"));
