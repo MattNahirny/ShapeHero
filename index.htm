@@ -352,7 +352,7 @@
                     for (var i = 0; i < l; i++) {
                         if (updateBuffer[i].contains(mx, my)) {
                             updateBuffer[i].clicked = true;
-                            window.count += Math.floor(++window.combo/3) + 1;
+                            window.count += Math.ceil(++window.combo/3);
                             validSFX();
                             return;
                         }
@@ -476,7 +476,7 @@
                 ctx.fillText("Score: " + window.count,0,30);
                 
                 ctx.textAlign="end";
-                ctx.fillText(Math.floor(window.combo/3) + 1 + "x",280,30);
+                ctx.fillText(Math.ceil(window.combo/3) + "x",280,30);
                 ctx.textAlign="start";
                 
                 var pauseButtonImg = new Image();
