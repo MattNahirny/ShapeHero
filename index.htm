@@ -698,8 +698,10 @@
             speakerImg.src = "img/speaker.png";
             var muteImg = new Image();
             muteImg.src = "img/mute.png";
-            
+
+            //---------------------------
             //Pause menu drawing
+            //---------------------------
             function pauseScreen() {
                 pause = true;
                 stop();
@@ -751,36 +753,45 @@
                 ctx.drawImage(restartButtonImg,160 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
                 ctx.drawImage(closeButtonImg,280 * ctx.canvas.width / 320,60 * ctx.canvas.height / 480, 30 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
             }
-            
+
+            //-------------------------------------------
             //BGM toggle variable and function
+            //-------------------------------------------
             var bgm = document.getElementById('background_audio');
             function toggleBGM() { 
                 bgm.muted = !bgm.muted;
             }
             
+            //-------------------------------------------------------
             //SFX toggle function, don't play sounds if false.
+            //-------------------------------------------------------
             var sfx = true;
             function toggleSFX() { 
                 sfx = !sfx;
             }
             
+            //--------------------
             //Valid SFX
+            //--------------------
             function validSFX() {
                 if(sfx === true) {
                     var new_sfx = new Audio('audio/valid.mp3');
                     new_sfx.play();
                 }
             }
-            
+
+            //-------------------
             //Error SFX
+            //-------------------
             function errorSFX() {
                 if(sfx === true) {
                     var new_sfx = new Audio('audio/error.mp3');
                     new_sfx.play();
                 }
             }
-            
+            //-----------------
             //Main Menu
+            //-----------------
             function mainMenu() {
                 mainMenuScreen = true;
                 ctx.drawImage(backgroundImage,0,0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
@@ -789,8 +800,10 @@
                 ctx.drawImage(leaderboardButton,28 * ctx.canvas.width / 320,320 * ctx.canvas.height / 480, 264 * ctx.canvas.width / 320, 54 * ctx.canvas.height / 480);
                 ctx.drawImage(optionsButton,28 * ctx.canvas.width / 320,400 * ctx.canvas.height / 480, 264 * ctx.canvas.width / 320, 54 * ctx.canvas.height / 480);
             }
-            
+
+            //---------------------------
             //New game aka restart
+            //---------------------------
             function newGame() {
                 currentRules = new RuleSet();
                 currentRules.newRule();
@@ -807,8 +820,10 @@
                 window.combo = 0;
                 start();
             }
-            
+
+            //------------------------------
             //Main menu options screen
+            //------------------------------
             function optionsScreen() {
                 mainMenuOptions = true;
                 ctx.rect(0,0,320 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
