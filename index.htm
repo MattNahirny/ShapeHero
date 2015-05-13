@@ -43,7 +43,7 @@
                 this.shapeType = "Circle";
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
-                this.yCurrent = y || -64;
+                this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
@@ -83,8 +83,8 @@
                 this.contains = function(mx, my) {
                 // All we have to do is make sure the Mouse X,Y fall in the area between
                 // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
-                        (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
+                return  (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
+                        (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
             }
             
@@ -97,7 +97,7 @@
                 this.shapeType = "Square";
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
-                this.yCurrent = y || -64;
+                this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
@@ -136,8 +136,8 @@
                 this.contains = function(mx, my) {
                 // All we have to do is make sure the Mouse X,Y fall in the area between
                 // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
-                        (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
+                return  (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
+                        (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
             }
             
@@ -150,7 +150,7 @@
                 this.shapeType = "Triangle";
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
-                this.yCurrent = y || -64;
+                this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
@@ -190,8 +190,8 @@
                 this.contains = function(mx, my) {
                 // All we have to do is make sure the Mouse X,Y fall in the area between
                 // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
-                        (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
+                return  (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
+                        (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
                 
             }
@@ -206,7 +206,7 @@
                 bodyImg.src = "img/shapes/star/star.png";  
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
-                this.yCurrent = y || -64;
+                this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
@@ -229,8 +229,8 @@
                 this.contains = function(mx, my) {
                 // All we have to do is make sure the Mouse X,Y fall in the area between
                 // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
-                        (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
+                return  (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
+                        (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
             }
             }
             
@@ -258,48 +258,48 @@
             //---------------------
             ShapeFactory.prototype.createShape = function createShape(type) {
                 var randomShape = ["Circle", "Square", "Triangle"];
-                var lane = [0, 64, 128, 192, 256];
+                var lane = [0, 64 * ctx.canvas.width / 320, 128 * ctx.canvas.width / 320, 192 * ctx.canvas.width / 320, 256 * ctx.canvas.width / 320];
                 if (type == "circle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
                 } else if (type == "square") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
                 } else if (type == "triangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
                 } else if (type == "redCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "red");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "red");
                 } else if (type == "blueCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "blue");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "blue");
                 } else if (type == "greenCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "green");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "green");
                 } else if (type == "yellowCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "yellow");
+                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "yellow");
                 } else if (type == "redSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "red");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "red");
                 } else if (type == "blueSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "blue");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "blue");
                 } else if (type == "greenSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "green");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "green");
                 } else if (type == "yellowSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "yellow");
+                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "yellow");
                 } else if (type == "redTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "red");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "red");
                 } else if (type == "blueTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "blue");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "blue");
                 } else if (type == "greenTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "green");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "green");
                 } else if (type == "yellowTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "yellow");
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "yellow");
                 } else if (type == "star") {
-                    return new Star(lane[Math.floor(Math.random()*5)], -64, null, null, null);
+                    return new Star(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null);
                 } else if (type == "random") {
                     var rs = randomShape[Math.floor(Math.random()*3)];
                     
                     if (rs == "Circle") {
-                        return new Circle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
+                        return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
                     } else if(rs == "Square") {
-                        return new Square(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
+                        return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
                     } else if (rs == "Triangle") {
-                        return new Triangle(lane[Math.floor(Math.random()*5)], -64, null, null, null, "random");
+                        return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
                     }
                 }
                 return;
@@ -338,62 +338,62 @@
                 var l = updateBuffer.length;
                 
                 if(mainMenuOptions === true) {
-                    if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
+                    if(mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
                         mainMenuOptions = false;
                         mainMenu();
-                    } else if(mx >= 30 && mx <= 65 && my >= 110 && my <= 145) {
+                    } else if(mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 110 * ctx.canvas.height / 480 && my <= 145 * ctx.canvas.height / 480) {
                         toggleBGM();
                         if(bgm.muted === false) {
-                            ctx.drawImage(speakerImg,30,110);
+                            ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,110 * ctx.canvas.height / 480);
                         } else {
-                            ctx.drawImage(muteImg,30,110);
+                            ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,110 * ctx.canvas.height / 480);
                         }
-                    } else if(mx >= 30 && mx <= 65 && my >= 150 && my <= 185) {
+                    } else if(mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 150 * ctx.canvas.height / 480 && my <= 185 * ctx.canvas.height / 480) {
                         toggleSFX();
                         if(sfx === true) {
-                            ctx.drawImage(speakerImg,30,150);
+                            ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480);
                         } else {
-                            ctx.drawImage(muteImg,30,150);
+                            ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480);
                         }
                     }
                 } else if(mainMenuScreen === true) {
-                    if(mx >= 28 && mx <= 292 && my >= 240 && my <= 294) {
+                    if(mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 240 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
-                    } else if(mx >= 28 && mx <= 292 && my >= 320 && my <= 374) { 
+                    } else if(mx >= 28 && mx <= 292 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) { 
                         //Leaderboard
-                    } else if(mx >= 28 && mx <= 292 && my >= 400 && my <= 454) {
+                    } else if(mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 400 * ctx.canvas.height / 480 && my <= 454 * ctx.canvas.height / 480) {
                         optionsScreen();
                     }
                 } else if(gameOver === true) {
-                    if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
+                    if(mx >= 20 * ctx.canvas.width / 320 && mx <= 159 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         mainMenu();
-                    } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
+                    } else if(mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
                     }
                 } else if(pause === true) {
-                    if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
+                    if(mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
                         pause = false;
                         start();
-                    } else if(mx >= 30 && mx <= 65 && my >= 170 && my <= 205) { 
+                    } else if(mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 170 * ctx.canvas.height / 480 && my <= 205 * ctx.canvas.height / 480) { 
                         toggleBGM();
                         if(bgm.muted === false) {
-                            ctx.drawImage(speakerImg,30,170);
+                            ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
                         } else {
-                            ctx.drawImage(muteImg,30,170);
+                            ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
                         }
-                    } else if(mx >= 30 && mx <= 65 && my >= 210 && my <= 245) {
+                    } else if(mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 210 * ctx.canvas.height / 480 && my <= 245 * ctx.canvas.height / 480) {
                         toggleSFX();
                         if(sfx === true) {
-                            ctx.drawImage(speakerImg,30,210);
+                            ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,210 * ctx.canvas.height / 480);
                         } else {
-                            ctx.drawImage(muteImg,30,210);
+                            ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,210 * ctx.canvas.height / 480);
                         }
-                    } else if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
+                    } else if(mx >= 20 * ctx.canvas.width / 320 && mx <= 159 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         mainMenu();
-                    } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
+                    } else if(mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
                     }
-                } else if(pause === false && mx >= 290 && my <= 30) {
+                } else if(pause === false && mx >= 290 * ctx.canvas.width / 320 && my <= 30 * ctx.canvas.height / 480) {
                     pauseScreen();
                 } else if(pause === false) {
                     for (var i = 0; i < l; i++) {
@@ -519,23 +519,23 @@
                 ctx.strokeStyle="grey";
                 ctx.lineWidth="2";
                 ctx.beginPath();
-                ctx.moveTo(64,0);
-                ctx.lineTo(64,480);
+                ctx.moveTo(64 * ctx.canvas.width / 320,0);
+                ctx.lineTo(64 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
                 ctx.beginPath();
-                ctx.moveTo(128,0);
-                ctx.lineTo(128,480);
+                ctx.moveTo(128 * ctx.canvas.width / 320,0);
+                ctx.lineTo(128 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
                 ctx.beginPath();
-                ctx.moveTo(192,0);
-                ctx.lineTo(192,480);
+                ctx.moveTo(192 * ctx.canvas.width / 320,0);
+                ctx.lineTo(192 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
                 ctx.beginPath();
-                ctx.moveTo(256,0);
-                ctx.lineTo(256,480);
+                ctx.moveTo(256 * ctx.canvas.width / 320,0);
+                ctx.lineTo(256 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
                 var l = layerBuffer.length;
@@ -544,12 +544,12 @@
                 }
                 layerBuffer = [];
                 ctx.fillStyle ="white";
-                ctx.fillText("FPS: " + Math.round(fps),180,410);
+                ctx.fillText("FPS: " + Math.round(fps),180 * ctx.canvas.width / 320,410 * ctx.canvas.height / 480);
                 //ctx.fillText("Entities: " + entities,180,440);
                 
                 // ** Add stuff you want drawn on top all the time here **
-                ctx.rect(0,0,320,35);
-                var grd=ctx.createLinearGradient(0,0,0,35);
+                ctx.rect(0,0,320 * ctx.canvas.width / 320,35 * ctx.canvas.height / 480);
+                var grd=ctx.createLinearGradient(0,0,0,35 * ctx.canvas.height / 480);
                 grd.addColorStop(0,"grey");
                 grd.addColorStop(0.2,"lightgrey");
                 grd.addColorStop(0.8,"lightgrey");
@@ -559,28 +559,28 @@
                 
                 ctx.strokeStyle="black";
                 ctx.beginPath();
-                ctx.moveTo(0,35);
-                ctx.lineTo(320,35);
+                ctx.moveTo(0,35 * ctx.canvas.height / 480);
+                ctx.lineTo(320 * ctx.canvas.width / 320,35 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
                 ctx.fillStyle = "black";
                 ctx.font = "30px Calibri";
-                ctx.fillText("Score: " + window.count,0,30);
+                ctx.fillText("Score: " + window.count,0,30 * ctx.canvas.height / 480);
                 
                 ctx.textAlign="end";
                 if(window.combo <= 1) {
-                    ctx.fillText(window.combo + "x",280,30);
+                    ctx.fillText(window.combo + "x",280 * ctx.canvas.width / 320,30 * ctx.canvas.height / 480);
                 } else {
-                    ctx.fillText(Math.ceil(Math.log2(window.combo)) + "x",280,30);
+                    ctx.fillText(Math.ceil(Math.log2(window.combo)) + "x",280 * ctx.canvas.width / 320,30 * ctx.canvas.height / 480);
                 }
                 ctx.textAlign="start";
                 
                 var pauseButtonImg = new Image();
                 pauseButtonImg.src = "img/pause.png";
-                ctx.drawImage(pauseButtonImg,285,0);
+                ctx.drawImage(pauseButtonImg,285 * ctx.canvas.width / 320,0);
                 
-                ctx.rect(0,445,320,480);
-                var grd=ctx.createLinearGradient(0,445,0,480);
+                ctx.rect(0,445 * ctx.canvas.height / 480,320 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
+                var grd=ctx.createLinearGradient(0,445 * ctx.canvas.height / 480,0,480 * ctx.canvas.height / 480);
                 grd.addColorStop(0,"grey");
                 grd.addColorStop(0.2,"lightgrey");
                 grd.addColorStop(0.8,"lightgrey");
@@ -590,18 +590,18 @@
                 
                 ctx.strokeStyle="black";
                 ctx.beginPath();
-                ctx.moveTo(0,445);
-                ctx.lineTo(320,445);
+                ctx.moveTo(0,445 * ctx.canvas.height / 480);
+                ctx.lineTo(320 * ctx.canvas.width / 320,445 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
                 ctx.fillStyle = "black";
                 ctx.font = "30px Calibri";
-                ctx.fillText("Rules: " + currentRules.rules[0],0,475);
+                ctx.fillText("Rules: " + currentRules.rules[0],0,475 * ctx.canvas.height / 480);
             }
 
             function panic() {
                 delta = 0;
-                ctx.fillText("Panic",100,200);
+                ctx.fillText("Panic",100 * ctx.canvas.width / 320,200 * ctx.canvas.height / 480);
             }
             
             //function begin() {
@@ -704,17 +704,17 @@
                 pause = true;
                 stop();
                 
-                ctx.rect(0,35,320,410);
+                ctx.rect(0,35 * ctx.canvas.height / 480,320 * ctx.canvas.width / 320,410 * ctx.canvas.height / 480);
                 ctx.fillStyle="rgba(0,0,0,.5)";
                 ctx.fill();
                 
                 ctx.beginPath();
                 ctx.lineWidth="4";
                 ctx.strokeStyle="black";
-                ctx.rect(22,70,276,190);
+                ctx.rect(22 * ctx.canvas.width / 320,70 * ctx.canvas.height / 480,276 * ctx.canvas.width / 320,190 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
-                var grd=ctx.createLinearGradient(0,70,0,260);
+                var grd=ctx.createLinearGradient(0,70 * ctx.canvas.height / 480,0,260 * ctx.canvas.height / 480);
                 grd.addColorStop(0,"grey");
                 grd.addColorStop(0.2,"lightgrey");
                 grd.addColorStop(0.8,"lightgrey");
@@ -724,32 +724,32 @@
                 
                 ctx.fillStyle = "black";
                 ctx.font = "20px Calibri";
-                ctx.fillText("Current Rule: ",25,90);
+                ctx.fillText("Current Rule: ",25 * ctx.canvas.width / 320,90 * ctx.canvas.height / 480);
                 
                 ctx.beginPath();
                 ctx.lineWidth="2";
-                ctx.moveTo(30,165);
-                ctx.lineTo(290,165);
+                ctx.moveTo(30 * ctx.canvas.width / 320,165 * ctx.canvas.height / 480);
+                ctx.lineTo(290 * ctx.canvas.width / 320,165 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
-                ctx.fillText("Background Music",70,195);
-                ctx.fillText("Sound Effects",70,235);
+                ctx.fillText("Background Music",70 * ctx.canvas.width / 320,195 * ctx.canvas.height / 480);
+                ctx.fillText("Sound Effects",70 * ctx.canvas.width / 320,235 * ctx.canvas.height / 480);
                 
                 if(bgm.muted === false) {
-                    ctx.drawImage(speakerImg,30,170);
+                    ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
                 } else {
-                    ctx.drawImage(muteImg,30,170);
+                    ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
                 }
                 
                 if(sfx === true) {
-                    ctx.drawImage(speakerImg,30,210);
+                    ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,210 * ctx.canvas.height / 480);
                 } else {
-                    ctx.drawImage(muteImg,30,210);
+                    ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,210 * ctx.canvas.height / 480);
                 }
                 
-                ctx.drawImage(menuButtonImg,20,250);
-                ctx.drawImage(restartButtonImg,160,250);
-                ctx.drawImage(closeButtonImg,280,60);
+                ctx.drawImage(menuButtonImg,20 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480);
+                ctx.drawImage(restartButtonImg,160 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480);
+                ctx.drawImage(closeButtonImg,280 * ctx.canvas.width / 320,60 * ctx.canvas.height / 480);
             }
             
             //BGM toggle variable and function
@@ -784,10 +784,10 @@
             function mainMenu() {
                 mainMenuScreen = true;
                 ctx.drawImage(backgroundImage,0,0);
-                ctx.drawImage(logo,0,60);
-                ctx.drawImage(playButton,28,240);
-                ctx.drawImage(leaderboardButton,28,320);
-                ctx.drawImage(optionsButton,28,400);
+                ctx.drawImage(logo,0,60 * ctx.canvas.height / 480);
+                ctx.drawImage(playButton,28 * ctx.canvas.width / 320,240 * ctx.canvas.height / 480);
+                ctx.drawImage(leaderboardButton,28 * ctx.canvas.width / 320,320 * ctx.canvas.height / 480);
+                ctx.drawImage(optionsButton,28 * ctx.canvas.width / 320,400 * ctx.canvas.height / 480);
             }
             
             //New game aka restart
@@ -811,17 +811,17 @@
             //Main menu options screen
             function optionsScreen() {
                 mainMenuOptions = true;
-                ctx.rect(0,0,320,480);
+                ctx.rect(0,0,320 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
                 ctx.fillStyle="rgba(0,0,0,.5)";
                 ctx.fill();
                 
                 ctx.beginPath();
                 ctx.lineWidth="4";
                 ctx.strokeStyle="black";
-                ctx.rect(22,70,276,190);
+                ctx.rect(22 * ctx.canvas.width / 320,70 * ctx.canvas.height / 480,276 * ctx.canvas.width / 320,190 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
-                var grd=ctx.createLinearGradient(0,70,0,260);
+                var grd=ctx.createLinearGradient(0,70 * ctx.canvas.height / 480,0,260 * ctx.canvas.height / 480);
                 grd.addColorStop(0,"grey");
                 grd.addColorStop(0.2,"lightgrey");
                 grd.addColorStop(0.8,"lightgrey");
@@ -831,24 +831,24 @@
                 
                 ctx.fillStyle = "black";
                 ctx.font = "30px Calibri";
-                ctx.fillText("Options",25,100);
+                ctx.fillText("Options",25 * ctx.canvas.width / 320,100 * ctx.canvas.height / 480);
                 ctx.font = "20px Calibri";
-                ctx.fillText("Background Music",70,135);
-                ctx.fillText("Sound Effects",70,175);
+                ctx.fillText("Background Music",70 * ctx.canvas.width / 320,135 * ctx.canvas.height / 480);
+                ctx.fillText("Sound Effects",70 * ctx.canvas.width / 320,175 * ctx.canvas.height / 480);
                 
                 if(bgm.muted === false) {
-                    ctx.drawImage(speakerImg,30,110);
+                    ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,110 * ctx.canvas.height / 480);
                 } else {
-                    ctx.drawImage(muteImg,30,110);
+                    ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,110 * ctx.canvas.height / 480);
                 }
                 
                 if(sfx === true) {
-                    ctx.drawImage(speakerImg,30,150);
+                    ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480);
                 } else {
-                    ctx.drawImage(muteImg,30,150);
+                    ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480);
                 }
                 
-                ctx.drawImage(closeButtonImg,280,60);
+                ctx.drawImage(closeButtonImg,280 * ctx.canvas.width / 320,60 * ctx.canvas.height / 480);
             }
             
             //Game over screen
@@ -857,17 +857,17 @@
                 errorSFX();
                 stop();
                 
-                ctx.rect(0,0,320,480);
+                ctx.rect(0,0,320 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
                 ctx.fillStyle="rgba(0,0,0,.5)";
                 ctx.fill();
                 
                 ctx.beginPath();
                 ctx.lineWidth="4";
                 ctx.strokeStyle="black";
-                ctx.rect(22,70,276,190);
+                ctx.rect(22 * ctx.canvas.width / 320,70 * ctx.canvas.height / 480,276 * ctx.canvas.width / 320,190 * ctx.canvas.height / 480);
                 ctx.stroke();
                 
-                var grd=ctx.createLinearGradient(0,70,0,260);
+                var grd=ctx.createLinearGradient(0,70 * ctx.canvas.height / 480,0,260 * ctx.canvas.height / 480);
                 grd.addColorStop(0,"grey");
                 grd.addColorStop(0.2,"lightgrey");
                 grd.addColorStop(0.8,"lightgrey");
@@ -877,30 +877,30 @@
                 
                 ctx.fillStyle = "black";
                 ctx.font = "30px Calibri";
-                ctx.fillText("Game Over",25,100);
+                ctx.fillText("Game Over",25 * ctx.canvas.width / 320,100 * ctx.canvas.height / 480);
                 
                 ctx.font = "20px Calibri";
-                ctx.fillText("Score: " + window.count,25,130);
+                ctx.fillText("Score: " + window.count,25 * ctx.canvas.width / 320,130 * ctx.canvas.height / 480);
                 
                 //Temporary variable, actually check in later iteration instead.
                 var newRecord = false;
                 if(newRecord === true) {
                     ctx.beginPath();
-                    ctx.rect(35,150,250,90);
+                    ctx.rect(35 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480,250 * ctx.canvas.width / 320,90 * ctx.canvas.height / 480);
                     ctx.stroke();
                     
                     ctx.fillStyle = "black";
                     ctx.font = "20px Calibri";
-                    ctx.fillText("New High Score",40,170);
+                    ctx.fillText("New High Score",40 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
                     
                     ctx.font = "15px Calibri";
-                    ctx.fillText("Enter your name",40,190);
+                    ctx.fillText("Enter your name",40 * ctx.canvas.width / 320,190 * ctx.canvas.height / 480);
                 } else {
-                    ctx.fillText("High Score: 9001",40,170);
+                    ctx.fillText("High Score: 9001",40 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
                 }
                 
-                ctx.drawImage(menuButtonImg,20,250);
-                ctx.drawImage(restartButtonImg,160,250);
+                ctx.drawImage(menuButtonImg,20 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480);
+                ctx.drawImage(restartButtonImg,160 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480);
             }
         </script>
     </body>
