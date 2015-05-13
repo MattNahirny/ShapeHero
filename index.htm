@@ -9,7 +9,7 @@
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
         </audio>
-        <canvas id="canvas" width="320" height="480">
+        <canvas id="canvas" width="320" height="600">
             Your browser does not support the HTML5 canvas tag.
         </canvas>
         <script>
@@ -564,7 +564,7 @@
                 ctx.stroke();
                 
                 ctx.fillStyle = "black";
-                ctx.font = "30px Calibri";
+                ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Score: " + window.count,0,30 * ctx.canvas.height / 480);
                 
                 ctx.textAlign="end";
@@ -595,7 +595,7 @@
                 ctx.stroke();
                 
                 ctx.fillStyle = "black";
-                ctx.font = "30px Calibri";
+                ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Rules: " + currentRules.rules[0],0,475 * ctx.canvas.height / 480);
             }
 
@@ -723,7 +723,7 @@
                 ctx.fill();
                 
                 ctx.fillStyle = "black";
-                ctx.font = "20px Calibri";
+                ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Current Rule: ",25 * ctx.canvas.width / 320,90 * ctx.canvas.height / 480);
                 
                 ctx.beginPath();
@@ -830,9 +830,9 @@
                 ctx.fill();
                 
                 ctx.fillStyle = "black";
-                ctx.font = "30px Calibri";
+                ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Options",25 * ctx.canvas.width / 320,100 * ctx.canvas.height / 480);
-                ctx.font = "20px Calibri";
+                ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Background Music",70 * ctx.canvas.width / 320,135 * ctx.canvas.height / 480);
                 ctx.fillText("Sound Effects",70 * ctx.canvas.width / 320,175 * ctx.canvas.height / 480);
                 
@@ -876,10 +876,10 @@
                 ctx.fill();
                 
                 ctx.fillStyle = "black";
-                ctx.font = "30px Calibri";
+                ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Game Over",25 * ctx.canvas.width / 320,100 * ctx.canvas.height / 480);
                 
-                ctx.font = "20px Calibri";
+                ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Score: " + window.count,25 * ctx.canvas.width / 320,130 * ctx.canvas.height / 480);
                 
                 //Temporary variable, actually check in later iteration instead.
@@ -890,10 +890,10 @@
                     ctx.stroke();
                     
                     ctx.fillStyle = "black";
-                    ctx.font = "20px Calibri";
+                    ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
                     ctx.fillText("New High Score",40 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
                     
-                    ctx.font = "15px Calibri";
+                    ctx.font = 15 * ctx.canvas.height / 480 + "px Calibri";
                     ctx.fillText("Enter your name",40 * ctx.canvas.width / 320,190 * ctx.canvas.height / 480);
                 } else {
                     ctx.fillText("High Score: 9001",40 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
