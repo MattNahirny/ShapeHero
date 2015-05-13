@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <link type="text/css" rel="stylesheet" href="css/style.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    	
+	</head>
+	
+	
+	
+	
+	
+
+    <body style="background-color:black;">
+        <audio id="background_audio" autoplay="autoplay" loop="loop">
+            <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
+        </audio>
+        <canvas id="canvas" width="320" height="480">
+            Your browser does not support the HTML5 canvas tag.
+        </canvas>
+        <script>
+            var ctx = document.getElementById("canvas").getContext("2d"),
+            limit = 300,
+            lastFrameTimeMs = 0,
+            maxFPS = 60,
+            delta = 0,
+            timestep = 1000 / 60,
+            fps = 60,
+            framesThisSecond = 0,
+            lastFpsUpdate = 0,
+            running = false,
+            started = false,
+            frameID = 0;
+            entities = 0;
+            mainMenuScreen = false;
+            mainMenuOptions = false;
+            gameOver = false;
+            pause = false;
+            window.count = 90;
+            window.combo = 0;
+            
+            //---------------------------------------
+            //Constructor for a Circle
+            //---------------------------------------
+            function Circle(x, y, z, xVelocity, yVelocity, colour) {
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
+                this.shapeType = "Circle";
+                this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -60;
+                this.yPrevious = this.yCurrent;
+                this.layer = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0.1;
+                this.clicked = false;
+                entities++;                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
+                    bodyImg.src = "img/shapes/circle/red_circle.png";
+                } else if (this.colour == "blue") {
+                    bodyImg.src = "img/shapes/circle/blue_circle.png";
+                } else if (this.colour == "green") {
+                    bodyImg.src = "img/shapes/circle/green_circle.png";
+                } else if (this.colour == "yellow") {
+                    bodyImg.src = "img/shapes/circle/yellow_circle.png";
+                }
+                
+                this.draw = function(interp) {
+                    ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
+                }
+                this.update = function() {
+                    this.xPrevious = this.xCurrent;
+                    this.yPrevious = this.yCurrent;
+                    this.xCurrent += this.xVelocity * delta;
+                    this.yCurrent += this.yVelocity * delta;
+                }
+                this.offScreen = function() {
+                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                }
+                
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
+                        (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
+                }
+            }
+            
+            //---------------------------------------
+            //Constructor for a Square
+            //---------------------------------------
+            function Square(x, y, z, xVelocity, yVelocity, colour) {
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
+                this.shapeType = "Square";
+                this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -60;
+                this.yPrevious = this.yCurrent;
+                this.layer = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0.1;
+                this.clicked = false;
+                entities++;
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
+                    bodyImg.src = "img/shapes/square/red_square.png";
+                } else if (this.colour == "blue") {
+                    bodyImg.src = "img/shapes/square/blue_square.png";
+                } else if (this.colour == "green") {
+                    bodyImg.src = "img/shapes/square/green_square.png";
+                } else if (this.colour == "yellow") {
+                    bodyImg.src = "img/shapes/square/yellow_square.png";
+                }
+                
+                this.draw = function(interp) {
+                    ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
+                }
+                this.update = function() {
+                    this.xPrevious = this.xCurrent;
+                    this.yPrevious = this.yCurrent;
+                    this.xCurrent += this.xVelocity * delta;
+                    this.yCurrent += this.yVelocity * delta;
+                }
+                this.offScreen = function() {
+                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
+                        (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
+            }
+            }
+            
+            //---------------------------------------
+            //Constructor for a Triangle
+            //---------------------------------------
+            function Triangle(x, y, z, xVelocity, yVelocity, colour) {
+                var randomColour = ["red", "blue", "green", "yellow"];
+                var bodyImg = new Image();
+                this.shapeType = "Triangle";
+                this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -60;
+                this.yPrevious = this.yCurrent;
+                this.layer = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0.1;
+                this.clicked = false;
+                entities++; 
+                
+                if (colour == "random") {
+                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                } else {
+                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                }
+                
+                if (this.colour == "red") {
+                    bodyImg.src = "img/shapes/triangle/red_triangle.png";
+                } else if (this.colour == "blue") {
+                    bodyImg.src = "img/shapes/triangle/blue_triangle.png";
+                } else if (this.colour == "green") {
+                    bodyImg.src = "img/shapes/triangle/green_triangle.png";
+                } else if (this.colour == "yellow") {
+                    bodyImg.src = "img/shapes/triangle/yellow_triangle.png";
+                }
+                
+                this.draw = function(interp) {
+                    ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
+                }
+                this.update = function() {
+                    this.xPrevious = this.xCurrent;
+                    this.yPrevious = this.yCurrent;
+                    this.xCurrent += this.xVelocity * delta;
+                    this.yCurrent += this.yVelocity * delta;
+                }
+                this.offScreen = function() {
+                    return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
+                        (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
+                }
+                
+            }
+            
+            //---------------------------------------
+            //Constructor for a Star
+            //---------------------------------------
+            function Star(x, y, z, xVelocity, yVelocity) {
+                var bodyImg = new Image();
+                this.shapeType = "Star";
+                this.colour = "yellow";
+                bodyImg.src = "img/shapes/star/star.png";  
+                this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -60;
+                this.yPrevious = this.yCurrent;
+                this.layer = z || 0;
+                this.xVelocity = xVelocity || 0;
+                this.yVelocity = yVelocity || 0.1;
+                this.clicked = false;
+                entities++;
+                this.draw = function(interp) {
+                    ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp);
+                }
+                this.update = function() {
+                    this.xPrevious = this.xCurrent;
+                    this.yPrevious = this.yCurrent;
+                    this.xCurrent += this.xVelocity * delta;
+                    this.yCurrent += this.yVelocity * delta;
+                }
+                this.offScreen = function() {
+                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                }
+                this.contains = function(mx, my) {
+                // All we have to do is make sure the Mouse X,Y fall in the area between
+                // the shape's X and (X + Width) and its Y and (Y + Height)
+                return  (this.xCurrent <= mx) && (this.xCurrent + 64 >= mx) &&
+                        (this.yCurrent <= my) && (this.yCurrent + 64 >= my);
+            }
+            }
+            
+            //The way that the factory works is you call createShape() with a parameter
+            //the parameter is a string of which shape to be created or random
+            //eg. ShapeFactory.createShape("blueCircle");
+            //or 
+            //ShapeFactory.createShape("random");
+            function ShapeFactory() { }
+            ShapeFactory.prototype.createShape = function createShape(type) {
+                var randomShape = ["Circle", "Square", "Triangle"];
+                var lane = [0, 64, 128, 192, 256];
+                if (type == "circle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                } else if (type == "square") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                } else if (type == "triangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                } else if (type == "redCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                } else if (type == "blueCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                } else if (type == "greenCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                } else if (type == "yellowCircle") {
+                    return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                } else if (type == "redSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                } else if (type == "blueSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                } else if (type == "greenSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                } else if (type == "yellowSquare") {
+                    return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                } else if (type == "redTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "red");
+                } else if (type == "blueTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "blue");
+                } else if (type == "greenTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "green");
+                } else if (type == "yellowTriangle") {
+                    return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "yellow");
+                } else if (type == "star") {
+                    return new Star(lane[Math.floor(Math.random()*5)], -60, null, null, null);
+                } else if (type == "random") {
+                    var rs = randomShape[Math.floor(Math.random()*3)];
+                    
+                    if (rs == "Circle") {
+                        return new Circle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    } else if(rs == "Square") {
+                        return new Square(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    } else if (rs == "Triangle") {
+                        return new Triangle(lane[Math.floor(Math.random()*5)], -60, null, null, null, "random");
+                    }
+                }
+                return;
+            };
+            
+            canvas.addEventListener('mousedown', function(e) {
+                var mouse = getMouse(e);
+                var mx = mouse.x;
+                var my = mouse.y;
+                var l = updateBuffer.length;
+                
+                if(mainMenuOptions === true) {
+                    if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
+                        mainMenuOptions = false;
+                        mainMenu();
+                    } else if(mx >= 30 && mx <= 65 && my >= 110 && my <= 145) {
+                        toggleBGM();
+                        if(bgm.muted === false) {
+                            ctx.drawImage(speakerImg,30,110);
+                        } else {
+                            ctx.drawImage(muteImg,30,110);
+                        }
+                    } else if(mx >= 30 && mx <= 65 && my >= 150 && my <= 185) {
+                        toggleSFX();
+                        if(sfx === true) {
+                            ctx.drawImage(speakerImg,30,150);
+                        } else {
+                            ctx.drawImage(muteImg,30,150);
+                        }
+                    }
+                } else if(mainMenuScreen === true) {
+                    if(mx >= 28 && mx <= 292 && my >= 240 && my <= 294) {
+                        newGame();
+                    } else if(mx >= 28 && mx <= 292 && my >= 320 && my <= 374) { 
+                        leaderboardScreen();
+                    } else if(mx >= 28 && mx <= 292 && my >= 400 && my <= 454) {
+                        optionsScreen();
+                    }
+                } else if(gameOver === true) {
+                    if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
+                        mainMenu();
+                    } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
+                        newGame();
+                    }
+                } else if(pause === true) {
+                    if(mx >= 280 && mx <= 310 && my >= 60 && my <= 90) {
+                        pause = false;
+                        start();
+                    } else if(mx >= 30 && mx <= 65 && my >= 170 && my <= 205) { 
+                        toggleBGM();
+                        if(bgm.muted === false) {
+                            ctx.drawImage(speakerImg,30,170);
+                        } else {
+                            ctx.drawImage(muteImg,30,170);
+                        }
+                    } else if(mx >= 30 && mx <= 65 && my >= 210 && my <= 245) {
+                        toggleSFX();
+                        if(sfx === true) {
+                            ctx.drawImage(speakerImg,30,210);
+                        } else {
+                            ctx.drawImage(muteImg,30,210);
+                        }
+                    } else if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
+                        mainMenu();
+                    } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
+                        newGame();
+                    }
+                } else if(pause === false && mx >= 290 && my <= 30) {
+                    pauseScreen();
+                } else if(pause === false) {
+				
+				
+                    for (var i = 0; i < l; i++) {
+                        if (updateBuffer[i].contains(mx, my)) {
+                            updateBuffer[i].clicked = true;
+                            window.count += ++window.combo;
+                            validSFX();
+                            return;
+                        }
+                    }
+					var derp = window.count;
+					document.getElementById("johnScore").innerHTML = derp;
+					
+                }
+            }, true);
+            
+            canvas.addEventListener('mouseup', function(e) {}, true);
+             
+            var sf = new ShapeFactory();             
+            var updateBuffer = [];
+            var layerBuffer = [];
+            updateBuffer.push(sf.createShape("random"));
+            updateBuffer.push(sf.createShape("random"));
+            updateBuffer.push(sf.createShape("random"));
+            updateBuffer.push(sf.createShape("random"));
+            updateBuffer.push(sf.createShape("random"));
+            
+            /*TODO WTF?
+            Shape.prototype.hit = function(mouse) {
+                mx = getMouse(mouse).x;
+                my = getMouse(mouse).y;
+                ctx.fillText("x: " + x, 180, 480);
+                ctx.fillText("y: " + entities, 180, 480);
+            }*/
+            
+            getMouse = function(mouseEvent) {
+                var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
+                if (element.offsetParent !== undefined) {
+                    do {
+                        offsetX += element.offsetLeft;
+                        offsetY += element.offsetTop;
+                    } while ((element = element.offsetParent));
+                }
+                //offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
+                //offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
+                mx = mouseEvent.pageX;// - offsetX;
+                my = mouseEvent.pageY;// - offsetY;
+                return {x: mx, y: my};
+            }
+            
+            
+            function update(delta) {
+                var l = updateBuffer.length,
+                s = 0;
+                for (var i = 0; i < l; i++) {
+                    if(updateBuffer[i - s].offScreen()) {
+                        updateBuffer.splice(i - s, 1);
+                        s++;
+                        //window.combo = 0;
+                        gameOver = true;
+                        entities--;
+                        updateBuffer.push(sf.createShape("random"));
+                    } else if (updateBuffer[i - s].clicked === true) {
+                        updateBuffer.splice(i - s, 1);
+                        s++;
+                        entities--;
+                        updateBuffer.push(sf.createShape("random"));
+                    } else {
+                        updateBuffer[i - s].update(delta);
+                        layerBuffer.push(updateBuffer[i - s]);
+                    }
+                }
+                layerBuffer.sort(function(a, b) {
+                    return b.layer - a.layer;
+                });
+            }
+
+            function draw(interp) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                // ** Add stuff you want drawn in the background all the time here **
+                    
+                var backgroundImg = new Image();
+                backgroundImg.src = "img/nebula_background.png";
+                ctx.drawImage(backgroundImg,0,0);
+                
+                ctx.strokeStyle="grey";
+                ctx.lineWidth="2";
+                ctx.beginPath();
+                ctx.moveTo(64,0);
+                ctx.lineTo(64,480);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(128,0);
+                ctx.lineTo(128,480);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(192,0);
+                ctx.lineTo(192,480);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(256,0);
+                ctx.lineTo(256,480);
+                ctx.stroke();
+                
+                var l = layerBuffer.length;
+                for (var i = 0; i < l; i++) {
+                    layerBuffer[i].draw(interp);
+                }
+                layerBuffer = [];
+                ctx.fillStyle ="white";
+                ctx.fillText("FPS: " + Math.round(fps),180,410);
+                //ctx.fillText("Entities: " + entities,180,440);
+                
+                // ** Add stuff you want drawn on top all the time here **
+                ctx.rect(0,0,320,35);
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.strokeStyle="black";
+                ctx.beginPath();
+                ctx.moveTo(0,35);
+                ctx.lineTo(320,35);
+                ctx.stroke();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Score: " + window.count,0,30);
+                
+                ctx.textAlign="end";
+                ctx.fillText(window.combo + "x",280,30);
+                ctx.textAlign="start";
+                
+                var pauseButtonImg = new Image();
+                pauseButtonImg.src = "img/pause.png";
+                ctx.drawImage(pauseButtonImg,285,0);
+                
+                ctx.rect(0,445,320,480);
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.strokeStyle="black";
+                ctx.beginPath();
+                ctx.moveTo(0,445);
+                ctx.lineTo(320,445);
+                ctx.stroke();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Rules: ",0,475);
+            }
+
+            function panic() {
+                delta = 0;
+                ctx.fillText("Panic",100,200);
+            }
+
+            //function begin() {
+            //}
+
+            function end(fps) {
+                if (fps < 25) {
+                    entities = 0;
+                    updateBuffer = [];
+                }
+            }
+
+            function stop() {
+                running = false;
+                started = false;
+                cancelAnimationFrame(frameID);
+            }
+
+            function start() {
+                if (!started) {
+                    started = true;
+                    frameID = requestAnimationFrame(function(timestamp) {
+                        draw(1);
+                        running = true;
+                        lastFrameTimeMs = timestamp;
+                        lastFpsUpdate = timestamp;
+                        framesThisSecond = 0;
+                        frameID = requestAnimationFrame(mainLoop);
+						
+                    });
+                }
+            }
+
+            function mainLoop(timestamp) {
+                // Throttle the frame rate.    
+                if (timestamp < lastFrameTimeMs + (1000 / maxFPS)) {
+                    frameID = requestAnimationFrame(mainLoop);
+                    return;
+                }
+                delta += timestamp - lastFrameTimeMs;
+                lastFrameTimeMs = timestamp;
+
+                //begin(timestamp, delta);
+
+                if (timestamp > lastFpsUpdate + 1000) {
+                    fps = 0.25 * framesThisSecond + 0.75 * fps;
+                    
+                    lastFpsUpdate = timestamp;
+                    framesThisSecond = 0;
+                }
+                framesThisSecond++;
+
+                var numUpdateSteps = 0;
+                while (delta >= timestep) {
+                    update(timestep);
+                    delta -= timestep;
+                    if (++numUpdateSteps >= 240) {
+                        panic();
+                        break;
+                    }
+                }
+
+                draw(delta / timestep);
+                
+                end(fps);
+                
+                frameID = requestAnimationFrame(mainLoop);
+                
+                if(gameOver === true) {
+                    gameOverScreen();
+                }
+            }
+            
+            //start();
+            window.onload = function() {
+                mainMenu();
+            };
+            
+            var backgroundImage = new Image();
+            backgroundImage.src = "img/star_background.png";
+            var logo = new Image();
+            logo.src = "img/logo.png";
+            var playButton = new Image();
+            playButton.src = "img/play_button.png";
+            var leaderboardButton = new Image();
+            leaderboardButton.src = "img/leaderboard_button.png";
+            var optionsButton = new Image();
+            optionsButton.src = "img/options_button.png";
+            var menuButtonImg = new Image();
+            menuButtonImg.src = "img/mainmenu.png";
+            var restartButtonImg = new Image();
+            restartButtonImg.src = "img/restart.png";
+            var closeButtonImg = new Image();
+            closeButtonImg.src = "img/close.png";
+            var speakerImg = new Image();
+            speakerImg.src = "img/speaker.png";
+            var muteImg = new Image();
+            muteImg.src = "img/mute.png";
+            
+            //Pause menu drawing
+            function pauseScreen() {
+                pause = true;
+                stop();
+                
+                ctx.rect(0,35,320,410);z
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Current Rule: ",25,90);
+                
+                ctx.beginPath();
+                ctx.lineWidth="2";
+                ctx.moveTo(30,165);
+                ctx.lineTo(290,165);
+                ctx.stroke();
+                
+                ctx.fillText("Background Music",70,195);
+                ctx.fillText("Sound Effects",70,235);
+                
+                if(bgm.muted === false) {
+                    ctx.drawImage(speakerImg,30,170);
+                } else {
+                    ctx.drawImage(muteImg,30,170);
+                }
+                
+                if(sfx === true) {
+                    ctx.drawImage(speakerImg,30,210);
+                } else {
+                    ctx.drawImage(muteImg,30,210);
+                }
+                
+                ctx.drawImage(menuButtonImg,20,250);
+                ctx.drawImage(restartButtonImg,160,250);
+                ctx.drawImage(closeButtonImg,280,60);
+            }
+            
+            //BGM toggle variable and function
+            var bgm = document.getElementById('background_audio');
+            function toggleBGM() { 
+                bgm.muted = !bgm.muted;
+            }
+            
+            //SFX toggle function, don't play sounds if false.
+            var sfx = true;
+            function toggleSFX() { 
+                sfx = !sfx;
+            }
+            
+            //Valid SFX
+            function validSFX() {
+                if(sfx === true) {
+                    var new_sfx = new Audio('audio/valid.mp3');
+                    new_sfx.play();
+                }
+            }
+            
+            //Error SFX
+            function errorSFX() {
+                if(sfx === true) {
+                    var new_sfx = new Audio('audio/error.mp3');
+                    new_sfx.play();
+                }
+            }
+            
+            //Main Menu
+            function mainMenu() {
+                mainMenuScreen = true;
+                ctx.drawImage(backgroundImage,0,0);
+                ctx.drawImage(logo,0,60);
+                ctx.drawImage(playButton,28,240);
+                ctx.drawImage(leaderboardButton,28,320);
+                ctx.drawImage(optionsButton,28,400);
+            }
+            
+            //New game aka restart
+            function newGame() {
+                updateBuffer = [];
+                layerBuffer = [];
+                updateBuffer.push(sf.createShape("random"));
+                updateBuffer.push(sf.createShape("random"));
+                updateBuffer.push(sf.createShape("random"));
+                updateBuffer.push(sf.createShape("random"));
+                updateBuffer.push(sf.createShape("random"));
+                frameID = 0;
+                entities = 0;
+                mainMenuScreen = false;
+                mainMenuOptions = false;
+				leaderboardScreen = false;
+                gameOver = false;
+                pause = false;
+                window.count = 0;
+                window.combo = 0;
+                start();
+            }
+            
+			function leaderboardScreen() {
+				window.open("leaderboardoverlap.html");
+			}
+			
+			
+            //Main menu options screen
+            function optionsScreen() {
+                mainMenuOptions = true;
+                ctx.rect(0,0,320,480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Options",25,100);
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Background Music",70,135);
+                ctx.fillText("Sound Effects",70,175);
+                
+                if(bgm.muted === false) {
+                    ctx.drawImage(speakerImg,30,110);
+                } else {
+                    ctx.drawImage(muteImg,30,110);
+                }
+                
+                if(sfx === true) {
+                    ctx.drawImage(speakerImg,30,150);
+                } else {
+                    ctx.drawImage(muteImg,30,150);
+                }
+                
+                ctx.drawImage(closeButtonImg,280,60);
+            }
+            
+            //Game over screen
+            function gameOverScreen() {
+                gameOver = true;
+                errorSFX();
+                stop();
+                
+                ctx.rect(0,0,320,480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+                
+                ctx.beginPath();
+                ctx.lineWidth="4";
+                ctx.strokeStyle="black";
+                ctx.rect(22,70,276,190);
+                ctx.stroke();
+                ctx.fillStyle="white";
+                ctx.fill();
+                
+                ctx.fillStyle = "black";
+                ctx.font = "30px Comic Sans MS";
+                ctx.fillText("Game Over",25,100);
+                
+                ctx.font = "20px Comic Sans MS";
+                ctx.fillText("Score: " + window.count,25,130);
+                
+                //Temporary variable, actually check in later iteration instead.
+                var newRecord = false;
+                if(newRecord === true) {
+                    ctx.beginPath();
+                    ctx.rect(35,150,250,90);
+                    ctx.stroke();
+                    
+                    ctx.fillStyle = "black";
+                    ctx.font = "20px Comic Sans MS";
+                    ctx.fillText("New High Score",40,170);
+                    
+                    ctx.font = "15px Comic Sans MS";
+                    ctx.fillText("Enter your name",40,190);
+                } else {
+                    ctx.fillText("High Score: 9001",40,170);
+                }
+                
+                ctx.drawImage(menuButtonImg,20,250);
+                ctx.drawImage(restartButtonImg,160,250);
+            }
+        
+  var LEADERBOARD_SIZE = 10;
+
+  // Create our Firebase reference
+  var scoreListRef = new Firebase('https://zu1g1l7h60o.firebaseio-demo.com//scoreList');
+
+  // Keep a mapping of firebase locations to HTML elements, so we can move / remove elements as necessary.
+  var htmlForPath = {};
+
+  // Helper function that takes a new score snapshot and adds an appropriate row to our leaderboard table.
+  function handleScoreAdded(scoreSnapshot, prevScoreName) {
+  
+  
+    var newScoreRow = $("<tr/>");
+	newScoreRow.append($("<td/>").append($("<em/>").text("")));
+
+    newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val().name)));
+    newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
+
+    // Store a reference to the table row so we can get it again later.
+    htmlForPath[scoreSnapshot.key()] = newScoreRow;
+
+    // Insert the new score in the appropriate place in the table.
+    if (prevScoreName === null) {
+      $("#leaderboardTable").append(newScoreRow);
+    }
+    else {
+      var lowerScoreRow = htmlForPath[prevScoreName];
+      lowerScoreRow.before(newScoreRow);
+    }
+  }
+
+  // Helper function to handle a score object being removed; just removes the corresponding table row.
+  function handleScoreRemoved(scoreSnapshot) {
+    var removedScoreRow = htmlForPath[scoreSnapshot.key()];
+    removedScoreRow.remove();
+    delete htmlForPath[scoreSnapshot.key()];
+  }
+
+  // Create a view to only receive callbacks for the last LEADERBOARD_SIZE scores
+  var scoreListView = scoreListRef.limitToLast(LEADERBOARD_SIZE);
+
+  // Add a callback to handle when a new score is added.
+  scoreListView.on('child_added', function (newScoreSnapshot, prevScoreName) {
+    handleScoreAdded(newScoreSnapshot, prevScoreName);
+  });
+
+  // Add a callback to handle when a score is removed
+  scoreListView.on('child_removed', function (oldScoreSnapshot) {
+    handleScoreRemoved(oldScoreSnapshot);
+  });
+
+  // Add a callback to handle when a score changes or moves positions.
+  var changedCallback = function (scoreSnapshot, prevScoreName) {
+    handleScoreRemoved(scoreSnapshot);
+    handleScoreAdded(scoreSnapshot, prevScoreName);
+  };
+  scoreListView.on('child_moved', changedCallback);
+  scoreListView.on('child_changed', changedCallback);
+
+  
+  // When the user presses enter on SubmitButton, add the score, and update the highest score.
+
+    $(document).ready(function(){
+    $("#zergling").click(function(){
+      var newScore = window.count;//Number($("#scoreInput").val());
+      var name = $("#nameInput").val();
+      //$("#scoreInput").val("");
+
+      if (name.length === 0)
+        return;
+
+      var userScoreRef = scoreListRef.child(name);
+
+      // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
+      userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+    });
+	});
+
+  
+</script>
+	<div class="example-base example-leaderboard l-demo-container">
+<!-- dont need table b/c we're just entering score -->
+  <footer>
+    </br>
+    <input class="example-leaderboard-name" type="text" id="nameInput" placeholder="Enter a name">
+    <!--<input class="example-leaderboard-score" type="text" id="derp" placeholder="Record your score..."> //remove score text field so user cant cheat-->
+  </footer>
+</div>	
+		
+<!--for testing purposes, delete this-->
+	<a href="leaderboardoverlap.html" id="foo"><img class="leaderboardThing" src="img/clicked_leaderboard_button.png" alt="404 page not found"/></a>
+	<p id="johnScore">Score placeholder? </p>
+	
+	</body>
+	<!-- hide the submit button onclick/after -->
+	<div id="hide_this">
+		</br>
+		<button type="button" id="zergling">Submit</button>
+	</div>
+	
+	<div class="menu">
+	  <a href="http://google.com">example</a>
+	</div>
+	
+</html>
