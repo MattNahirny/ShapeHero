@@ -9,7 +9,7 @@
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
         </audio>
-        <canvas id="canvas" width="320" height="600">
+        <canvas id="canvas" width="320" height="480">
             Your browser does not support the HTML5 canvas tag.
         </canvas>
         <script>
@@ -444,7 +444,7 @@
                 s = 0;
                 for (var i = 0; i < l; i++) {
                 
-                if (updateBuffer[i - s] instanceof Circle ||
+                    if (updateBuffer[i - s] instanceof Circle ||
                             updateBuffer[i - s] instanceof Square ||
                             updateBuffer[i - s] instanceof Triangle ||
                             updateBuffer[i - s] instanceof Star) {
@@ -456,11 +456,16 @@
                     if(updateBuffer[i - s].offScreen()) {
                         for(var j = 0; j < currentRules.rules.length; j++) {
                             if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                                gameOver = true;
+                                //gameOver = true;
+                                ruleFail();
                             } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
                                 //Do nothing, should pass
+                                rulePass();
                             } else if(currentRules.rules[j].type.slice(0,2) === "no") {
-                                gameOver = true;
+                                //gameOver = true;
+                                ruleFail();
+                            } else {
+                                rulePass();
                             }
                         }
                         updateBuffer.splice(i - s, 1);
