@@ -5,7 +5,7 @@
         <link type="text/css" rel="stylesheet" href="css/style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
-    <body>
+    <body style="overflow:hidden;">
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
         </audio>
@@ -24,15 +24,49 @@
             lastFpsUpdate = 0,
             running = false,
             started = false,
-            frameID = 0;
-            entities = 0;
-            mainMenuScreen = false;
-            mainMenuOptions = false;
-            gameOver = false;
-            pause = false;
-            var currentRules = null;
+            frameID = 0,
+            entities = 0,
+            mainMenuScreen = false,
+            mainMenuOptions = false,
+            gameOver = false,
+            pause = false,
+			portrait = false,
+            currentRules = null;
             window.count = 0;
             window.combo = 0;
+			
+			ctx.canvas.width = window.innerWidth;
+			ctx.canvas.height = window.innerHeight;
+			
+			portrait = ctx.canvas.width < ctx.canvas.height;
+
+			
+			
+			function notPortrait() {
+				stop();
+				ctx.rect(0,0,320 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
+                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.fill();
+				
+				ctx.fillStyle = "red";
+				ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
+				ctx.textAlign = "center";
+                ctx.fillText("Please flip your screen to portrait" , ctx.canvas.width / 2, ctx.canvas.height / 2);
+			}
+			
+			//Doesn't work on menu
+			//somebody help!!!!!!
+			window.addEventListener("resize", function() {
+				ctx.canvas.width = window.innerWidth;
+				ctx.canvas.height = window.innerHeight;
+				draw(delta / timestep);
+				/*portrait = ctx.canvas.width < ctx.canvas.height;
+				if(!portrait) {
+					notPortrait();
+					return;
+				} 
+				start();*/
+			});
             
             //---------------------------------------
             //Constructor for a Circle
@@ -47,7 +81,7 @@
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
-                this.yVelocity = yVelocity || 0.1;
+                this.yVelocity = yVelocity || 0.1 * ctx.canvas.height / 480;
                 this.clicked = false;
                 this.checked = false;
                 entities++;                
@@ -101,7 +135,7 @@
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
-                this.yVelocity = yVelocity || 0.1;
+                this.yVelocity = yVelocity || 0.1 * ctx.canvas.height / 480;
                 this.clicked = false;
                 this.checked = false;
                 entities++;
@@ -154,7 +188,7 @@
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
-                this.yVelocity = yVelocity || 0.1;
+                this.yVelocity = yVelocity || 0.1 * ctx.canvas.height / 480 ;
                 this.clicked = false;
                 this.checked = false;
                 entities++; 
@@ -210,7 +244,7 @@
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
-                this.yVelocity = yVelocity || 0.1;
+                this.yVelocity = yVelocity || 0.1 * ctx.canvas.height / 480;
                 this.clicked = false;
                 this.checked = false;
                 entities++;
@@ -331,13 +365,37 @@
                 };
             }
             
+			canvas.addEventListener('dblclick', function(e) {
+				fullscreen = false;
+				if(!fullscreen) {
+					if(ctx.canvas.webkitRequestFullScreen) {
+						fullscreen = true;
+						ctx.canvas.webkitRequestFullScreen();
+					} else {
+						fullscreen = true;
+						ctx.canvas.mozRequestFullScreen();
+					}  
+				} /*else {
+					if(ctx.canvas.webkitExitFullscreen) {
+						fullscreen = false;
+						ctx.canvas.webkitExitFullscreen();
+					} else {
+						fullscreen = false;
+						ctx.canvas.mozCancelFullScreen();
+					}
+				}*/
+				
+			}, true);
+			
             canvas.addEventListener('mousedown', function(e) {
                 var mouse = getMouse(e);
                 var mx = mouse.x;
                 var my = mouse.y;
                 var l = updateBuffer.length;
                 
-                if(mainMenuOptions === true) {
+				//LOL
+				/*if (portrait === false || true) {
+                } else*/ if(mainMenuOptions === true) {
                     if(mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
                         mainMenuOptions = false;
                         mainMenu();
@@ -679,8 +737,12 @@
                 }
             }
             
-            window.onload = function() {
-                mainMenu();
+            window.onload = function() {    
+				mainMenu();
+				//breaks
+				/*if(!portrait) {
+					notPortrait();
+				}*/
             };
             
             var backgroundImage = new Image();
