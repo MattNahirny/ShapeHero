@@ -467,7 +467,6 @@
                         s++;
                         entities--;
                     } else if (updateBuffer[i - s].clicked === true) {
-                        console.log(currentRules.rules[0].type.slice(0,2));
                         for(var j = 0; j < currentRules.rules.length; j++) {
                             if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
                                 rulePass();
