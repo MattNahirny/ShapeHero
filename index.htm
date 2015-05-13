@@ -470,17 +470,13 @@
                         console.log(currentRules.rules[0].type.slice(0,2));
                         for(var j = 0; j < currentRules.rules.length; j++) {
                             if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                                window.count += Math.ceil(++window.combo/3);
-                                validSFX();
+                                rulePass();
                             } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
-                                window.combo = 0;
-                                errorSFX();
+                                ruleFail();
                             } else if(currentRules.rules[j].type.slice(0,2) === "no") {
-                                window.count += Math.ceil(++window.combo/3);
-                                validSFX();
+                                rulePass();
                             } else {
-                                window.combo = 0;
-                                errorSFX();
+                                ruleFail();
                             }
                         }
                         updateBuffer.splice(i - s, 1);
@@ -494,6 +490,20 @@
                 layerBuffer.sort(function(a, b) {
                     return b.layer - a.layer;
                 });
+            }
+            
+            function rulePass() {
+                if(window.combo === 0) {
+                    window.count += ++window.combo;
+                } else {
+                    window.count += Math.ceil(Math.log2(++window.combo));
+                }
+                validSFX();
+            }
+            
+            function ruleFail() {
+                window.combo = 0;
+                errorSFX();
             }
 
             //----------------------------------------------------------
@@ -559,7 +569,11 @@
                 ctx.fillText("Score: " + window.count,0,30);
                 
                 ctx.textAlign="end";
-                ctx.fillText(Math.ceil(window.combo/3) + "x",280,30);
+                if(window.combo <= 1) {
+                    ctx.fillText(window.combo + "x",280,30);
+                } else {
+                    ctx.fillText(Math.ceil(Math.log2(window.combo)) + "x",280,30);
+                }
                 ctx.textAlign="start";
                 
                 var pauseButtonImg = new Image();
