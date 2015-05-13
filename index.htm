@@ -246,7 +246,12 @@
             //---------------------
             ShapeFactory.prototype.spawnCheck = function spawnCheck(shape) {
                 var spawnBox = 0;
-                
+                if (shape.yCurrent > spawnBox) {
+                    shape.checked = true;
+                    return true;
+                } else {
+                    return false;
+                }
             };
             //---------------------
             //createShape method
@@ -461,7 +466,6 @@
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
-                        updateBuffer.push(sf.createShape("random"));
                     } else if (updateBuffer[i - s].clicked === true) {
                         console.log(currentRules.rules[0].type.slice(0,2));
                         for(var j = 0; j < currentRules.rules.length; j++) {
@@ -482,7 +486,6 @@
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
-                        updateBuffer.push(sf.createShape("random"));
                     } else {
                         updateBuffer[i - s].update(delta);
                         layerBuffer.push(updateBuffer[i - s]);
@@ -780,10 +783,6 @@
                 currentRules.newRule();
                 updateBuffer = [];
                 layerBuffer = [];
-                updateBuffer.push(sf.createShape("random"));
-                updateBuffer.push(sf.createShape("random"));
-                updateBuffer.push(sf.createShape("random"));
-                updateBuffer.push(sf.createShape("random"));
                 updateBuffer.push(sf.createShape("random"));
                 frameID = 0;
                 entities = 0;
