@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body style="overflow:hidden;">
-		<div id="midscreen" style="position:absolute; left: (40 * ctx.canvas.width / 320) +"px"; top:(180 * ctx.canvas.height / 480) +"px";">
+		<div id="midscreen" style="position:absolute; left: 40px; top:180px;">
 		</div>	
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
@@ -458,8 +458,7 @@
 							document.getElementById("midscreen").removeChild(textFieldHS);
 						}
 						newGame();
-                    }
-					} else if(mx >= 39 * ctx.canvas.width / 320 && mx <= 154 * ctx.canvas.width / 320 && my >= 192 * ctx.canvas.height / 480 && my <= 236 * ctx.canvas.height / 480) {
+                    } else if(mx >= 39 * ctx.canvas.width / 320 && mx <= 154 * ctx.canvas.width / 320 && my >= 192 * ctx.canvas.height / 480 && my <= 236 * ctx.canvas.height / 480) {
                         if(document.getElementById("nameInput") != null) {
 							document.getElementById("midscreen").removeChild(textFieldHS);
 						}
@@ -1091,6 +1090,10 @@
 				textFieldHS.setAttribute("z-index", "1");
 				textFieldHS.setAttribute("id", "nameInput");
 				document.getElementById("midscreen").appendChild(textFieldHS);
+                
+                document.getElementById("midscreen").style.top = 180 * ctx.canvas.height / 480 + "px";
+                document.getElementById("midscreen").style.left = 40 * ctx.canvas.width / 320 + "px";
+                
 			}
 			
 			var LEADERBOARD_SIZE = 10;
