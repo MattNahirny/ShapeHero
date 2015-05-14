@@ -380,6 +380,8 @@
             //--------------------------------------------
             function Rule(type) {
                 this.type = type;
+                this.ruleImg = new Image();
+                this.ruleImg.src = "img/rules/" + type + ".png";
 
                 Rule.prototype.toString = function ruleToString() {
                     var ret = this.type + "\n";
@@ -389,16 +391,21 @@
 
             function RuleSet() {
                 this.rules = [];
-                this.availableRules = ["red", "nored", "blue", "noblue", "green", "nogreen", "yellow", "noyellow", "Circle", "noCircle", "Square", "noSquare", "Triangle", "noTriangle"];
+                this.availableRules = ["red", "blue", "green", "yellow", "Circle", "Square", "Triangle",
+                                       "nored", "noblue", "nogreen", "noyellow", "noCircle", "noSquare", "noTriangle"];
                 RuleSet.prototype.newRule = function newRule() {
                     var rand = Math.floor(Math.random() * this.availableRules.length);
+                    var first = true;
                     this.rules.push(new Rule(this.availableRules[rand]));
-
-                    if (rand % 2 === 0) {
-                        this.availableRules.splice(rand, 2);
-                    } else {
-                        this.availableRules.splice(rand - 1, 2);
+                    if (first === true) {
+                        if (rand < 7) {
+                            this.availableRules.splice(7, 7);
+                        } else {
+                            this.availableRules.splice(0, 7);
+                        }
+                        first = false;
                     }
+                    this.availableRules.splice(rand % 7, 1);
                     console.log(this.rules);
                 };
             }
@@ -439,7 +446,9 @@
                         if (this.level === 5 || this.level === 10) {
                             currentRules.newRule();
                         }
-                        this.targetScore += 20;
+                        for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
+                            this.targetScore += 0.6 * Math.log2(i)
+                        }
                     } else {
                         gameOver = true;
                     }
@@ -490,7 +499,7 @@
                 } else if (mainMenuScreen === true) {
                     if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 240 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
-                    } else if (mx >= 28 && mx <= 292 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) {
+                    } else if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) {
                         //Leaderboard
                     } else if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 400 * ctx.canvas.height / 480 && my <= 454 * ctx.canvas.height / 480) {
                         optionsScreen();
@@ -619,18 +628,6 @@
                             }
                         }
 
-                        /*for(var j = 0; j < currentRules.rules.length; j++) {
-                        if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                        ruleFail();
-                        } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
-                        rulePass();
-                        } else if(currentRules.rules[j].type.slice(0,2) === "no") {
-                        ruleFail();
-                        } else {
-                        rulePass();
-                        }
-                        }*/
-
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
@@ -665,18 +662,6 @@
                             }
                         }
 
-                        /*for(var j = 0; j < currentRules.rules.length; j++) {
-                        if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                        rulePass();
-                        } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
-                        ruleFail();
-                        } else if(currentRules.rules[j].type.slice(0,2) === "no") {
-                        rulePass();
-                        } else {
-                        ruleFail();
-                        }
-                        }*/
-
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
@@ -710,8 +695,10 @@
             //----------------------------------------------------------
             function draw(interp) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                // ** Add stuff you want drawn in the background all the time here **
 
+                //-----------------------
+                //Game Screen
+                //-----------------------
                 var backgroundImg = new Image();
                 backgroundImg.src = "img/nebula_background.png";
                 ctx.drawImage(backgroundImg, 0, 0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
@@ -748,6 +735,9 @@
                 //ctx.fillText("Entities: " + entities,180,440);
 
                 // ** Add stuff you want drawn on top all the time here **
+                //----------------
+                //Top Bar
+                //----------------
                 ctx.rect(0, 0, 320 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 var grd = ctx.createLinearGradient(0, 0, 0, 35 * ctx.canvas.height / 480);
                 grd.addColorStop(0, "grey");
@@ -779,6 +769,10 @@
                 pauseButtonImg.src = "img/pause.png";
                 ctx.drawImage(pauseButtonImg, 285 * ctx.canvas.width / 320, 0, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
 
+
+                //------------------
+                //Bottom Bar
+                //------------------
                 ctx.rect(0, 445 * ctx.canvas.height / 480, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
                 var grd = ctx.createLinearGradient(0, 445 * ctx.canvas.height / 480, 0, 480 * ctx.canvas.height / 480);
                 grd.addColorStop(0, "grey");
@@ -787,7 +781,12 @@
                 grd.addColorStop(1, "grey");
                 ctx.fillStyle = grd;
                 ctx.fill();
-
+                
+                ctx.beginPath();
+                ctx.rect(0, 445 * ctx.canvas.height / 480, window.count / df.targetScore * ctx.canvas.width, 480 * ctx.canvas.height / 480);
+                ctx.fillStyle = "rgba(150,0,150,.5)";
+                ctx.fill();
+                
                 ctx.strokeStyle = "black";
                 ctx.beginPath();
                 ctx.moveTo(0, 445 * ctx.canvas.height / 480);
