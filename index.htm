@@ -574,7 +574,7 @@
                             var rulesetPassed = false;
                             for(var j = 0; j < currentRules.rules.length; j++) {
                                 if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                                    rulesetPassed();
+                                    rulesetPassed = true;
                                     rulePass();
                                     break;
                                 }
