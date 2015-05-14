@@ -392,10 +392,13 @@
             //------------------------
             function Difficulty() {
                 this.level = 1;
+                this.targetScore = 20;
                 this.numShapes = 1;
 
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
+                    if (score > this.targetScore) {
                         this.level++;
+                        this.targetScore += this.targetScore;
                     } else {
                         gameOver = true;
                     }
@@ -405,11 +408,13 @@
                     return Math.min(Math.ceil(this.level / 2) * 0.04, 0.14);
                 };
 
+                Difficulty.prototype.checkLevelChange = function checkLevelChange() {
                     if (this.numShapes === this.level * 20) {
                         return true;
                     } else {
                         return false;
                     }
+                };
 
             }
 
@@ -529,6 +534,7 @@
                 var l = updateBuffer.length,
                 s = 0;
                 if (df.checkLevelChange() === true) {
+                    df.levelProgress(window.count);
                 }
 
                 for (var i = 0; i < l; i++) {
