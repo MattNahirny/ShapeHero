@@ -16,6 +16,8 @@
 	
 
     <body style="background-color:black;">
+		<div id="midscreen" style="position:absolute; left: 40px; top:180px;">
+		</div>	
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
         </audio>
@@ -762,7 +764,7 @@
                 
                 ctx.drawImage(closeButtonImg,280,60);
             }
-            
+            //------------------------------------------------------------------------------------------------------------------------------
             //Game over screen
             function gameOverScreen() {
                 gameOver = true;
@@ -789,7 +791,7 @@
                 ctx.fillText("Score: " + window.count,25,130);
                 
                 //Temporary variable, actually check in later iteration instead.
-                var newRecord = false;
+                var newRecord = true;
                 if(newRecord === true) {
                     ctx.beginPath();
                     ctx.rect(35,150,250,90);
@@ -798,9 +800,9 @@
                     ctx.fillStyle = "black";
                     ctx.font = "20px Comic Sans MS";
                     ctx.fillText("New High Score",40,170);
+					nameInputHS();
                     
-                    ctx.font = "15px Comic Sans MS";
-                    ctx.fillText("Enter your name",40,190);
+
                 } else {
                     ctx.fillText("High Score: 9001",40,170);
                 }
@@ -808,9 +810,23 @@
                 ctx.drawImage(menuButtonImg,20,250);
                 ctx.drawImage(restartButtonImg,160,250);
             }
+			
+			function nameInputHS() {
+				var textFieldHS = document.createElement("INPUT");
+				textFieldHS.setAttribute("type", "text");
+				textFieldHS.setAttribute("value", "Enter your name");
+				textFieldHS.setAttribute("z-index", "1");
+				textFieldHS.setAttribute("id", "nameInput");
+				document.getElementById("midscreen").appendChild(textFieldHS);
+			}
+			
+			function removeNameInputHS() {
+				
+			}
         
   var LEADERBOARD_SIZE = 10;
-
+	
+	
   // Create our Firebase reference
   var scoreListRef = new Firebase('https://zu1g1l7h60o.firebaseio-demo.com//scoreList');
 
@@ -884,6 +900,7 @@
 
       // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
       userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+	  document.getElementById("midscreen").removeChild(textFieldHS);
     });
 	});
 
@@ -893,11 +910,11 @@
 <!-- dont need table b/c we're just entering score -->
   <footer>
     </br>
-    <input class="example-leaderboard-name" type="text" id="nameInput" placeholder="Enter a name">
+    <!--<input class="example-leaderboard-name" type="text" id="nameInput" placeholder="Enter a name" style="position:absolute; z-index: 1; left: 40px; top:180px;"> -->
     <!--<input class="example-leaderboard-score" type="text" id="derp" placeholder="Record your score..."> //remove score text field so user cant cheat-->
   </footer>
 </div>	
-		
+
 <!--for testing purposes, delete this-->
 	<a href="leaderboardoverlap.html" id="foo"><img class="leaderboardThing" src="img/clicked_leaderboard_button.png" alt="404 page not found"/></a>
 	<p id="johnScore">Score placeholder? </p>
