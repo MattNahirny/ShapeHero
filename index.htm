@@ -343,6 +343,8 @@
             //--------------------------------------------
             function Rule(type) {
                 this.type = type;
+                this.ruleImg = new Image();
+                ruleImg.src = "img/" + "Rules" + type + ".png"
 
                 Rule.prototype.toString = function ruleToString() {
                     var ret = this.type + "\n";
