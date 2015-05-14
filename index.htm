@@ -402,7 +402,10 @@
                         if (this.level === 5 || this.level === 10) {
                             currentRules.newRule();
                         }
-                        this.targetScore += 20;
+                        for(var i = (this.level - 1) * 20; i < this.level * 20; i++) {
+                            this.targetScore += 0.6 * Math.log2(i)
+                        }
+                        console.log(this.targetScore);
                     } else {
                         gameOver = true;
                     }
