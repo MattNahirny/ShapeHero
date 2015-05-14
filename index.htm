@@ -30,44 +30,44 @@
             mainMenuOptions = false,
             gameOver = false,
             pause = false,
-			portrait = false,
+            portrait = false,
             currentRules = null;
             window.count = 0;
             window.combo = 0;
-			
-			ctx.canvas.width = window.innerWidth;
-			ctx.canvas.height = window.innerHeight;
-			
-			portrait = ctx.canvas.width < ctx.canvas.height;
 
-			
-			
-			function notPortrait() {
-				stop();
-				ctx.rect(0,0,320 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
-                ctx.fillStyle="rgba(0,0,0,.5)";
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight;
+
+            portrait = ctx.canvas.width < ctx.canvas.height;
+
+
+
+            function notPortrait() {
+                stop();
+                ctx.rect(0, 0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
+                ctx.fillStyle = "rgba(0,0,0,.5)";
                 ctx.fill();
-				
-				ctx.fillStyle = "red";
-				ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
-				ctx.textAlign = "center";
-                ctx.fillText("Please flip your screen to portrait" , ctx.canvas.width / 2, ctx.canvas.height / 2);
-			}
-			
-			//Doesn't work on menu
-			//somebody help!!!!!!
-			window.addEventListener("resize", function() {
-				ctx.canvas.width = window.innerWidth;
-				ctx.canvas.height = window.innerHeight;
-				draw(delta / timestep);
-				/*portrait = ctx.canvas.width < ctx.canvas.height;
-				if(!portrait) {
-					notPortrait();
-					return;
-				} 
-				start();*/
-			});
-            
+
+                ctx.fillStyle = "red";
+                ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
+                ctx.textAlign = "center";
+                ctx.fillText("Please flip your screen to portrait", ctx.canvas.width / 2, ctx.canvas.height / 2);
+            }
+
+            //Doesn't work on menu
+            //somebody help!!!!!!
+            window.addEventListener("resize", function () {
+                ctx.canvas.width = window.innerWidth;
+                ctx.canvas.height = window.innerHeight;
+                draw(delta / timestep);
+                /*portrait = ctx.canvas.width < ctx.canvas.height;
+                if(!portrait) {
+                notPortrait();
+                return;
+                } 
+                start();*/
+            });
+
             //---------------------------------------
             //Constructor for a Circle
             //---------------------------------------
@@ -84,13 +84,13 @@
                 this.yVelocity = yVelocity || 0.1 * ctx.canvas.height / 480;
                 this.clicked = false;
                 this.checked = false;
-                entities++;                
+                entities++;
                 if (colour == "random") {
-                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                    this.colour = randomColour[Math.floor(Math.random() * 4)];
                 } else {
-                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                    this.colour = colour || randomColour[Math.floor(Math.random() * 4)];
                 }
-                
+
                 if (this.colour == "red") {
                     bodyImg.src = "img/shapes/circle/red_circle.png";
                 } else if (this.colour == "blue") {
@@ -100,28 +100,28 @@
                 } else if (this.colour == "yellow") {
                     bodyImg.src = "img/shapes/circle/yellow_circle.png";
                 }
-                
-                this.draw = function(interp) {
+
+                this.draw = function (interp) {
                     ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 64 * ctx.canvas.width / 320, 64 * ctx.canvas.height / 480);
                 }
-                this.update = function() {
+                this.update = function () {
                     this.xPrevious = this.xCurrent;
                     this.yPrevious = this.yCurrent;
                     this.xCurrent += this.xVelocity * delta;
                     this.yCurrent += this.yVelocity * delta;
                 }
-                this.offScreen = function() {
-                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                this.offScreen = function () {
+                    return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
                 }
-                
-                this.contains = function(mx, my) {
-                // All we have to do is make sure the Mouse X,Y fall in the area between
-                // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
+
+                this.contains = function (mx, my) {
+                    // All we have to do is make sure the Mouse X,Y fall in the area between
+                    // the shape's X and (X + Width) and its Y and (Y + Height)
+                    return (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
             }
-            
+
             //---------------------------------------
             //Constructor for a Square
             //---------------------------------------
@@ -140,11 +140,11 @@
                 this.checked = false;
                 entities++;
                 if (colour == "random") {
-                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                    this.colour = randomColour[Math.floor(Math.random() * 4)];
                 } else {
-                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                    this.colour = colour || randomColour[Math.floor(Math.random() * 4)];
                 }
-                
+
                 if (this.colour == "red") {
                     bodyImg.src = "img/shapes/square/red_square.png";
                 } else if (this.colour == "blue") {
@@ -154,27 +154,27 @@
                 } else if (this.colour == "yellow") {
                     bodyImg.src = "img/shapes/square/yellow_square.png";
                 }
-                
-                this.draw = function(interp) {
+
+                this.draw = function (interp) {
                     ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 64 * ctx.canvas.width / 320, 64 * ctx.canvas.height / 480);
                 }
-                this.update = function() {
+                this.update = function () {
                     this.xPrevious = this.xCurrent;
                     this.yPrevious = this.yCurrent;
                     this.xCurrent += this.xVelocity * delta;
                     this.yCurrent += this.yVelocity * delta;
                 }
-                this.offScreen = function() {
-                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                this.offScreen = function () {
+                    return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
                 }
-                this.contains = function(mx, my) {
-                // All we have to do is make sure the Mouse X,Y fall in the area between
-                // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
+                this.contains = function (mx, my) {
+                    // All we have to do is make sure the Mouse X,Y fall in the area between
+                    // the shape's X and (X + Width) and its Y and (Y + Height)
+                    return (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
             }
-            
+
             //---------------------------------------
             //Constructor for a Triangle
             //---------------------------------------
@@ -188,17 +188,17 @@
                 this.yPrevious = this.yCurrent;
                 this.layer = z || 0;
                 this.xVelocity = xVelocity || 0;
-                this.yVelocity = yVelocity || 0.1 * ctx.canvas.height / 480 ;
+                this.yVelocity = yVelocity || 0.1 * ctx.canvas.height / 480;
                 this.clicked = false;
                 this.checked = false;
-                entities++; 
-                
+                entities++;
+
                 if (colour == "random") {
-                    this.colour = randomColour[Math.floor(Math.random()*4)];
+                    this.colour = randomColour[Math.floor(Math.random() * 4)];
                 } else {
-                    this.colour = colour || randomColour[Math.floor(Math.random()*4)];
+                    this.colour = colour || randomColour[Math.floor(Math.random() * 4)];
                 }
-                
+
                 if (this.colour == "red") {
                     bodyImg.src = "img/shapes/triangle/red_triangle.png";
                 } else if (this.colour == "blue") {
@@ -208,28 +208,28 @@
                 } else if (this.colour == "yellow") {
                     bodyImg.src = "img/shapes/triangle/yellow_triangle.png";
                 }
-                
-                this.draw = function(interp) {
+
+                this.draw = function (interp) {
                     ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 64 * ctx.canvas.width / 320, 64 * ctx.canvas.height / 480);
                 }
-                this.update = function() {
+                this.update = function () {
                     this.xPrevious = this.xCurrent;
                     this.yPrevious = this.yCurrent;
                     this.xCurrent += this.xVelocity * delta;
                     this.yCurrent += this.yVelocity * delta;
                 }
-                this.offScreen = function() {
+                this.offScreen = function () {
                     return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
                 }
-                this.contains = function(mx, my) {
-                // All we have to do is make sure the Mouse X,Y fall in the area between
-                // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
+                this.contains = function (mx, my) {
+                    // All we have to do is make sure the Mouse X,Y fall in the area between
+                    // the shape's X and (X + Width) and its Y and (Y + Height)
+                    return (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
-                
+
             }
-            
+
             //---------------------------------------
             //Constructor for a Star
             //---------------------------------------
@@ -237,7 +237,7 @@
                 var bodyImg = new Image();
                 this.shapeType = "Star";
                 this.colour = "yellow";
-                bodyImg.src = "img/shapes/star/star.png";  
+                bodyImg.src = "img/shapes/star/star.png";
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
@@ -248,33 +248,33 @@
                 this.clicked = false;
                 this.checked = false;
                 entities++;
-                this.draw = function(interp) {
+                this.draw = function (interp) {
                     ctx.drawImage(bodyImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 64 * ctx.canvas.width / 320, 64 * ctx.canvas.height / 480);
                 }
-                this.update = function() {
+                this.update = function () {
                     this.xPrevious = this.xCurrent;
                     this.yPrevious = this.yCurrent;
                     this.xCurrent += this.xVelocity * delta;
                     this.yCurrent += this.yVelocity * delta;
                 }
-                this.offScreen = function() {
-                return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
+                this.offScreen = function () {
+                    return this.xCurrent >= canvas.width || this.yCurrent >= canvas.height;
                 }
-                this.contains = function(mx, my) {
-                // All we have to do is make sure the Mouse X,Y fall in the area between
-                // the shape's X and (X + Width) and its Y and (Y + Height)
-                return  (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
+                this.contains = function (mx, my) {
+                    // All we have to do is make sure the Mouse X,Y fall in the area between
+                    // the shape's X and (X + Width) and its Y and (Y + Height)
+                    return (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
                         (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
+                }
             }
-            }
-            
+
             //The way that the factory works is you call createShape() with a parameter
             //the parameter is a string of which shape to be created or random
             //eg. ShapeFactory.createShape("blueCircle");
             //or 
             //ShapeFactory.createShape("random");
             function ShapeFactory() { }
-            
+
             //---------------------
             //spawnCheck method
             //---------------------
@@ -294,46 +294,46 @@
                 var randomShape = ["Circle", "Square", "Triangle"];
                 var lane = [0, 64 * ctx.canvas.width / 320, 128 * ctx.canvas.width / 320, 192 * ctx.canvas.width / 320, 256 * ctx.canvas.width / 320];
                 if (type == "circle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                 } else if (type == "square") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                 } else if (type == "triangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                 } else if (type == "redCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "red");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "red");
                 } else if (type == "blueCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "blue");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "blue");
                 } else if (type == "greenCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "green");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "green");
                 } else if (type == "yellowCircle") {
-                    return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "yellow");
+                    return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "yellow");
                 } else if (type == "redSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "red");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "red");
                 } else if (type == "blueSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "blue");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "blue");
                 } else if (type == "greenSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "green");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "green");
                 } else if (type == "yellowSquare") {
-                    return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "yellow");
+                    return new Square(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "yellow");
                 } else if (type == "redTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "red");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "red");
                 } else if (type == "blueTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "blue");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "blue");
                 } else if (type == "greenTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "green");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "green");
                 } else if (type == "yellowTriangle") {
-                    return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "yellow");
+                    return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "yellow");
                 } else if (type == "star") {
-                    return new Star(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null);
+                    return new Star(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity());
                 } else if (type == "random") {
-                    var rs = randomShape[Math.floor(Math.random()*3)];
-                    
+                    var rs = randomShape[Math.floor(Math.random() * 3)];
+
                     if (rs == "Circle") {
-                        return new Circle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
-                    } else if(rs == "Square") {
-                        return new Square(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
+                        return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
+                    } else if (rs == "Square") {
+                        return new Square(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                     } else if (rs == "Triangle") {
-                        return new Triangle(lane[Math.floor(Math.random()*5)], -64 * ctx.canvas.height / 480, null, null, null, "random");
+                        return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                     }
                 }
                 return;
@@ -364,38 +364,37 @@
                     }
                 };
             }
-            
-			canvas.addEventListener('dblclick', function(e) {
-				fullscreen = false;
-				if(!fullscreen) {
-					if(ctx.canvas.webkitRequestFullScreen) {
-						fullscreen = true;
-						ctx.canvas.webkitRequestFullScreen();
-					} else {
-						fullscreen = true;
-						ctx.canvas.mozRequestFullScreen();
-					}  
-				} /*else {
-					if(ctx.canvas.webkitExitFullscreen) {
-						fullscreen = false;
-						ctx.canvas.webkitExitFullscreen();
-					} else {
-						fullscreen = false;
-						ctx.canvas.mozCancelFullScreen();
-					}
-				}*/
-				
-			}, true);
-			
+
+            canvas.addEventListener('dblclick', function (e) {
+                fullscreen = false;
+                if (!fullscreen) {
+                    if (ctx.canvas.webkitRequestFullScreen) {
+                        fullscreen = true;
+                        ctx.canvas.webkitRequestFullScreen();
+                    } else {
+                        fullscreen = true;
+                        ctx.canvas.mozRequestFullScreen();
+                    }
+                } /*else {
+                    if(ctx.canvas.webkitExitFullscreen) {
+                        fullscreen = false;
+                        ctx.canvas.webkitExitFullscreen();
+                    } else {
+                        fullscreen = false;
+                        ctx.canvas.mozCancelFullScreen();
+                    }
+                }*/
+
+            }, true);
+
             //------------------------
             //Difficulty
             //------------------------
             function Difficulty() {
                 this.level = 1;
-                this.targetScore = ;
+                this.numShapes = 1;
 
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
-                    if (score > TargetScore) {
                         this.level++;
                     } else {
                         gameOver = true;
@@ -403,80 +402,85 @@
                 };
 
                 Difficulty.prototype.getVelocity = function getVelocity() {
-                    return Math.min(Math.ceil(this.level / 2) * 0.02, 0.14);
+                    return Math.min(Math.ceil(this.level / 2) * 0.04, 0.14);
                 };
 
-
+                    if (this.numShapes === this.level * 20) {
+                        return true;
+                    } else {
+                        return false;
+                    }
 
             }
 
-            canvas.addEventListener('mousedown', function(e) {
+            canvas.addEventListener('mousedown', function (e) {
                 var mouse = getMouse(e);
                 var mx = mouse.x;
                 var my = mouse.y;
                 var l = updateBuffer.length;
-                
-				//LOL
-				/*if (portrait === false || true) {
-                } else*/ if(mainMenuOptions === true) {
-                    if(mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
+
+                //LOL
+                /*if (portrait === false || true) {
+                } else*/
+                if (mainMenuOptions === true) {
+                    if (mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
                         mainMenuOptions = false;
                         mainMenu();
-                    } else if(mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 110 * ctx.canvas.height / 480 && my <= 145 * ctx.canvas.height / 480) {
+                    } else if (mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 110 * ctx.canvas.height / 480 && my <= 145 * ctx.canvas.height / 480) {
                         toggleBGM();
-                        if(bgm.muted === false) {
-                            ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,110 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                        if (bgm.muted === false) {
+                            ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 110 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         } else {
-                            ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,110 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                            ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 110 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         }
-                    } else if(mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 150 * ctx.canvas.height / 480 && my <= 185 * ctx.canvas.height / 480) {
+                    } else if (mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 150 * ctx.canvas.height / 480 && my <= 185 * ctx.canvas.height / 480) {
                         toggleSFX();
-                        if(sfx === true) {
-                            ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                        if (sfx === true) {
+                            ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         } else {
-                            ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                            ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         }
                     }
-                } else if(mainMenuScreen === true) {
-                    if(mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 240 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
+                } else if (mainMenuScreen === true) {
+                    if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 240 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
-                    } else if(mx >= 28 && mx <= 292 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) { 
+                    } else if (mx >= 28 && mx <= 292 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) {
                         //Leaderboard
-                    } else if(mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 400 * ctx.canvas.height / 480 && my <= 454 * ctx.canvas.height / 480) {
+                    } else if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 400 * ctx.canvas.height / 480 && my <= 454 * ctx.canvas.height / 480) {
                         optionsScreen();
                     }
-                } else if(gameOver === true) {
-                    if(mx >= 20 * ctx.canvas.width / 320 && mx <= 159 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
+                } else if (gameOver === true) {
+                    if (mx >= 20 * ctx.canvas.width / 320 && mx <= 159 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         mainMenu();
-                    } else if(mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
+                    } else if (mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
                     }
-                } else if(pause === true) {
-                    if(mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
+                } else if (pause === true) {
+                    if (mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
                         pause = false;
                         start();
-                    } else if(mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 170 * ctx.canvas.height / 480 && my <= 205 * ctx.canvas.height / 480) { 
+                    } else if (mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 170 * ctx.canvas.height / 480 && my <= 205 * ctx.canvas.height / 480) {
                         toggleBGM();
-                        if(bgm.muted === false) {
-                            ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                        if (bgm.muted === false) {
+                            ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         } else {
-                            ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                            ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         }
-                    } else if(mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 210 * ctx.canvas.height / 480 && my <= 245 * ctx.canvas.height / 480) {
+                    } else if (mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 210 * ctx.canvas.height / 480 && my <= 245 * ctx.canvas.height / 480) {
                         toggleSFX();
-                        if(sfx === true) {
-                            ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,210 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                        if (sfx === true) {
+                            ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 210 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         } else {
-                            ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,210 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                            ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 210 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         }
-                    } else if(mx >= 20 * ctx.canvas.width / 320 && mx <= 159 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
+                    } else if (mx >= 20 * ctx.canvas.width / 320 && mx <= 159 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         mainMenu();
-                    } else if(mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
+                    } else if (mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
                     }
-                } else if(pause === false && mx >= 290 * ctx.canvas.width / 320 && my <= 30 * ctx.canvas.height / 480) {
+                } else if (pause === false && mx >= 290 * ctx.canvas.width / 320 && my <= 30 * ctx.canvas.height / 480) {
                     pauseScreen();
-                } else if(pause === false) {
+                } else if (pause === false) {
                     for (var i = 0; i < l; i++) {
                         if (updateBuffer[i].contains(mx, my)) {
                             updateBuffer[i].clicked = true;
@@ -485,24 +489,25 @@
                     }
                 }
             }, true);
-            
-            canvas.addEventListener('mouseup', function(e) {}, true);
-             
+
+            canvas.addEventListener('mouseup', function (e) { }, true);
+
             var sf = new ShapeFactory();
             var rs = new RuleSet();
+            var df = new Difficulty();
             var updateBuffer = [];
             var layerBuffer = [];
-            
-            
+
+
             /*TODO WTF?
             Shape.prototype.hit = function(mouse) {
-                mx = getMouse(mouse).x;
-                my = getMouse(mouse).y;
-                ctx.fillText("x: " + x, 180, 480);
-                ctx.fillText("y: " + entities, 180, 480);
+            mx = getMouse(mouse).x;
+            my = getMouse(mouse).y;
+            ctx.fillText("x: " + x, 180, 480);
+            ctx.fillText("y: " + entities, 180, 480);
             }*/
-            
-            getMouse = function(mouseEvent) {
+
+            getMouse = function (mouseEvent) {
                 var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
                 if (element.offsetParent !== undefined) {
                     do {
@@ -512,113 +517,118 @@
                 }
                 //offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
                 //offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
-                mx = mouseEvent.pageX;// - offsetX;
-                my = mouseEvent.pageY;// - offsetY;
-                return {x: mx, y: my};
+                mx = mouseEvent.pageX; // - offsetX;
+                my = mouseEvent.pageY; // - offsetY;
+                return { x: mx, y: my };
             }
-            
+
             //------------------------------------------
             //UPDATE BUFFER
             //------------------------------------------
             function update(delta) {
                 var l = updateBuffer.length,
                 s = 0;
+                if (df.checkLevelChange() === true) {
+                }
+
                 for (var i = 0; i < l; i++) {
-                
+
+                    //if its a shape do a spawnCheck and if it passes spawn a shape
                     if (updateBuffer[i - s] instanceof Circle ||
                             updateBuffer[i - s] instanceof Square ||
                             updateBuffer[i - s] instanceof Triangle ||
                             updateBuffer[i - s] instanceof Star) {
-                                if (updateBuffer[i - s].checked === false && 
+                        if (updateBuffer[i - s].checked === false &&
                                 sf.spawnCheck(updateBuffer[i - s]) === true) {
-                                    updateBuffer.push(sf.createShape("random"));
-                                }
+                            updateBuffer.push(sf.createShape("random"));
+                            df.numShapes++;
                         }
-                    if(updateBuffer[i - s].offScreen()) {
-                        if(currentRules.rules[0].type.slice(0,2) === "no") {
+                    }
+                    if (updateBuffer[i - s].offScreen()) {
+                        if (currentRules.rules[0].type.slice(0, 2) === "no") {
                             //negative rules: on offscreen, pass any = pass
                             var rulesetPassed = false;
-                            for(var j = 0; j < currentRules.rules.length; j++) {
-                                if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
+                            for (var j = 0; j < currentRules.rules.length; j++) {
+                                if (currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
                                     rulesetPassed = true;
                                     rulePass();
                                     break;
                                 }
                             }
-                            if(rulesetPassed === false) {
+                            if (rulesetPassed === false) {
                                 ruleFail();
                             }
                         } else {
                             //positive rules: on offscreen, fail any = fail
                             var rulesetFailed = false;
-                            for(var j = 0; j < currentRules.rules.length; j++) {
-                                if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                            for (var j = 0; j < currentRules.rules.length; j++) {
+                                if (currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
                                     rulesetFailed = true;
                                     ruleFail();
                                     break;
                                 }
                             }
-                            if(rulesetFailed === false) {
+                            if (rulesetFailed === false) {
                                 rulePass();
                             }
                         }
-                        
+
                         /*for(var j = 0; j < currentRules.rules.length; j++) {
-                            if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                                ruleFail();
-                            } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
-                                rulePass();
-                            } else if(currentRules.rules[j].type.slice(0,2) === "no") {
-                                ruleFail();
-                            } else {
-                                rulePass();
-                            }
+                        if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                        ruleFail();
+                        } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
+                        rulePass();
+                        } else if(currentRules.rules[j].type.slice(0,2) === "no") {
+                        ruleFail();
+                        } else {
+                        rulePass();
+                        }
                         }*/
-                        
+
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
                     } else if (updateBuffer[i - s].clicked === true) {
-                        if(currentRules.rules[0].type.slice(0,2) === "no") {
+                        if (currentRules.rules[0].type.slice(0, 2) === "no") {
                             //negative rules: on click, fail any rule = fail
                             var rulesetFailed = false;
-                            for(var j = 0; j < currentRules.rules.length; j++) {
-                                if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
+                            for (var j = 0; j < currentRules.rules.length; j++) {
+                                if (currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
                                     rulesetFailed = true;
                                     ruleFail();
                                     break;
                                 }
                             }
-                            if(rulesetFailed === false) {
+                            if (rulesetFailed === false) {
                                 rulePass();
                             }
                         } else {
                             //positive rules: on click, pass any rule = pass
                             var rulesetPassed = false;
-                            for(var j = 0; j < currentRules.rules.length; j++) {
-                                if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                            for (var j = 0; j < currentRules.rules.length; j++) {
+                                if (currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
                                     rulesetPassed = true;
                                     rulePass();
                                     break;
                                 }
                             }
-                            if(rulesetPassed === false) {
+                            if (rulesetPassed === false) {
                                 ruleFail();
                             }
                         }
-                        
+
                         /*for(var j = 0; j < currentRules.rules.length; j++) {
-                            if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                                rulePass();
-                            } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
-                                ruleFail();
-                            } else if(currentRules.rules[j].type.slice(0,2) === "no") {
-                                rulePass();
-                            } else {
-                                ruleFail();
-                            }
+                        if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                        rulePass();
+                        } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
+                        ruleFail();
+                        } else if(currentRules.rules[j].type.slice(0,2) === "no") {
+                        rulePass();
+                        } else {
+                        ruleFail();
+                        }
                         }*/
-                        
+
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
@@ -627,20 +637,20 @@
                         layerBuffer.push(updateBuffer[i - s]);
                     }
                 }
-                layerBuffer.sort(function(a, b) {
+                layerBuffer.sort(function (a, b) {
                     return b.layer - a.layer;
                 });
             }
-            
+
             function rulePass() {
-                if(window.combo === 0) {
+                if (window.combo === 0) {
                     window.count += ++window.combo;
                 } else {
                     window.count += Math.ceil(Math.log2(++window.combo));
                 }
                 validSFX();
             }
-            
+
             function ruleFail() {
                 window.combo = 0;
                 errorSFX();
@@ -652,102 +662,102 @@
             function draw(interp) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 // ** Add stuff you want drawn in the background all the time here **
-                    
+
                 var backgroundImg = new Image();
                 backgroundImg.src = "img/nebula_background.png";
                 ctx.drawImage(backgroundImg, 0, 0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
-                
-                ctx.strokeStyle="grey";
-                ctx.lineWidth="2";
+
+                ctx.strokeStyle = "grey";
+                ctx.lineWidth = "2";
                 ctx.beginPath();
-                ctx.moveTo(64 * ctx.canvas.width / 320,0);
-                ctx.lineTo(64 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
+                ctx.moveTo(64 * ctx.canvas.width / 320, 0);
+                ctx.lineTo(64 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
+
                 ctx.beginPath();
-                ctx.moveTo(128 * ctx.canvas.width / 320,0);
-                ctx.lineTo(128 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
+                ctx.moveTo(128 * ctx.canvas.width / 320, 0);
+                ctx.lineTo(128 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
+
                 ctx.beginPath();
-                ctx.moveTo(192 * ctx.canvas.width / 320,0);
-                ctx.lineTo(192 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
+                ctx.moveTo(192 * ctx.canvas.width / 320, 0);
+                ctx.lineTo(192 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
+
                 ctx.beginPath();
-                ctx.moveTo(256 * ctx.canvas.width / 320,0);
-                ctx.lineTo(256 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
+                ctx.moveTo(256 * ctx.canvas.width / 320, 0);
+                ctx.lineTo(256 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
+
                 var l = layerBuffer.length;
                 for (var i = 0; i < l; i++) {
                     layerBuffer[i].draw(interp);
                 }
                 layerBuffer = [];
-                ctx.fillStyle ="white";
-                ctx.fillText("FPS: " + Math.round(fps),180 * ctx.canvas.width / 320,410 * ctx.canvas.height / 480);
+                ctx.fillStyle = "white";
+                ctx.fillText("FPS: " + Math.round(fps), 180 * ctx.canvas.width / 320, 410 * ctx.canvas.height / 480);
                 //ctx.fillText("Entities: " + entities,180,440);
-                
+
                 // ** Add stuff you want drawn on top all the time here **
-                ctx.rect(0,0,320 * ctx.canvas.width / 320,35 * ctx.canvas.height / 480);
-                var grd=ctx.createLinearGradient(0,0,0,35 * ctx.canvas.height / 480);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+                ctx.rect(0, 0, 320 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                var grd = ctx.createLinearGradient(0, 0, 0, 35 * ctx.canvas.height / 480);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
-                ctx.strokeStyle="black";
+
+                ctx.strokeStyle = "black";
                 ctx.beginPath();
-                ctx.moveTo(0,35 * ctx.canvas.height / 480);
-                ctx.lineTo(320 * ctx.canvas.width / 320,35 * ctx.canvas.height / 480);
+                ctx.moveTo(0, 35 * ctx.canvas.height / 480);
+                ctx.lineTo(320 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
-                ctx.fillText("Score: " + window.count,0,30 * ctx.canvas.height / 480);
-                
-                ctx.textAlign="end";
-                if(window.combo <= 1) {
-                    ctx.fillText(window.combo + "x",280 * ctx.canvas.width / 320,30 * ctx.canvas.height / 480);
+                ctx.fillText("Score: " + window.count, 0, 30 * ctx.canvas.height / 480);
+
+                ctx.textAlign = "end";
+                if (window.combo <= 1) {
+                    ctx.fillText(window.combo + "x", 280 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
                 } else {
-                    ctx.fillText(Math.ceil(Math.log2(window.combo)) + "x",280 * ctx.canvas.width / 320,30 * ctx.canvas.height / 480);
+                    ctx.fillText(Math.ceil(Math.log2(window.combo)) + "x", 280 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
                 }
-                ctx.textAlign="start";
-                
+                ctx.textAlign = "start";
+
                 var pauseButtonImg = new Image();
                 pauseButtonImg.src = "img/pause.png";
                 ctx.drawImage(pauseButtonImg, 285 * ctx.canvas.width / 320, 0, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
-                
-                ctx.rect(0,445 * ctx.canvas.height / 480,320 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
-                var grd=ctx.createLinearGradient(0,445 * ctx.canvas.height / 480,0,480 * ctx.canvas.height / 480);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+
+                ctx.rect(0, 445 * ctx.canvas.height / 480, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
+                var grd = ctx.createLinearGradient(0, 445 * ctx.canvas.height / 480, 0, 480 * ctx.canvas.height / 480);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
-                ctx.strokeStyle="black";
+
+                ctx.strokeStyle = "black";
                 ctx.beginPath();
-                ctx.moveTo(0,445 * ctx.canvas.height / 480);
-                ctx.lineTo(320 * ctx.canvas.width / 320,445 * ctx.canvas.height / 480);
+                ctx.moveTo(0, 445 * ctx.canvas.height / 480);
+                ctx.lineTo(320 * ctx.canvas.width / 320, 445 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
-                ctx.fillText("Rules: " + currentRules.rules[0],0,475 * ctx.canvas.height / 480);
+                ctx.fillText("Rules: " + currentRules.rules[0], 0, 475 * ctx.canvas.height / 480);
             }
 
             function panic() {
                 delta = 0;
-                ctx.fillText("Panic",100 * ctx.canvas.width / 320,200 * ctx.canvas.height / 480);
+                ctx.fillText("Panic", 100 * ctx.canvas.width / 320, 200 * ctx.canvas.height / 480);
             }
-            
+
             //function begin() {
             //}
-            
+
             function end(fps) {
                 if (fps < 25) {
                     entities = 0;
@@ -764,7 +774,7 @@
             function start() {
                 if (!started) {
                     started = true;
-                    frameID = requestAnimationFrame(function(timestamp) {
+                    frameID = requestAnimationFrame(function (timestamp) {
                         draw(1);
                         running = true;
                         lastFrameTimeMs = timestamp;
@@ -788,7 +798,7 @@
 
                 if (timestamp > lastFpsUpdate + 1000) {
                     fps = 0.25 * framesThisSecond + 0.75 * fps;
-                    
+
                     lastFpsUpdate = timestamp;
                     framesThisSecond = 0;
                 }
@@ -805,24 +815,24 @@
                 }
 
                 draw(delta / timestep);
-                
+
                 end(fps);
-                
+
                 frameID = requestAnimationFrame(mainLoop);
-                
-                if(gameOver === true) {
+
+                if (gameOver === true) {
                     gameOverScreen();
                 }
             }
-            
-            window.onload = function() {    
-				mainMenu();
-				//breaks
-				/*if(!portrait) {
-					notPortrait();
-				}*/
+
+            window.onload = function () {
+                mainMenu();
+                //breaks
+                /*if(!portrait) {
+                notPortrait();
+                }*/
             };
-            
+
             var backgroundImage = new Image();
             backgroundImage.src = "img/star_background.png";
             var logo = new Image();
@@ -850,76 +860,76 @@
             function pauseScreen() {
                 pause = true;
                 stop();
-                
-                ctx.rect(0,35 * ctx.canvas.height / 480,320 * ctx.canvas.width / 320,410 * ctx.canvas.height / 480);
-                ctx.fillStyle="rgba(0,0,0,.5)";
+
+                ctx.rect(0, 35 * ctx.canvas.height / 480, 320 * ctx.canvas.width / 320, 410 * ctx.canvas.height / 480);
+                ctx.fillStyle = "rgba(0,0,0,.5)";
                 ctx.fill();
-                
+
                 ctx.beginPath();
-                ctx.lineWidth="4";
-                ctx.strokeStyle="black";
-                ctx.rect(22 * ctx.canvas.width / 320,70 * ctx.canvas.height / 480,276 * ctx.canvas.width / 320,190 * ctx.canvas.height / 480);
+                ctx.lineWidth = "4";
+                ctx.strokeStyle = "black";
+                ctx.rect(22 * ctx.canvas.width / 320, 70 * ctx.canvas.height / 480, 276 * ctx.canvas.width / 320, 190 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
-                var grd=ctx.createLinearGradient(0,70 * ctx.canvas.height / 480,0,260 * ctx.canvas.height / 480);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+
+                var grd = ctx.createLinearGradient(0, 70 * ctx.canvas.height / 480, 0, 260 * ctx.canvas.height / 480);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
-                ctx.fillText("Current Rule: ",25 * ctx.canvas.width / 320,90 * ctx.canvas.height / 480);
-                
+                ctx.fillText("Current Rule: ", 25 * ctx.canvas.width / 320, 90 * ctx.canvas.height / 480);
+
                 ctx.beginPath();
-                ctx.lineWidth="2";
-                ctx.moveTo(30 * ctx.canvas.width / 320,165 * ctx.canvas.height / 480);
-                ctx.lineTo(290 * ctx.canvas.width / 320,165 * ctx.canvas.height / 480);
+                ctx.lineWidth = "2";
+                ctx.moveTo(30 * ctx.canvas.width / 320, 165 * ctx.canvas.height / 480);
+                ctx.lineTo(290 * ctx.canvas.width / 320, 165 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
-                ctx.fillText("Background Music",70 * ctx.canvas.width / 320,195 * ctx.canvas.height / 480);
-                ctx.fillText("Sound Effects",70 * ctx.canvas.width / 320,235 * ctx.canvas.height / 480);
-                
-                if(bgm.muted === false) {
+
+                ctx.fillText("Background Music", 70 * ctx.canvas.width / 320, 195 * ctx.canvas.height / 480);
+                ctx.fillText("Sound Effects", 70 * ctx.canvas.width / 320, 235 * ctx.canvas.height / 480);
+
+                if (bgm.muted === false) {
                     ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 } else {
                     ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 }
-                
-                if(sfx === true) {
+
+                if (sfx === true) {
                     ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 210 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 } else {
                     ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 210 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 }
-                
-                ctx.drawImage(menuButtonImg,20 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
-                ctx.drawImage(restartButtonImg,160 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
-                ctx.drawImage(closeButtonImg,280 * ctx.canvas.width / 320,60 * ctx.canvas.height / 480, 30 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
+
+                ctx.drawImage(menuButtonImg, 20 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
+                ctx.drawImage(restartButtonImg, 160 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
+                ctx.drawImage(closeButtonImg, 280 * ctx.canvas.width / 320, 60 * ctx.canvas.height / 480, 30 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
             }
 
             //-------------------------------------------
             //BGM toggle variable and function
             //-------------------------------------------
             var bgm = document.getElementById('background_audio');
-            function toggleBGM() { 
+            function toggleBGM() {
                 bgm.muted = !bgm.muted;
             }
-            
+
             //-------------------------------------------------------
             //SFX toggle function, don't play sounds if false.
             //-------------------------------------------------------
             var sfx = true;
-            function toggleSFX() { 
+            function toggleSFX() {
                 sfx = !sfx;
             }
-            
+
             //--------------------
             //Valid SFX
             //--------------------
             function validSFX() {
-                if(sfx === true) {
+                if (sfx === true) {
                     var new_sfx = new Audio('audio/valid.mp3');
                     new_sfx.play();
                 }
@@ -929,7 +939,7 @@
             //Error SFX
             //-------------------
             function errorSFX() {
-                if(sfx === true) {
+                if (sfx === true) {
                     var new_sfx = new Audio('audio/error.mp3');
                     new_sfx.play();
                 }
@@ -939,11 +949,11 @@
             //-----------------
             function mainMenu() {
                 mainMenuScreen = true;
-                ctx.drawImage(backgroundImage,0,0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
-                ctx.drawImage(logo,0,60 * ctx.canvas.height / 480, 320 * ctx.canvas.width / 320, 136 * ctx.canvas.height / 480);
-                ctx.drawImage(playButton,28 * ctx.canvas.width / 320,240 * ctx.canvas.height / 480, 264 * ctx.canvas.width / 320, 54 * ctx.canvas.height / 480);
-                ctx.drawImage(leaderboardButton,28 * ctx.canvas.width / 320,320 * ctx.canvas.height / 480, 264 * ctx.canvas.width / 320, 54 * ctx.canvas.height / 480);
-                ctx.drawImage(optionsButton,28 * ctx.canvas.width / 320,400 * ctx.canvas.height / 480, 264 * ctx.canvas.width / 320, 54 * ctx.canvas.height / 480);
+                ctx.drawImage(backgroundImage, 0, 0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
+                ctx.drawImage(logo, 0, 60 * ctx.canvas.height / 480, 320 * ctx.canvas.width / 320, 136 * ctx.canvas.height / 480);
+                ctx.drawImage(playButton, 28 * ctx.canvas.width / 320, 240 * ctx.canvas.height / 480, 264 * ctx.canvas.width / 320, 54 * ctx.canvas.height / 480);
+                ctx.drawImage(leaderboardButton, 28 * ctx.canvas.width / 320, 320 * ctx.canvas.height / 480, 264 * ctx.canvas.width / 320, 54 * ctx.canvas.height / 480);
+                ctx.drawImage(optionsButton, 28 * ctx.canvas.width / 320, 400 * ctx.canvas.height / 480, 264 * ctx.canvas.width / 320, 54 * ctx.canvas.height / 480);
             }
 
             //---------------------------
@@ -952,6 +962,7 @@
             function newGame() {
                 currentRules = new RuleSet();
                 currentRules.newRule();
+                df = new Difficulty();
                 updateBuffer = [];
                 layerBuffer = [];
                 updateBuffer.push(sf.createShape("random"));
@@ -971,96 +982,96 @@
             //------------------------------
             function optionsScreen() {
                 mainMenuOptions = true;
-                ctx.rect(0,0,320 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
-                ctx.fillStyle="rgba(0,0,0,.5)";
+                ctx.rect(0, 0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
+                ctx.fillStyle = "rgba(0,0,0,.5)";
                 ctx.fill();
-                
+
                 ctx.beginPath();
-                ctx.lineWidth="4";
-                ctx.strokeStyle="black";
-                ctx.rect(22 * ctx.canvas.width / 320,70 * ctx.canvas.height / 480,276 * ctx.canvas.width / 320,190 * ctx.canvas.height / 480);
+                ctx.lineWidth = "4";
+                ctx.strokeStyle = "black";
+                ctx.rect(22 * ctx.canvas.width / 320, 70 * ctx.canvas.height / 480, 276 * ctx.canvas.width / 320, 190 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
-                var grd=ctx.createLinearGradient(0,70 * ctx.canvas.height / 480,0,260 * ctx.canvas.height / 480);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+
+                var grd = ctx.createLinearGradient(0, 70 * ctx.canvas.height / 480, 0, 260 * ctx.canvas.height / 480);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
-                ctx.fillText("Options",25 * ctx.canvas.width / 320,100 * ctx.canvas.height / 480);
+                ctx.fillText("Options", 25 * ctx.canvas.width / 320, 100 * ctx.canvas.height / 480);
                 ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
-                ctx.fillText("Background Music",70 * ctx.canvas.width / 320,135 * ctx.canvas.height / 480);
-                ctx.fillText("Sound Effects",70 * ctx.canvas.width / 320,175 * ctx.canvas.height / 480);
-                
-                if(bgm.muted === false) {
-                    ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,110 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                ctx.fillText("Background Music", 70 * ctx.canvas.width / 320, 135 * ctx.canvas.height / 480);
+                ctx.fillText("Sound Effects", 70 * ctx.canvas.width / 320, 175 * ctx.canvas.height / 480);
+
+                if (bgm.muted === false) {
+                    ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 110 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 } else {
-                    ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,110 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                    ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 110 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 }
-                
-                if(sfx === true) {
-                    ctx.drawImage(speakerImg,30 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+
+                if (sfx === true) {
+                    ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 } else {
-                    ctx.drawImage(muteImg,30 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                    ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 }
-                
-                ctx.drawImage(closeButtonImg,280 * ctx.canvas.width / 320,60 * ctx.canvas.height / 480, 30 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
+
+                ctx.drawImage(closeButtonImg, 280 * ctx.canvas.width / 320, 60 * ctx.canvas.height / 480, 30 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
             }
-            
+
             //Game over screen
             function gameOverScreen() {
                 gameOver = true;
                 errorSFX();
                 stop();
-                
-                ctx.rect(0,0,320 * ctx.canvas.width / 320,480 * ctx.canvas.height / 480);
-                ctx.fillStyle="rgba(0,0,0,.5)";
+
+                ctx.rect(0, 0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
+                ctx.fillStyle = "rgba(0,0,0,.5)";
                 ctx.fill();
-                
+
                 ctx.beginPath();
-                ctx.lineWidth="4";
-                ctx.strokeStyle="black";
-                ctx.rect(22 * ctx.canvas.width / 320,70 * ctx.canvas.height / 480,276 * ctx.canvas.width / 320,190 * ctx.canvas.height / 480);
+                ctx.lineWidth = "4";
+                ctx.strokeStyle = "black";
+                ctx.rect(22 * ctx.canvas.width / 320, 70 * ctx.canvas.height / 480, 276 * ctx.canvas.width / 320, 190 * ctx.canvas.height / 480);
                 ctx.stroke();
-                
-                var grd=ctx.createLinearGradient(0,70 * ctx.canvas.height / 480,0,260 * ctx.canvas.height / 480);
-                grd.addColorStop(0,"grey");
-                grd.addColorStop(0.2,"lightgrey");
-                grd.addColorStop(0.8,"lightgrey");
-                grd.addColorStop(1,"grey");
-                ctx.fillStyle=grd;
+
+                var grd = ctx.createLinearGradient(0, 70 * ctx.canvas.height / 480, 0, 260 * ctx.canvas.height / 480);
+                grd.addColorStop(0, "grey");
+                grd.addColorStop(0.2, "lightgrey");
+                grd.addColorStop(0.8, "lightgrey");
+                grd.addColorStop(1, "grey");
+                ctx.fillStyle = grd;
                 ctx.fill();
-                
+
                 ctx.fillStyle = "black";
                 ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
-                ctx.fillText("Game Over",25 * ctx.canvas.width / 320,100 * ctx.canvas.height / 480);
-                
+                ctx.fillText("Game Over", 25 * ctx.canvas.width / 320, 100 * ctx.canvas.height / 480);
+
                 ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
-                ctx.fillText("Score: " + window.count,25 * ctx.canvas.width / 320,130 * ctx.canvas.height / 480);
-                
+                ctx.fillText("Score: " + window.count, 25 * ctx.canvas.width / 320, 130 * ctx.canvas.height / 480);
+
                 //Temporary variable, actually check in later iteration instead.
                 var newRecord = false;
-                if(newRecord === true) {
+                if (newRecord === true) {
                     ctx.beginPath();
-                    ctx.rect(35 * ctx.canvas.width / 320,150 * ctx.canvas.height / 480,250 * ctx.canvas.width / 320,90 * ctx.canvas.height / 480);
+                    ctx.rect(35 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 250 * ctx.canvas.width / 320, 90 * ctx.canvas.height / 480);
                     ctx.stroke();
-                    
+
                     ctx.fillStyle = "black";
                     ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
-                    ctx.fillText("New High Score",40 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
-                    
+                    ctx.fillText("New High Score", 40 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480);
+
                     ctx.font = 15 * ctx.canvas.height / 480 + "px Calibri";
-                    ctx.fillText("Enter your name",40 * ctx.canvas.width / 320,190 * ctx.canvas.height / 480);
+                    ctx.fillText("Enter your name", 40 * ctx.canvas.width / 320, 190 * ctx.canvas.height / 480);
                 } else {
-                    ctx.fillText("High Score: 9001",40 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
+                    ctx.fillText("High Score: 9001", 40 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480);
                 }
-                
-                ctx.drawImage(menuButtonImg,20 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
-                ctx.drawImage(restartButtonImg,160 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
+
+                ctx.drawImage(menuButtonImg, 20 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
+                ctx.drawImage(restartButtonImg, 160 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
             }
         </script>
     </body>
