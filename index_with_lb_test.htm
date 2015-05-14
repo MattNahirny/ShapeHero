@@ -16,6 +16,7 @@
 	
 
     <body style="background-color:black;">
+		<!-- this div is where the high score text box shows up, doesn't work with scaling at all i'm sure -->
 		<div id="midscreen" style="position:absolute; left: 40px; top:180px;">
 		</div>	
         <audio id="background_audio" autoplay="autoplay" loop="loop">
@@ -331,10 +332,14 @@
                     }
                 } else if(gameOver === true) {
                     if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
-						document.getElementById("midscreen").removeChild(textFieldHS);
+						if(document.getElementById("nameInput") != null) {
+							document.getElementById("midscreen").removeChild(textFieldHS);
+						}
                         mainMenu();
                     } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
-						document.getElementById("midscreen").removeChild(textFieldHS);
+						if(document.getElementById("nameInput") != null) {
+							document.getElementById("midscreen").removeChild(textFieldHS);
+						}
                         newGame();
                     }
                 } else if(pause === true) {
@@ -812,6 +817,7 @@
                 ctx.drawImage(menuButtonImg,20,250);
                 ctx.drawImage(restartButtonImg,160,250);
             }
+			//The function to call to make the text box for high score show up
 			var textFieldHS = document.createElement("INPUT");
 			function nameInputHS() {
 				textFieldHS.setAttribute("type", "text");
