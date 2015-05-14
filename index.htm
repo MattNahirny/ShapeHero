@@ -600,7 +600,9 @@
                         }
                     }
                     if (updateBuffer[i - s].offScreen()) {
-                        if (currentRules.rules[0].type.slice(0, 2) === "no") {
+                        if (updateBuffer[i - s] instanceof scoreParticle) {
+                            
+                        } else if (currentRules.rules[0].type.slice(0, 2) === "no") {
                             //negative rules: on offscreen, pass any = pass
                             var rulesetPassed = false;
                             for (var j = 0; j < currentRules.rules.length; j++) {
