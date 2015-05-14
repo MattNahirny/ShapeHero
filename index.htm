@@ -409,7 +409,7 @@
                 };
 
                 Difficulty.prototype.getVelocity = function getVelocity() {
-                    return (0.02 + Math.min(Math.ceil(this.level / 2) * 0.02, 0.16)) * ctx.canvas.height / 480;
+                    return (0.03 + Math.min(this.level * 0.01, 0.13)) * ctx.canvas.height / 480;
                 };
 
                 Difficulty.prototype.checkLevelChange = function checkLevelChange() {
