@@ -14,24 +14,24 @@
         </canvas>
         <script>
             var ctx = document.getElementById("canvas").getContext("2d"),
-            limit = 300,
-            lastFrameTimeMs = 0,
-            maxFPS = 60,
-            delta = 0,
-            timestep = 1000 / 60,
-            fps = 60,
-            framesThisSecond = 0,
-            lastFpsUpdate = 0,
-            running = false,
-            started = false,
-            frameID = 0,
-            entities = 0,
-            mainMenuScreen = false,
-            mainMenuOptions = false,
-            gameOver = false,
-            pause = false,
-            portrait = false,
-            currentRules = null;
+             limit = 300,
+             lastFrameTimeMs = 0,
+             maxFPS = 60,
+             delta = 0,
+             timestep = 1000 / 60,
+             fps = 60,
+             framesThisSecond = 0,
+             lastFpsUpdate = 0,
+             running = false,
+             started = false,
+             frameID = 0,
+             entities = 0,
+             mainMenuScreen = false,
+             mainMenuOptions = false,
+             gameOver = false,
+             pause = false,
+             portrait = false,
+             currentRules = null;
             window.count = 0;
             window.combo = 0;
 
@@ -118,7 +118,7 @@
                     // All we have to do is make sure the Mouse X,Y fall in the area between
                     // the shape's X and (X + Width) and its Y and (Y + Height)
                     return (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
-                        (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
+                         (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
             }
 
@@ -171,7 +171,7 @@
                     // All we have to do is make sure the Mouse X,Y fall in the area between
                     // the shape's X and (X + Width) and its Y and (Y + Height)
                     return (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
-                        (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
+                         (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
             }
 
@@ -225,7 +225,7 @@
                     // All we have to do is make sure the Mouse X,Y fall in the area between
                     // the shape's X and (X + Width) and its Y and (Y + Height)
                     return (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
-                        (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
+                         (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
 
             }
@@ -264,7 +264,7 @@
                     // All we have to do is make sure the Mouse X,Y fall in the area between
                     // the shape's X and (X + Width) and its Y and (Y + Height)
                     return (this.xCurrent <= mx) && (this.xCurrent + 64 * ctx.canvas.width / 320 >= mx) &&
-                        (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
+                         (this.yCurrent <= my) && (this.yCurrent + 64 * ctx.canvas.height / 480 >= my);
                 }
             }
 
@@ -351,9 +351,9 @@
             }
 
             function RuleSet() {
-                this.rules = new Array();
+                this.rules = [];
                 this.availableRules = ["red", "nored", "blue", "noblue", "green", "nogreen", "yellow", "noyellow", "Circle", "noCircle", "Square", "noSquare", "Triangle", "noTriangle"];
-                this.newRule = function () {
+                RuleSet.prototype.newRule = function newRule() {
                     var rand = Math.floor(Math.random() * this.availableRules.length);
                     this.rules.push(new Rule(this.availableRules[rand]));
 
@@ -362,28 +362,29 @@
                     } else {
                         this.availableRules.splice(rand - 1, 2);
                     }
+                    console.log(this.rules);
                 };
             }
 
-           /* canvas.addEventListener('dblclick', function (e) {
-                fullscreen = false;
-                if (!fullscreen) {
-                    if (ctx.canvas.webkitRequestFullScreen) {
-                        fullscreen = true;
-                        ctx.canvas.webkitRequestFullScreen();
-                    } else {
-                        fullscreen = true;
-                        ctx.canvas.mozRequestFullScreen();
-                    }
-                } else {
-                    if(ctx.canvas.webkitExitFullscreen) {
-                        fullscreen = false;
-                        ctx.canvas.webkitExitFullscreen();
-                    } else {
-                        fullscreen = false;
-                        ctx.canvas.mozCancelFullScreen();
-                    }
-                }
+            /* canvas.addEventListener('dblclick', function (e) {
+            fullscreen = false;
+            if (!fullscreen) {
+            if (ctx.canvas.webkitRequestFullScreen) {
+            fullscreen = true;
+            ctx.canvas.webkitRequestFullScreen();
+            } else {
+            fullscreen = true;
+            ctx.canvas.mozRequestFullScreen();
+            }
+            } else {
+            if(ctx.canvas.webkitExitFullscreen) {
+            fullscreen = false;
+            ctx.canvas.webkitExitFullscreen();
+            } else {
+            fullscreen = false;
+            ctx.canvas.mozCancelFullScreen();
+            }
+            }
 
             }, true);*/
 
@@ -398,6 +399,8 @@
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
                         this.level++;
+                            currentRules.newRule();
+                        }
                         this.targetScore += 20;
                     } else {
                         gameOver = true;
@@ -405,7 +408,7 @@
                 };
 
                 Difficulty.prototype.getVelocity = function getVelocity() {
-                    return Math.min(Math.ceil(this.level / 2) * 0.04, 0.14);
+                    return Math.min(Math.ceil(this.level / 2) * 0.04, 0.2);
                 };
 
                 Difficulty.prototype.checkLevelChange = function checkLevelChange() {
@@ -532,7 +535,7 @@
             //------------------------------------------
             function update(delta) {
                 var l = updateBuffer.length,
-                s = 0;
+                 s = 0;
                 if (df.checkLevelChange() === true) {
                     df.levelProgress(window.count);
                 }
@@ -541,11 +544,11 @@
 
                     //if its a shape do a spawnCheck and if it passes spawn a shape
                     if (updateBuffer[i - s] instanceof Circle ||
-                            updateBuffer[i - s] instanceof Square ||
-                            updateBuffer[i - s] instanceof Triangle ||
-                            updateBuffer[i - s] instanceof Star) {
+                             updateBuffer[i - s] instanceof Square ||
+                             updateBuffer[i - s] instanceof Triangle ||
+                             updateBuffer[i - s] instanceof Star) {
                         if (updateBuffer[i - s].checked === false &&
-                                sf.spawnCheck(updateBuffer[i - s]) === true) {
+                                 sf.spawnCheck(updateBuffer[i - s]) === true) {
                             updateBuffer.push(sf.createShape("random"));
                             df.numShapes++;
                         }
