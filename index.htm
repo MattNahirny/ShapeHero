@@ -53,6 +53,43 @@
                 ctx.textAlign = "center";
                 ctx.fillText("Please flip your screen to portrait", ctx.canvas.width / 2, ctx.canvas.height / 2);
             }
+			
+			function scoreParticle(x, y, score) {
+                this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -64 * ctx.canvas.height / 480;
+                this.yPrevious = this.yCurrent;
+                this.layer = 0;
+                this.xVelocity = 0;
+                this.yVelocity = -0.05 * ctx.canvas.height / 480;
+				this.life = 100;
+				this.score = score || 0;
+                this.clicked = false;
+                this.checked = false;
+                entities++;
+
+                this.draw = function (interp) {
+					this.life--;
+					ctx.save();
+					ctx.font = "30px Comic Sans MS";
+					ctx.fillStyle = "rgba(255, 0, 0, " + this.life / 100 + ")";
+					ctx.textAlign = "center";
+					ctx.fillText(this.score, this.xCurrent, this.yCurrent);
+					ctx.restore();
+                }
+                this.update = function () {
+                    this.xPrevious = this.xCurrent;
+                    this.yPrevious = this.yCurrent;
+                    this.xCurrent += this.xVelocity * delta;
+                    this.yCurrent += this.yVelocity * delta;
+                }
+                this.offScreen = function () {
+                    return this.life <= 0;
+                }
+                this.contains = function (mx, my) {
+                    return false;
+                }
+            }
 
             //Doesn't work on menu
             //somebody help!!!!!!
@@ -515,7 +552,6 @@
             ctx.fillText("x: " + x, 180, 480);
             ctx.fillText("y: " + entities, 180, 480);
             }*/
-
             getMouse = function (mouseEvent) {
                 var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
                 if (element.offsetParent !== undefined) {
@@ -611,6 +647,7 @@
                             }
                             if (rulesetFailed === false) {
                                 rulePass();
+								updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
                             }
                         } else {
                             //positive rules: on click, pass any rule = pass
@@ -619,6 +656,7 @@
                                 if (currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
                                     rulesetPassed = true;
                                     rulePass();
+									updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
                                     break;
                                 }
                             }
@@ -650,6 +688,7 @@
                 layerBuffer.sort(function (a, b) {
                     return b.layer - a.layer;
                 });
+				console.log(window.combo);
             }
 
             function rulePass() {
@@ -769,10 +808,10 @@
             //}
 
             function end(fps) {
-                if (fps < 25) {
+                /*if (fps < 25) {
                     entities = 0;
                     updateBuffer = [];
-                }
+                }*/
             }
 
             function stop() {
