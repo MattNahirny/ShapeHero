@@ -399,6 +399,7 @@
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
                         this.level++;
+                        if (this.level === 5 || this.level === 10) {
                             currentRules.newRule();
                         }
                         this.targetScore += 20;
