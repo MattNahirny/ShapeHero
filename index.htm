@@ -387,6 +387,29 @@
 				
 			}, true);
 			
+            //------------------------
+            //Difficulty
+            //------------------------
+            function Difficulty() {
+                this.level = 1;
+                this.targetScore = ;
+
+                Difficulty.prototype.levelProgress = function levelProgress(score) {
+                    if (score > TargetScore) {
+                        this.level++;
+                    } else {
+                        gameOver = true;
+                    }
+                };
+
+                Difficulty.prototype.getVelocity = function getVelocity() {
+                    return Math.min(Math.ceil(this.level / 2) * 0.02, 0.14);
+                };
+
+
+
+            }
+
             canvas.addEventListener('mousedown', function(e) {
                 var mouse = getMouse(e);
                 var mx = mouse.x;
