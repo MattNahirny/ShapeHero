@@ -343,6 +343,8 @@
             //--------------------------------------------
             function Rule(type) {
                 this.type = type;
+                this.ruleImg = new Image();
+                ruleImg.src = "img/" + "Rules" + type + ".png"
 
                 Rule.prototype.toString = function ruleToString() {
                     var ret = this.type + "\n";
@@ -352,16 +354,21 @@
 
             function RuleSet() {
                 this.rules = [];
-                this.availableRules = ["red", "nored", "blue", "noblue", "green", "nogreen", "yellow", "noyellow", "Circle", "noCircle", "Square", "noSquare", "Triangle", "noTriangle"];
+                this.availableRules = ["red", "blue", "green", "yellow", "Circle", "Square", "Triangle",
+                                       "nored", "noblue", "nogreen", "noyellow", "noCircle", "noSquare", "noTriangle"];
                 RuleSet.prototype.newRule = function newRule() {
                     var rand = Math.floor(Math.random() * this.availableRules.length);
+                    var first = true;
                     this.rules.push(new Rule(this.availableRules[rand]));
-
-                    if (rand % 2 === 0) {
-                        this.availableRules.splice(rand, 2);
-                    } else {
-                        this.availableRules.splice(rand - 1, 2);
+                    if (first === true) {
+                        if (rand < 7) {
+                            this.availableRules.splice(7, 7);
+                        } else {
+                            this.availableRules.splice(0, 7);
+                        }
+                        first = false;
                     }
+                    this.availableRules.splice(rand % 7, 1);
                     console.log(this.rules);
                 };
             }
@@ -402,7 +409,7 @@
                         if (this.level === 5 || this.level === 10) {
                             currentRules.newRule();
                         }
-                        for(var i = (this.level - 1) * 20; i < this.level * 20; i++) {
+                        for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
                             this.targetScore += 0.6 * Math.log2(i)
                         }
                         console.log(this.targetScore);
@@ -674,7 +681,7 @@
             //----------------------------------------------------------
             function draw(interp) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
+
                 //-----------------------
                 //Game Screen
                 //-----------------------

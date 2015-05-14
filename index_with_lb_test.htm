@@ -724,7 +724,6 @@
                 entities = 0;
                 mainMenuScreen = false;
                 mainMenuOptions = false;
-				leaderboardScreen = false;
                 gameOver = false;
                 pause = false;
                 window.count = 0;
@@ -830,7 +829,7 @@
 			function nameInputHS() {
 				textFieldHS.setAttribute("type", "text");
 				textFieldHS.setAttribute("value", "Enter your name");
-				textFieldHS.setAttribute("z-index", "1");
+				textFieldHS.setAttribute("z-index", "1"); //on top of canvas
 				textFieldHS.setAttribute("id", "nameInput");
 				document.getElementById("midscreen").appendChild(textFieldHS);
 			}
