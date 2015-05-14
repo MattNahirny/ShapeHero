@@ -462,7 +462,7 @@
                 } else if (mainMenuScreen === true) {
                     if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 240 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
-                    } else if (mx >= 28 && mx <= 292 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) {
+                    } else if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) {
                         //Leaderboard
                     } else if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 400 * ctx.canvas.height / 480 && my <= 454 * ctx.canvas.height / 480) {
                         optionsScreen();
