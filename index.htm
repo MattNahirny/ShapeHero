@@ -512,25 +512,79 @@
                                 }
                         }
                     if(updateBuffer[i - s].offScreen()) {
-                        for(var j = 0; j < currentRules.rules.length; j++) {
+                        if(currentRules.rules[0].type.slice(0,2) === "no") {
+                            //negative rules: on offscreen, pass any = pass
+                            var rulesetPassed = false;
+                            for(var j = 0; j < currentRules.rules.length; j++) {
+                                if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
+                                    rulesetPassed = true;
+                                    rulePass();
+                                    break;
+                                }
+                            }
+                            if(rulesetPassed === false) {
+                                ruleFail();
+                            }
+                        } else {
+                            //positive rules: on offscreen, fail any = fail
+                            var rulesetFailed = false;
+                            for(var j = 0; j < currentRules.rules.length; j++) {
+                                if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                                    rulesetFailed = true;
+                                    ruleFail();
+                                    break;
+                                }
+                            }
+                            if(rulesetFailed === false) {
+                                rulePass();
+                            }
+                        }
+                        
+                        /*for(var j = 0; j < currentRules.rules.length; j++) {
                             if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                                //gameOver = true;
                                 ruleFail();
                             } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
-                                //Do nothing, should pass
                                 rulePass();
                             } else if(currentRules.rules[j].type.slice(0,2) === "no") {
-                                //gameOver = true;
                                 ruleFail();
                             } else {
                                 rulePass();
                             }
-                        }
+                        }*/
+                        
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
                     } else if (updateBuffer[i - s].clicked === true) {
-                        for(var j = 0; j < currentRules.rules.length; j++) {
+                        if(currentRules.rules[0].type.slice(0,2) === "no") {
+                            //negative rules: on click, fail any rule = fail
+                            var rulesetFailed = false;
+                            for(var j = 0; j < currentRules.rules.length; j++) {
+                                if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
+                                    rulesetFailed = true;
+                                    ruleFail();
+                                    break;
+                                }
+                            }
+                            if(rulesetFailed === false) {
+                                rulePass();
+                            }
+                        } else {
+                            //positive rules: on click, pass any rule = pass
+                            var rulesetPassed = false;
+                            for(var j = 0; j < currentRules.rules.length; j++) {
+                                if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                                    rulesetPassed();
+                                    rulePass();
+                                    break;
+                                }
+                            }
+                            if(rulesetPassed === false) {
+                                ruleFail();
+                            }
+                        }
+                        
+                        /*for(var j = 0; j < currentRules.rules.length; j++) {
                             if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
                                 rulePass();
                             } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
@@ -540,7 +594,8 @@
                             } else {
                                 ruleFail();
                             }
-                        }
+                        }*/
+                        
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
