@@ -331,8 +331,10 @@
                     }
                 } else if(gameOver === true) {
                     if(mx >= 20 && mx <= 159 && my >= 250 && my <= 294) {
+						document.getElementById("midscreen").removeChild(textFieldHS);
                         mainMenu();
                     } else if(mx >= 160 && mx <= 300 && my >= 250 && my <= 294) {
+						document.getElementById("midscreen").removeChild(textFieldHS);
                         newGame();
                     }
                 } else if(pause === true) {
@@ -810,9 +812,8 @@
                 ctx.drawImage(menuButtonImg,20,250);
                 ctx.drawImage(restartButtonImg,160,250);
             }
-			
+			var textFieldHS = document.createElement("INPUT");
 			function nameInputHS() {
-				var textFieldHS = document.createElement("INPUT");
 				textFieldHS.setAttribute("type", "text");
 				textFieldHS.setAttribute("value", "Enter your name");
 				textFieldHS.setAttribute("z-index", "1");
