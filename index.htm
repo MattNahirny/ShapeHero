@@ -344,7 +344,7 @@
             function Rule(type) {
                 this.type = type;
                 this.ruleImg = new Image();
-                this.ruleImg.src = "img/Rules/" + type + ".png";
+                this.ruleImg.src = "img/rules/" + type + ".png";
 
                 Rule.prototype.toString = function ruleToString() {
                     var ret = this.type + "\n";
@@ -412,7 +412,6 @@
                         for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
                             this.targetScore += 0.6 * Math.log2(i)
                         }
-                        console.log(this.targetScore);
                     } else {
                         gameOver = true;
                     }
@@ -593,18 +592,6 @@
                             }
                         }
 
-                        /*for(var j = 0; j < currentRules.rules.length; j++) {
-                        if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                        ruleFail();
-                        } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
-                        rulePass();
-                        } else if(currentRules.rules[j].type.slice(0,2) === "no") {
-                        ruleFail();
-                        } else {
-                        rulePass();
-                        }
-                        }*/
-
                         updateBuffer.splice(i - s, 1);
                         s++;
                         entities--;
@@ -636,18 +623,6 @@
                                 ruleFail();
                             }
                         }
-
-                        /*for(var j = 0; j < currentRules.rules.length; j++) {
-                        if(currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
-                        rulePass();
-                        } else if(currentRules.rules[j].type === "no" + updateBuffer[i - s].shapeType || currentRules.rules[j].type === "no" + updateBuffer[i - s].colour) {
-                        ruleFail();
-                        } else if(currentRules.rules[j].type.slice(0,2) === "no") {
-                        rulePass();
-                        } else {
-                        ruleFail();
-                        }
-                        }*/
 
                         updateBuffer.splice(i - s, 1);
                         s++;
@@ -772,8 +747,6 @@
                 ctx.rect(0, 445 * ctx.canvas.height / 480, window.count / df.targetScore * ctx.canvas.width, 480 * ctx.canvas.height / 480);
                 ctx.fillStyle = "rgba(150,0,150,.5)";
                 ctx.fill();
-                
-                console.log(window.count / df.targetScore * ctx.canvas.width);
                 
                 ctx.strokeStyle = "black";
                 ctx.beginPath();
