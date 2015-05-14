@@ -365,7 +365,7 @@
                 };
             }
 
-            canvas.addEventListener('dblclick', function (e) {
+           /* canvas.addEventListener('dblclick', function (e) {
                 fullscreen = false;
                 if (!fullscreen) {
                     if (ctx.canvas.webkitRequestFullScreen) {
@@ -375,7 +375,7 @@
                         fullscreen = true;
                         ctx.canvas.mozRequestFullScreen();
                     }
-                } /*else {
+                } else {
                     if(ctx.canvas.webkitExitFullscreen) {
                         fullscreen = false;
                         ctx.canvas.webkitExitFullscreen();
@@ -383,9 +383,9 @@
                         fullscreen = false;
                         ctx.canvas.mozCancelFullScreen();
                     }
-                }*/
+                }
 
-            }, true);
+            }, true);*/
 
             //------------------------
             //Difficulty
@@ -398,7 +398,7 @@
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
                         this.level++;
-                        this.targetScore += this.targetScore;
+                        this.targetScore += 20;
                     } else {
                         gameOver = true;
                     }
