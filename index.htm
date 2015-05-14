@@ -674,8 +674,10 @@
             //----------------------------------------------------------
             function draw(interp) {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                // ** Add stuff you want drawn in the background all the time here **
-
+                
+                //-----------------------
+                //Game Screen
+                //-----------------------
                 var backgroundImg = new Image();
                 backgroundImg.src = "img/nebula_background.png";
                 ctx.drawImage(backgroundImg, 0, 0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
@@ -712,6 +714,9 @@
                 //ctx.fillText("Entities: " + entities,180,440);
 
                 // ** Add stuff you want drawn on top all the time here **
+                //----------------
+                //Top Bar
+                //----------------
                 ctx.rect(0, 0, 320 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 var grd = ctx.createLinearGradient(0, 0, 0, 35 * ctx.canvas.height / 480);
                 grd.addColorStop(0, "grey");
@@ -743,6 +748,10 @@
                 pauseButtonImg.src = "img/pause.png";
                 ctx.drawImage(pauseButtonImg, 285 * ctx.canvas.width / 320, 0, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
 
+
+                //------------------
+                //Bottom Bar
+                //------------------
                 ctx.rect(0, 445 * ctx.canvas.height / 480, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
                 var grd = ctx.createLinearGradient(0, 445 * ctx.canvas.height / 480, 0, 480 * ctx.canvas.height / 480);
                 grd.addColorStop(0, "grey");
