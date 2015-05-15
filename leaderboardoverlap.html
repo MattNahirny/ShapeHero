@@ -89,8 +89,6 @@
 	
   <footer>
     </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
-    <input class="example-leaderboard-name" type="text" id="nameInput" placeholder="Enter a name">
-    <input class="example-leaderboard-score" type="text" id="scoreInput" placeholder="Record your score...">
   </footer>
 </div>
 
@@ -158,27 +156,13 @@
   
   // When the user presses enter on SubmitButton, add the score, and update the highest score.
 
-    $(document).ready(function(){
-    $("#zergling").click(function(){
-      var newScore = Number($("#scoreInput").val());
-      var name = $("#nameInput").val();
-      $("#scoreInput").val("");
-
-      if (name.length === 0)
-        return;
-
-      var userScoreRef = scoreListRef.child(name);
-
-      // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
-      userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
-    });
-	});
+    
 
   
 </script>
 <!-- submit button -->
 
-<button type="button" id="zergling">Submit</button>
+
  
  </body>
 </html>
