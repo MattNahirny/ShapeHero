@@ -984,11 +984,7 @@
                 gameOver = false;
                 pause = false;
                 window.count = 0;
-                window.combo = 0;
-				//------------------------------------------------------------------------------------------
-				//GNARLY TEST GAMEOVER, remove this 
-				//------------------------------------------------------------------------------------------
-				gameOver = true;
+                window.combo = 0;	
                 start();
             }
 
@@ -1104,25 +1100,22 @@
 				textFieldHS.setAttribute("z-index", "1");
 				textFieldHS.setAttribute("id", "nameInput");
 				document.getElementById("midscreen").appendChild(textFieldHS);
-                
                 document.getElementById("midscreen").style.top 	= 175 * ctx.canvas.height / 480 + "px";
                 document.getElementById("midscreen").style.left = 40 * ctx.canvas.width / 320 + "px";
                 
 			}
-			
+			//The function to call to make the submit button for high score show up
 			var submitHS = document.createElement("div");
 			function submit() {
 				submitHS.setAttribute("type", "text");
 				submitHS.setAttribute("value", "Enter your name");
 				submitHS.setAttribute("z-index", "1");
 				submitHS.setAttribute("id", "zergling");
-				submitHS.setAttribute("style", "background-image:url(img/submit.png)");
-				submitHS.setAttribute("style", "background-size:100%");
-				submitHS.style.height = 44 * ctx.canvas.width / 320 + "px";
-				submitHS.style.width = 115 * ctx.canvas.height / 480 + "px";
-				document.getElementById("midscreenSubmit").appendChild(submitHS);
-                
-                document.getElementById("midscreenSubmit").style.top = 200 * ctx.canvas.height / 480 + "px";
+				submitHS.setAttribute("style", "background-image:url(img/submit.png); background-size:100% 100%;");
+				submitHS.style.width = 89 * ctx.canvas.width / 320 + "px";
+				submitHS.style.height = 34 * ctx.canvas.height / 480 + "px";
+				document.getElementById("midscreenSubmit").appendChild(submitHS);   
+                document.getElementById("midscreenSubmit").style.top = 192 * ctx.canvas.height / 480 + "px";
                 document.getElementById("midscreenSubmit").style.left = 39 * ctx.canvas.width / 320 + "px";
 				clickity();
 				//$("div").click(function(){
