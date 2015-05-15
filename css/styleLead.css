@@ -1,0 +1,40 @@
+	body {
+		background-image: url("../img/1820536.png");
+		
+	}
+  
+	table, th, td{
+		padding: 5px;
+		border-radius: 25px;
+		font-family: "Times New Roman", Times, serif;
+	}
+	
+ 
+	#leaderboardTable{
+		background-color:black;
+		color:yellow;
+		position:absolute;
+		
+	}
+ 
+	#rankOverlap{
+		background-color:black;
+		color:yellow;
+		position: absolute;
+		top:50px;
+		left: 10px;
+		
+		
+	}
+ 
+	th{
+		
+		background: -webkit-linear-gradient(#00CCFF, #000099); 
+		background: -o-linear-gradient(#00CCFF, #000099); 
+		background: -moz-linear-gradient(#00CCFF, #000099); 
+		background: linear-gradient(#00CCFF, #000099); 
+		border-style: outset;
+		z-index: +1; 
+		position:relative;
+		font-size: 125%;
+	}

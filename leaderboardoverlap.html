@@ -3,43 +3,7 @@
   <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  
-  <style>
- 
-	body {
-		background: -webkit-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0));
-		background: -webkit-linear-gradient(left,rgba(0,0,0,0),rgba(0,0,0,0));
-	}
-  
-	table, th, td{
-		padding: 5px;
-		border-radius: 25px;
-		
-	}
- 
-	#leaderboardTable{
-		background-color:black;
-		color:yellow;
-		position:absolute;
-	}
- 
-	#rankOverlap{
-		background-color:black;
-		color:yellow;
-		position: absolute;
-		top:44px;
-		left: 10px;
-  
-	}
- 
-	th{
-		background-color:blue;
-		border-style: outset;
-		z-index: +1; 
-		position:relative;
-		font-size: 125%;
-	}
-</style>
+  <link type="text/css" rel="stylesheet" href="css/styleLead.css" />
 
 </head>
 <body>
@@ -47,7 +11,7 @@
 <div class="example-base example-leaderboard l-demo-container">
   <table id="leaderboardTable">
     <tr>
-	  <th>Score</th>
+	  <th>Rank</th>
       <th align="left">Player</th>
       <th align="left">Score</th>
     </tr>
@@ -86,10 +50,12 @@
 	  </tr>
 	  
 	</table>
-	
+	<!--
   <footer>
     </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
-  </footer>
+    <input class="example-leaderboard-name" type="text" id="nameInput" placeholder="Enter a name">
+    <input class="example-leaderboard-score" type="text" id="scoreInput" placeholder="Record your score...">
+  </footer>-->
 </div>
 
 
@@ -156,13 +122,27 @@
   
   // When the user presses enter on SubmitButton, add the score, and update the highest score.
 
-    
+    $(document).ready(function(){
+    $("#zergling").click(function(){
+      var newScore = Number($("#scoreInput").val());
+      var name = $("#nameInput").val();
+      $("#scoreInput").val("");
+
+      if (name.length === 0)
+        return;
+
+      var userScoreRef = scoreListRef.child(name);
+
+      // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
+      userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+    });
+	});
 
   
 </script>
 <!-- submit button -->
 
-
+<button type="button" id="zergling">Submit</button>
  
  </body>
 </html>
