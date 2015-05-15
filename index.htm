@@ -90,6 +90,71 @@
                     return false;
                 }
             }
+			
+			function explosion(x, y, size) {
+				var explosionParticles = [];
+				for(var i = 0; i < size; i++) {
+					explosionParticles.push(new particle(x, y, (Math.random() - 0.5) / 10, (Math.random() - 0.5) / 10));
+				}
+				
+				this.draw = function(interp) {
+					for(var i = 0; i < explosionParticles.length; i++) {
+						explosionParticles[i].draw(interp);
+					}
+				}
+				
+				this.update = function() {
+					for(var i = 0; i < explosionParticles.length; i++) {
+						explosionParticles[i].update();
+					}
+				}
+				
+				this.offScreen = function () {
+                    for(var i = 0; i < explosionParticles.length; i++) {
+						explosionParticles[i].offScreen();
+					}
+                }
+				
+				this.contains = function (mx, my) {
+                    return false;
+                }
+			}
+			
+			function particle(x, y, xVelocity, yVelocity) {
+				this.xCurrent = x || 0;
+                this.xPrevious = this.xCurrent;
+                this.yCurrent = y || -64 * ctx.canvas.height / 480;
+                this.yPrevious = this.yCurrent;
+                this.layer = 0;
+                this.xVelocity = xVelocity * ctx.canvas.width / 320;
+                this.yVelocity = yVelocity * ctx.canvas.height / 480;
+				this.xAcceleration = 0;
+				this.yAcceleration = 0.0001;
+				
+				this.update = function () {
+                    this.xPrevious = this.xCurrent;
+                    this.yPrevious = this.yCurrent;
+					this.xVelocity += this.xAcceleration * delta;
+					this.yVelocity += this.yAcceleration * delta;
+                    this.xCurrent += this.xVelocity * delta;
+                    this.yCurrent += this.yVelocity * delta;
+                }
+				
+				this.draw = function (interp) {
+					ctx.save();
+					ctx.fillStyle = "yellow";
+					ctx.fillRect(this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 10 * ctx.canvas.width / 320, 10 * ctx.canvas.height / 480)
+					ctx.restore();
+                }
+				
+				this.offScreen = function () {
+                    return this.yCurrent >= canvas.height;
+                }
+				
+				this.contains = function (mx, my) {
+                    return false;
+                }
+			}
 
             //Doesn't work on menu
             //somebody help!!!!!!
@@ -473,7 +538,8 @@
                 var mx = mouse.x;
                 var my = mouse.y;
                 var l = updateBuffer.length;
-
+				
+				updateBuffer.push(new explosion(mx, my, 5));
                 //LOL
                 /*if (portrait === false || true) {
                 } else*/
@@ -673,7 +739,6 @@
                 layerBuffer.sort(function (a, b) {
                     return b.layer - a.layer;
                 });
-				console.log(window.combo);
             }
 
             function rulePass() {
