@@ -10,10 +10,10 @@
     </head>
     <body style="overflow:hidden;">
 	
-		<div id="midscreen" style="position:absolute; left: 40px; top:180px;">
+		<div id="midscreen" style="position:absolute; left: 40px; top:175px;">
 		</div>	
 		<!--current ===========================================================================-->
-		<div id="midscreenSubmit" style="position:absolute; left: 39px; top:192px;">
+		<div id="midscreenSubmit" style="position:absolute; left: 39px; top:200px;">
 		</div>	
 		
         <audio id="background_audio" autoplay="autoplay" loop="loop">
@@ -459,11 +459,13 @@
                     if(mx >= 20 * ctx.canvas.width / 320 && mx <= 159 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         if(document.getElementById("nameInput") != null) {
 							document.getElementById("midscreen").removeChild(textFieldHS);
+							document.getElementById("midscreenSubmit").removeChild(submitHS);
 						}
 						mainMenu();
                     } else if(mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         if(document.getElementById("nameInput") != null) {
 							document.getElementById("midscreen").removeChild(textFieldHS);
+							document.getElementById("midscreenSubmit").removeChild(submitHS);
 						}
 						newGame();
                     } 
@@ -1103,7 +1105,7 @@
 				textFieldHS.setAttribute("id", "nameInput");
 				document.getElementById("midscreen").appendChild(textFieldHS);
                 
-                document.getElementById("midscreen").style.top 	= 180 * ctx.canvas.height / 480 + "px";
+                document.getElementById("midscreen").style.top 	= 175 * ctx.canvas.height / 480 + "px";
                 document.getElementById("midscreen").style.left = 40 * ctx.canvas.width / 320 + "px";
                 
 			}
@@ -1115,11 +1117,12 @@
 				submitHS.setAttribute("z-index", "1");
 				submitHS.setAttribute("id", "zergling");
 				submitHS.setAttribute("style", "background-image:url(img/submit.png)");
-				submitHS.style.height = '44px';
-				submitHS.style.width = '115px';
+				submitHS.setAttribute("style", "background-size:100%");
+				submitHS.style.height = 44 * ctx.canvas.width / 320 + "px";
+				submitHS.style.width = 115 * ctx.canvas.height / 480 + "px";
 				document.getElementById("midscreenSubmit").appendChild(submitHS);
                 
-                document.getElementById("midscreenSubmit").style.top = 192 * ctx.canvas.height / 480 + "px";
+                document.getElementById("midscreenSubmit").style.top = 200 * ctx.canvas.height / 480 + "px";
                 document.getElementById("midscreenSubmit").style.left = 39 * ctx.canvas.width / 320 + "px";
 				clickity();
 				//$("div").click(function(){
