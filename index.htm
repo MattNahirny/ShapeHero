@@ -559,7 +559,7 @@
                 var my = mouse.y;
                 var l = updateBuffer.length;
 
-                updateBuffer.push(new explosion(mx, my, 5));
+                
                 //LOL
                 /*if (portrait === false || true) {
                 } else*/
@@ -741,6 +741,7 @@
                             if (rulesetFailed === false) {
                                 rulePass();
                                 updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
+                                updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5));
                             }
                         } else {
                             //positive rules: on click, pass any rule = pass
@@ -750,6 +751,7 @@
                                     rulesetPassed = true;
                                     rulePass();
                                     updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
+                                    updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5));
                                     break;
                                 }
                             }
