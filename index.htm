@@ -4,8 +4,16 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <link type="text/css" rel="stylesheet" href="css/style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     </head>
     <body style="overflow:hidden;">
+		<div id="midscreen" style="position:absolute; left: 40px; top:175px;">
+		</div>	
+		<!--current ===========================================================================-->
+		<div id="midscreenSubmit" style="position:absolute; left: 39px; top:200px;">
+		</div>	
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
         </audio>
@@ -566,15 +574,23 @@
                     if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 240 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
                     } else if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) {
-                        //Leaderboard
+                        leaderboardScreen();
                     } else if (mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 400 * ctx.canvas.height / 480 && my <= 454 * ctx.canvas.height / 480) {
                         optionsScreen();
                     }
                 } else if (gameOver === true) {
                     if (mx >= 20 * ctx.canvas.width / 320 && mx <= 159 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
-                        mainMenu();
+                        if(document.getElementById("nameInput") != null) {
+							document.getElementById("midscreen").removeChild(textFieldHS);
+							document.getElementById("midscreenSubmit").removeChild(submitHS);
+						}
+						mainMenu();
                     } else if (mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
-                        newGame();
+                        if(document.getElementById("nameInput") != null) {
+							document.getElementById("midscreen").removeChild(textFieldHS);
+							document.getElementById("midscreenSubmit").removeChild(submitHS);
+						}
+						newGame();
                     }
                 } else if (pause === true) {
                     if (mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
@@ -975,6 +991,8 @@
             speakerImg.src = "img/speaker.png";
             var muteImg = new Image();
             muteImg.src = "img/mute.png";
+			var submitImg = new Image();
+			submitImg.src = "img/submit.png";
 
             //---------------------------
             //Pause menu drawing
@@ -1100,6 +1118,10 @@
                 start();
             }
 
+			function leaderboardScreen() {	
+				window.open("leaderboardoverlap.html");
+			}
+			
             //------------------------------
             //Main menu options screen
             //------------------------------
@@ -1177,7 +1199,7 @@
                 ctx.fillText("Score: " + window.count, 25 * ctx.canvas.width / 320, 130 * ctx.canvas.height / 480);
 
                 //Temporary variable, actually check in later iteration instead.
-                var newRecord = false;
+                var newRecord = true;
                 if (newRecord === true) {
                     ctx.beginPath();
                     ctx.rect(35 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 250 * ctx.canvas.width / 320, 90 * ctx.canvas.height / 480);
@@ -1186,9 +1208,8 @@
                     ctx.fillStyle = "black";
                     ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
                     ctx.fillText("New High Score", 40 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480);
-
-                    ctx.font = 15 * ctx.canvas.height / 480 + "px Calibri";
-                    ctx.fillText("Enter your name", 40 * ctx.canvas.width / 320, 190 * ctx.canvas.height / 480);
+					nameInputHS();
+					submit();
                 } else {
                     ctx.fillText("High Score: 9001", 40 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480);
                 }
@@ -1196,6 +1217,122 @@
                 ctx.drawImage(menuButtonImg, 20 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
                 ctx.drawImage(restartButtonImg, 160 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
             }
+			
+			//The function to call to make the text box for high score show up
+			var textFieldHS = document.createElement("INPUT");
+			function nameInputHS() {
+				textFieldHS.setAttribute("type", "text");
+				textFieldHS.setAttribute("value", "Enter your name");
+				textFieldHS.setAttribute("z-index", "1");
+				textFieldHS.setAttribute("id", "nameInput");
+				document.getElementById("midscreen").appendChild(textFieldHS);
+                document.getElementById("midscreen").style.top 	= 175 * ctx.canvas.height / 480 + "px";
+                document.getElementById("midscreen").style.left = 40 * ctx.canvas.width / 320 + "px";
+                
+			}
+			//The function to call to make the submit button for high score show up
+			var submitHS = document.createElement("div");
+			function submit() {
+				submitHS.setAttribute("type", "text");
+				submitHS.setAttribute("value", "Enter your name");
+				submitHS.setAttribute("z-index", "1");
+				submitHS.setAttribute("id", "zergling");
+				submitHS.setAttribute("style", "background-image:url(img/submit.png); background-size:100% 100%;");
+				submitHS.style.width = 89 * ctx.canvas.width / 320 + "px";
+				submitHS.style.height = 34 * ctx.canvas.height / 480 + "px";
+				document.getElementById("midscreenSubmit").appendChild(submitHS);   
+                document.getElementById("midscreenSubmit").style.top = 192 * ctx.canvas.height / 480 + "px";
+                document.getElementById("midscreenSubmit").style.left = 39 * ctx.canvas.width / 320 + "px";
+				clickity();
+				//$("div").click(function(){
+					//alert("submit div was clicked.");
+				//});
+                
+			}
+			
+			
+			var LEADERBOARD_SIZE = 100;
+	
+	
+			// Create our Firebase reference
+			var scoreListRef = new Firebase('https://zu1g1l7h60o.firebaseio-demo.com//scoreList');
+
+			// Keep a mapping of firebase locations to HTML elements, so we can move / remove elements as necessary.
+			var htmlForPath = {};
+
+			// Helper function that takes a new score snapshot and adds an appropriate row to our leaderboard table.
+			function handleScoreAdded(scoreSnapshot, prevScoreName) {
+				  
+				  
+				var newScoreRow = $("<tr/>");
+				newScoreRow.append($("<td/>").append($("<em/>").text("")));
+
+				newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val().name)));
+				newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
+
+				// Store a reference to the table row so we can get it again later.
+				htmlForPath[scoreSnapshot.key()] = newScoreRow;
+
+				// Insert the new score in the appropriate place in the table.
+				if (prevScoreName === null) {
+					$("#leaderboardTable").append(newScoreRow);
+				} else {
+					var lowerScoreRow = htmlForPath[prevScoreName];
+					lowerScoreRow.before(newScoreRow);
+				}
+			}
+
+			// Helper function to handle a score object being removed; just removes the corresponding table row.
+			function handleScoreRemoved(scoreSnapshot) {
+				var removedScoreRow = htmlForPath[scoreSnapshot.key()];
+				removedScoreRow.remove();
+				delete htmlForPath[scoreSnapshot.key()];
+			}
+
+			// Create a view to only receive callbacks for the last LEADERBOARD_SIZE scores
+			var scoreListView = scoreListRef.limitToLast(LEADERBOARD_SIZE);
+
+			// Add a callback to handle when a new score is added.
+			scoreListView.on('child_added', function (newScoreSnapshot, prevScoreName) {
+				handleScoreAdded(newScoreSnapshot, prevScoreName);
+			});
+
+			// Add a callback to handle when a score is removed
+			scoreListView.on('child_removed', function (oldScoreSnapshot) {
+				handleScoreRemoved(oldScoreSnapshot);
+			});
+
+			// Add a callback to handle when a score changes or moves positions.
+			var changedCallback = function (scoreSnapshot, prevScoreName) {
+				handleScoreRemoved(scoreSnapshot);
+				handleScoreAdded(scoreSnapshot, prevScoreName);
+			};
+			scoreListView.on('child_moved', changedCallback);
+			scoreListView.on('child_changed', changedCallback);
+
+			  
+			// When the user presses enter on SubmitButton, add the score, and update the highest score.
+
+			function clickity () {
+			
+				$(document).ready(function(){
+					$("#zergling").click(function(){
+						var newScore = window.count;//Number($("#scoreInput").val());
+						var name = $("#nameInput").val();
+						//$("#scoreInput").val("");
+
+						if (name.length === 0)
+						return;
+
+						var userScoreRef = scoreListRef.child(name);
+
+						// Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
+						userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+						document.getElementById("midscreen").removeChild(textFieldHS);
+						document.getElementById("midscreenSubmit").removeChild(submitHS);
+					});
+				});			
+			}
         </script>
     </body>
 </html>
