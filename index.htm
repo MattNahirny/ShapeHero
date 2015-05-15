@@ -879,12 +879,12 @@
                 ctx.fillStyle = "black";
                 ctx.font = 30 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Rules:", 0, 475 * ctx.canvas.height / 480);
-                ctx.drawImage(currentRules.rules[0].ruleImg, 90 * ctx.canvas.width / 320, 450 * ctx.canvas.height / 480);
+                ctx.drawImage(currentRules.rules[0].ruleImg, 90 * ctx.canvas.width / 320, 450 * ctx.canvas.height / 480, 90 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 if (currentRules.rules.length > 1) {
-                    ctx.drawImage(currentRules.rules[1].ruleImg,  160 * ctx.canvas.width / 320, 450 * ctx.canvas.height / 480);
+                    ctx.drawImage(currentRules.rules[1].ruleImg, 160 * ctx.canvas.width / 320, 450 * ctx.canvas.height / 480, 90 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 }
                 if (currentRules.rules.length > 2) {
-                    ctx.drawImage(currentRules.rules[2].ruleImg, 230 * ctx.canvas.width / 320, 450 * ctx.canvas.height / 480);
+                    ctx.drawImage(currentRules.rules[2].ruleImg, 230 * ctx.canvas.width / 320, 450 * ctx.canvas.height / 480, 90 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 }
             }
 
