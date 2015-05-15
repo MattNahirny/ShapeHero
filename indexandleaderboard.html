@@ -4,10 +4,18 @@
         <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
         <link type="text/css" rel="stylesheet" href="css/style.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     </head>
     <body style="overflow:hidden;">
+	
 		<div id="midscreen" style="position:absolute; left: 40px; top:180px;">
 		</div>	
+		<!--current ===========================================================================-->
+		<div id="midscreenSubmit" style="position:absolute; left: 39px; top:192px;">
+		</div>	
+		
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
         </audio>
@@ -442,8 +450,8 @@
                 } else if(mainMenuScreen === true) {
                     if(mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 240 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         newGame();
-                    } else if(mx >= 28 && mx <= 292 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) { 
-                        //Leaderboard
+                    } else if(mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 320 * ctx.canvas.height / 480 && my <= 374 * ctx.canvas.height / 480) { 
+                        leaderboardScreen();
                     } else if(mx >= 28 * ctx.canvas.width / 320 && mx <= 292 * ctx.canvas.width / 320 && my >= 400 * ctx.canvas.height / 480 && my <= 454 * ctx.canvas.height / 480) {
                         optionsScreen();
                     }
@@ -458,12 +466,8 @@
 							document.getElementById("midscreen").removeChild(textFieldHS);
 						}
 						newGame();
-                    } else if(mx >= 39 * ctx.canvas.width / 320 && mx <= 154 * ctx.canvas.width / 320 && my >= 192 * ctx.canvas.height / 480 && my <= 236 * ctx.canvas.height / 480) {
-                        if(document.getElementById("nameInput") != null) {
-							document.getElementById("midscreen").removeChild(textFieldHS);
-						}
-						newGame();
-                    }
+                    } 
+                    
 					
                 } else if(pause === true) {
                     if(mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
@@ -986,6 +990,13 @@
                 start();
             }
 
+			
+			
+			function leaderboardScreen() {	
+				window.open("leaderboardoverlap.html");
+			}
+			
+			
             //------------------------------
             //Main menu options screen
             //------------------------------
@@ -1073,13 +1084,14 @@
                     ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
                     ctx.fillText("New High Score",40 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
                     nameInputHS();
+					submit();
                 } else {
                     ctx.fillText("High Score: 9001",40 * ctx.canvas.width / 320,170 * ctx.canvas.height / 480);
                 }
                 
                 ctx.drawImage(menuButtonImg,20 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
                 ctx.drawImage(restartButtonImg,160 * ctx.canvas.width / 320,250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
-				ctx.drawImage(submitImg,39 * ctx.canvas.width / 320,192 * ctx.canvas.height / 480, 115 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
+				//ctx.drawImage(submitImg,39 * ctx.canvas.width / 320,192 * ctx.canvas.height / 480, 115 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
 			}
 			
 			//The function to call to make the text box for high score show up
@@ -1091,12 +1103,33 @@
 				textFieldHS.setAttribute("id", "nameInput");
 				document.getElementById("midscreen").appendChild(textFieldHS);
                 
-                document.getElementById("midscreen").style.top = 180 * ctx.canvas.height / 480 + "px";
+                document.getElementById("midscreen").style.top 	= 180 * ctx.canvas.height / 480 + "px";
                 document.getElementById("midscreen").style.left = 40 * ctx.canvas.width / 320 + "px";
                 
 			}
 			
-			var LEADERBOARD_SIZE = 10;
+			var submitHS = document.createElement("div");
+			function submit() {
+				submitHS.setAttribute("type", "text");
+				submitHS.setAttribute("value", "Enter your name");
+				submitHS.setAttribute("z-index", "1");
+				submitHS.setAttribute("id", "zergling");
+				submitHS.setAttribute("style", "background-image:url(img/submit.png)");
+				submitHS.style.height = '44px';
+				submitHS.style.width = '115px';
+				document.getElementById("midscreenSubmit").appendChild(submitHS);
+                
+                document.getElementById("midscreenSubmit").style.top = 192 * ctx.canvas.height / 480 + "px";
+                document.getElementById("midscreenSubmit").style.left = 39 * ctx.canvas.width / 320 + "px";
+				clickity();
+				//$("div").click(function(){
+					//alert("submit div was clicked.");
+				//});
+                
+			}
+			
+			
+			var LEADERBOARD_SIZE = 100;
 	
 	
 			// Create our Firebase reference
@@ -1158,22 +1191,27 @@
 			  
 			// When the user presses enter on SubmitButton, add the score, and update the highest score.
 
-			$(document).ready(function(){
-				$("#zergling").click(function(){
-					var newScore = window.count;//Number($("#scoreInput").val());
-					var name = $("#nameInput").val();
-					//$("#scoreInput").val("");
+			function clickity () {
+			
+				$(document).ready(function(){
+					$("#zergling").click(function(){
+						var newScore = window.count;//Number($("#scoreInput").val());
+						var name = $("#nameInput").val();
+						//$("#scoreInput").val("");
 
-					if (name.length === 0)
-					return;
+						if (name.length === 0)
+						return;
 
-					var userScoreRef = scoreListRef.child(name);
+						var userScoreRef = scoreListRef.child(name);
 
-					// Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
-					userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
-					document.getElementById("midscreen").removeChild(textFieldHS);
-				});
-			});
+						// Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
+						userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
+						document.getElementById("midscreen").removeChild(textFieldHS);
+						document.getElementById("midscreenSubmit").removeChild(submitHS);
+					});
+				});			
+			}
+			
         </script>
 		<!-- 462-467 is my submit button code, need to implement the submit -->
     </body>
