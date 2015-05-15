@@ -53,8 +53,8 @@
                 ctx.textAlign = "center";
                 ctx.fillText("Please flip your screen to portrait", ctx.canvas.width / 2, ctx.canvas.height / 2);
             }
-			
-			function scoreParticle(x, y, score) {
+            
+            function scoreParticle(x, y, score) {
                 this.xCurrent = x || 0;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
@@ -62,20 +62,20 @@
                 this.layer = 0;
                 this.xVelocity = 0;
                 this.yVelocity = -0.05 * ctx.canvas.height / 480;
-				this.life = 100;
-				this.score = score || 0;
+                this.life = 100;
+                this.score = score || 0;
                 this.clicked = false;
                 this.checked = false;
                 entities++;
 
                 this.draw = function (interp) {
-					this.life--;
-					ctx.save();
-					ctx.font = "30px Comic Sans MS";
-					ctx.fillStyle = "rgba(255, 0, 0, " + this.life / 100 + ")";
-					ctx.textAlign = "center";
-					ctx.fillText(this.score, this.xCurrent, this.yCurrent);
-					ctx.restore();
+                    this.life--;
+                    ctx.save();
+                    ctx.font = "30px Comic Sans MS";
+                    ctx.fillStyle = "rgba(255, 0, 0, " + this.life / 100 + ")";
+                    ctx.textAlign = "center";
+                    ctx.fillText(this.score, this.xCurrent, this.yCurrent);
+                    ctx.restore();
                 }
                 this.update = function () {
                     this.xPrevious = this.xCurrent;
@@ -512,7 +512,7 @@
                             currentRules.newRule();
                         }
                         for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
-                            this.targetScore += 0.6 * Math.log2(i)
+                            this.targetScore += 0.6 * Math.log2(i);
                         }
                     } else {
                         gameOver = true;
@@ -618,8 +618,7 @@
             var df = new Difficulty();
             var updateBuffer = [];
             var layerBuffer = [];
-
-
+            
             /*TODO WTF?
             Shape.prototype.hit = function(mouse) {
             mx = getMouse(mouse).x;
@@ -627,6 +626,7 @@
             ctx.fillText("x: " + x, 180, 480);
             ctx.fillText("y: " + entities, 180, 480);
             }*/
+            
             getMouse = function (mouseEvent) {
                 var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
                 if (element.offsetParent !== undefined) {
@@ -666,7 +666,9 @@
                         }
                     }
                     if (updateBuffer[i - s].offScreen()) {
-                        if (currentRules.rules[0].type.slice(0, 2) === "no") {
+                        if (updateBuffer[i - s] instanceof scoreParticle) {
+                            
+                        } else if (currentRules.rules[0].type.slice(0, 2) === "no") {
                             //negative rules: on offscreen, pass any = pass
                             var rulesetPassed = false;
                             for (var j = 0; j < currentRules.rules.length; j++) {
@@ -710,7 +712,7 @@
                             }
                             if (rulesetFailed === false) {
                                 rulePass();
-								updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
+                                updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
                             }
                         } else {
                             //positive rules: on click, pass any rule = pass
@@ -719,7 +721,7 @@
                                 if (currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
                                     rulesetPassed = true;
                                     rulePass();
-									updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
+                                    updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
                                     break;
                                 }
                             }
