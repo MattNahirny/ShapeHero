@@ -48,6 +48,13 @@
 
             portrait = ctx.canvas.width < ctx.canvas.height;
 
+            var backgroundImg = new Image();
+            var backgrounds = ["bright", "galaxy", "lava", "lightning",
+                               "fireice", "nebula", "pink", "purple",
+                               "purplepink", "paint", "tealpink", "bigstar",
+                               "rainbow", "bluemoon", "redspace"];
+            var bgimgnum = 0;
+
 
 
             function notPortrait() {
@@ -524,6 +531,12 @@
                     } else {
                         gameOver = true;
                     }
+                    if (bgimgnum < 15) {
+                        bgimgnum++;
+                    } else {
+                        bgimgnum = 0;
+                    }
+                    backgroundImg.src = "img/backgrounds/" + backgrounds[bgimgnum] + "_background.png";
                 };
 
                 Difficulty.prototype.getVelocity = function getVelocity() {
@@ -579,17 +592,17 @@
                     }
                 } else if (gameOver === true) {
                     if (mx >= 20 * ctx.canvas.width / 320 && mx <= 159 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
-                        if(document.getElementById("nameInput") != null) {
-							document.getElementById("midscreen").removeChild(textFieldHS);
-							document.getElementById("midscreenSubmit").removeChild(submitHS);
-						}
-						mainMenu();
+                        if (document.getElementById("nameInput") != null) {
+                            document.getElementById("midscreen").removeChild(textFieldHS);
+                            document.getElementById("midscreenSubmit").removeChild(submitHS);
+                        }
+                        mainMenu();
                     } else if (mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
-                        if(document.getElementById("nameInput") != null) {
-							document.getElementById("midscreen").removeChild(textFieldHS);
-							document.getElementById("midscreenSubmit").removeChild(submitHS);
-						}
-						newGame();
+                        if (document.getElementById("nameInput") != null) {
+                            document.getElementById("midscreen").removeChild(textFieldHS);
+                            document.getElementById("midscreenSubmit").removeChild(submitHS);
+                        }
+                        newGame();
                     }
                 } else if (pause === true) {
                     if (mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
@@ -781,8 +794,8 @@
                 //-----------------------
                 //Game Screen
                 //-----------------------
-                var backgroundImg = new Image();
-                backgroundImg.src = "img/nebula_background.png";
+
+
                 ctx.drawImage(backgroundImg, 0, 0, 320 * ctx.canvas.width / 320, 480 * ctx.canvas.height / 480);
 
                 ctx.strokeStyle = "grey";
@@ -971,7 +984,7 @@
             };
 
             var backgroundImage = new Image();
-            backgroundImage.src = "img/star_background.png";
+            backgroundImage.src = "img/backgrounds/star_background.png";
             var logo = new Image();
             logo.src = "img/logo.png";
             var playButton = new Image();
@@ -990,8 +1003,8 @@
             speakerImg.src = "img/speaker.png";
             var muteImg = new Image();
             muteImg.src = "img/mute.png";
-			var submitImg = new Image();
-			submitImg.src = "img/submit.png";
+            var submitImg = new Image();
+            submitImg.src = "img/submit.png";
 
             //---------------------------
             //Pause menu drawing
@@ -1105,6 +1118,8 @@
                 df = new Difficulty();
                 updateBuffer = [];
                 layerBuffer = [];
+                bgimgnum = 0;
+                backgroundImg.src = "img/backgrounds/" + backgrounds[bgimgnum] + "_background.png";
                 updateBuffer.push(sf.createShape("random"));
                 frameID = 0;
                 entities = 0;
@@ -1117,10 +1132,10 @@
                 start();
             }
 
-			function leaderboardScreen() {	
-				window.open("leaderboardoverlap.html");
-			}
-			
+            function leaderboardScreen() {
+                window.open("leaderboardoverlap.html");
+            }
+
             //------------------------------
             //Main menu options screen
             //------------------------------
@@ -1207,8 +1222,8 @@
                     ctx.fillStyle = "black";
                     ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
                     ctx.fillText("New High Score", 40 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480);
-					nameInputHS();
-					submit();
+                    nameInputHS();
+                    submit();
                 } else {
                     ctx.fillText("High Score: 9001", 40 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480);
                 }
@@ -1216,123 +1231,123 @@
                 ctx.drawImage(menuButtonImg, 20 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
                 ctx.drawImage(restartButtonImg, 160 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
             }
-			
-			//The function to call to make the text box for high score show up
-			var textFieldHS = document.createElement("INPUT");
-			function nameInputHS() {
-				textFieldHS.setAttribute("type", "text");
-				textFieldHS.setAttribute("placeholder", "Enter your name");
-				textFieldHS.setAttribute("z-index", "1");
-				textFieldHS.setAttribute("id", "nameInput");
-                textFieldHS.setAttribute("style", "font-size: "+ 13 * ctx.canvas.height / 480 +"px");
-				document.getElementById("midscreen").appendChild(textFieldHS);
-                document.getElementById("midscreen").style.top 	= 175 * ctx.canvas.height / 480 + "px";
+
+            //The function to call to make the text box for high score show up
+            var textFieldHS = document.createElement("INPUT");
+            function nameInputHS() {
+                textFieldHS.setAttribute("type", "text");
+                textFieldHS.setAttribute("placeholder", "Enter your name");
+                textFieldHS.setAttribute("z-index", "1");
+                textFieldHS.setAttribute("id", "nameInput");
+                textFieldHS.setAttribute("style", "font-size: " + 13 * ctx.canvas.height / 480 + "px");
+                document.getElementById("midscreen").appendChild(textFieldHS);
+                document.getElementById("midscreen").style.top = 175 * ctx.canvas.height / 480 + "px";
                 document.getElementById("midscreen").style.left = 40 * ctx.canvas.width / 320 + "px";
-                
-			}
-			//The function to call to make the submit button for high score show up
-			var submitHS = document.createElement("div");
-			function submit() {
-				submitHS.setAttribute("type", "text");
-				submitHS.setAttribute("value", "Enter your name");
-				submitHS.setAttribute("z-index", "1");
-				submitHS.setAttribute("id", "zergling");
-				submitHS.setAttribute("style", "background-image:url(img/submit.png); background-size:100% 100%;");
-				submitHS.style.width = 89 * ctx.canvas.width / 320 + "px";
-				submitHS.style.height = 34 * ctx.canvas.height / 480 + "px";
-				document.getElementById("midscreenSubmit").appendChild(submitHS);   
+
+            }
+            //The function to call to make the submit button for high score show up
+            var submitHS = document.createElement("div");
+            function submit() {
+                submitHS.setAttribute("type", "text");
+                submitHS.setAttribute("value", "Enter your name");
+                submitHS.setAttribute("z-index", "1");
+                submitHS.setAttribute("id", "zergling");
+                submitHS.setAttribute("style", "background-image:url(img/submit.png); background-size:100% 100%;");
+                submitHS.style.width = 89 * ctx.canvas.width / 320 + "px";
+                submitHS.style.height = 34 * ctx.canvas.height / 480 + "px";
+                document.getElementById("midscreenSubmit").appendChild(submitHS);
                 document.getElementById("midscreenSubmit").style.top = 200 * ctx.canvas.height / 480 + "px";
                 document.getElementById("midscreenSubmit").style.left = 39 * ctx.canvas.width / 320 + "px";
-				clickity();
-				//$("div").click(function(){
-					//alert("submit div was clicked.");
-				//});
-                
-			}
-			
-			
-			var LEADERBOARD_SIZE = 100;
-	
-	
-			// Create our Firebase reference
-			var scoreListRef = new Firebase('https://zu1g1l7h60o.firebaseio-demo.com//scoreList');
+                clickity();
+                //$("div").click(function(){
+                //alert("submit div was clicked.");
+                //});
 
-			// Keep a mapping of firebase locations to HTML elements, so we can move / remove elements as necessary.
-			var htmlForPath = {};
+            }
 
-			// Helper function that takes a new score snapshot and adds an appropriate row to our leaderboard table.
-			function handleScoreAdded(scoreSnapshot, prevScoreName) {
-				  
-				  
-				var newScoreRow = $("<tr/>");
-				newScoreRow.append($("<td/>").append($("<em/>").text("")));
 
-				newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val().name)));
-				newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
+            var LEADERBOARD_SIZE = 100;
 
-				// Store a reference to the table row so we can get it again later.
-				htmlForPath[scoreSnapshot.key()] = newScoreRow;
 
-				// Insert the new score in the appropriate place in the table.
-				if (prevScoreName === null) {
-					$("#leaderboardTable").append(newScoreRow);
-				} else {
-					var lowerScoreRow = htmlForPath[prevScoreName];
-					lowerScoreRow.before(newScoreRow);
-				}
-			}
+            // Create our Firebase reference
+            var scoreListRef = new Firebase('https://zu1g1l7h60o.firebaseio-demo.com//scoreList');
 
-			// Helper function to handle a score object being removed; just removes the corresponding table row.
-			function handleScoreRemoved(scoreSnapshot) {
-				var removedScoreRow = htmlForPath[scoreSnapshot.key()];
-				removedScoreRow.remove();
-				delete htmlForPath[scoreSnapshot.key()];
-			}
+            // Keep a mapping of firebase locations to HTML elements, so we can move / remove elements as necessary.
+            var htmlForPath = {};
 
-			// Create a view to only receive callbacks for the last LEADERBOARD_SIZE scores
-			var scoreListView = scoreListRef.limitToLast(LEADERBOARD_SIZE);
+            // Helper function that takes a new score snapshot and adds an appropriate row to our leaderboard table.
+            function handleScoreAdded(scoreSnapshot, prevScoreName) {
 
-			// Add a callback to handle when a new score is added.
-			scoreListView.on('child_added', function (newScoreSnapshot, prevScoreName) {
-				handleScoreAdded(newScoreSnapshot, prevScoreName);
-			});
 
-			// Add a callback to handle when a score is removed
-			scoreListView.on('child_removed', function (oldScoreSnapshot) {
-				handleScoreRemoved(oldScoreSnapshot);
-			});
+                var newScoreRow = $("<tr/>");
+                newScoreRow.append($("<td/>").append($("<em/>").text("")));
 
-			// Add a callback to handle when a score changes or moves positions.
-			var changedCallback = function (scoreSnapshot, prevScoreName) {
-				handleScoreRemoved(scoreSnapshot);
-				handleScoreAdded(scoreSnapshot, prevScoreName);
-			};
-			scoreListView.on('child_moved', changedCallback);
-			scoreListView.on('child_changed', changedCallback);
+                newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val().name)));
+                newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
 
-			  
-			// When the user presses enter on SubmitButton, add the score, and update the highest score.
+                // Store a reference to the table row so we can get it again later.
+                htmlForPath[scoreSnapshot.key()] = newScoreRow;
 
-			function clickity () {
-			
-				$(document).ready(function(){
-					$("#zergling").click(function(){
-						var newScore = window.count;//Number($("#scoreInput").val());
-						var name = $("#nameInput").val();
-						//$("#scoreInput").val("");
+                // Insert the new score in the appropriate place in the table.
+                if (prevScoreName === null) {
+                    $("#leaderboardTable").append(newScoreRow);
+                } else {
+                    var lowerScoreRow = htmlForPath[prevScoreName];
+                    lowerScoreRow.before(newScoreRow);
+                }
+            }
 
-						if (name.length === 0)
-						return;
+            // Helper function to handle a score object being removed; just removes the corresponding table row.
+            function handleScoreRemoved(scoreSnapshot) {
+                var removedScoreRow = htmlForPath[scoreSnapshot.key()];
+                removedScoreRow.remove();
+                delete htmlForPath[scoreSnapshot.key()];
+            }
 
-						var userScoreRef = scoreListRef.child(name);
+            // Create a view to only receive callbacks for the last LEADERBOARD_SIZE scores
+            var scoreListView = scoreListRef.limitToLast(LEADERBOARD_SIZE);
 
-						// Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
-						userScoreRef.setWithPriority({ name:name, score:newScore }, newScore);
-						document.getElementById("midscreen").removeChild(textFieldHS);
-						document.getElementById("midscreenSubmit").removeChild(submitHS);
-					});
-				});			
-			}
+            // Add a callback to handle when a new score is added.
+            scoreListView.on('child_added', function (newScoreSnapshot, prevScoreName) {
+                handleScoreAdded(newScoreSnapshot, prevScoreName);
+            });
+
+            // Add a callback to handle when a score is removed
+            scoreListView.on('child_removed', function (oldScoreSnapshot) {
+                handleScoreRemoved(oldScoreSnapshot);
+            });
+
+            // Add a callback to handle when a score changes or moves positions.
+            var changedCallback = function (scoreSnapshot, prevScoreName) {
+                handleScoreRemoved(scoreSnapshot);
+                handleScoreAdded(scoreSnapshot, prevScoreName);
+            };
+            scoreListView.on('child_moved', changedCallback);
+            scoreListView.on('child_changed', changedCallback);
+
+
+            // When the user presses enter on SubmitButton, add the score, and update the highest score.
+
+            function clickity() {
+
+                $(document).ready(function () {
+                    $("#zergling").click(function () {
+                        var newScore = window.count; //Number($("#scoreInput").val());
+                        var name = $("#nameInput").val();
+                        //$("#scoreInput").val("");
+
+                        if (name.length === 0)
+                            return;
+
+                        var userScoreRef = scoreListRef.child(name);
+
+                        // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
+                        userScoreRef.setWithPriority({ name: name, score: newScore }, newScore);
+                        document.getElementById("midscreen").removeChild(textFieldHS);
+                        document.getElementById("midscreenSubmit").removeChild(submitHS);
+                    });
+                });
+            }
         </script>
     </body>
 </html>
