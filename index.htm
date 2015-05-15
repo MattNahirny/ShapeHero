@@ -1340,8 +1340,9 @@
 
                         if (name.length === 0)
                             return;
-
-                        var userScoreRef = scoreListRef.child(name);
+                        
+                        var timestampName = name + Date.now();
+                        var userScoreRef = scoreListRef.child(timestampName);
 
                         // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
                         userScoreRef.setWithPriority({ name: name, score: newScore }, newScore);
