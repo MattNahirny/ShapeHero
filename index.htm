@@ -462,6 +462,19 @@
                 this.type = type;
                 this.ruleImg = new Image();
                 this.ruleImg.src = "img/rules/" + type + ".png";
+                if (type === "red" ||
+                    type === "blue" ||
+                    type === "green" ||
+                    type === "yellow" ||
+                    type === "nored" ||
+                    type === "noblue" ||
+                    type === "nogreen" ||
+                    type === "noyellow") {
+                    this.genre = "colour";
+                } else {
+                    this.genre = "shape";
+                }
+
 
                 Rule.prototype.toString = function ruleToString() {
                     var ret = this.type + "\n";
@@ -471,21 +484,34 @@
 
             function RuleSet() {
                 this.rules = [];
+                this.ruleNum = 1;
                 this.availableRules = ["red", "blue", "green", "yellow", "Circle", "Square", "Triangle",
                                        "nored", "noblue", "nogreen", "noyellow", "noCircle", "noSquare", "noTriangle"];
                 RuleSet.prototype.newRule = function newRule() {
-                    var rand = Math.floor(Math.random() * this.availableRules.length);
-                    var first = true;
-                    this.rules.push(new Rule(this.availableRules[rand]));
-                    if (first === true) {
+                    var rand;
+
+                    if (this.ruleNum === 1) {
+                        rand = Math.floor(Math.random() * this.availableRules.length);
+                        this.rules.push(new Rule(this.availableRules[rand]));
                         if (rand < 7) {
                             this.availableRules.splice(7, 7);
                         } else {
                             this.availableRules.splice(0, 7);
                         }
-                        first = false;
+                        this.ruleNum++;
+                    } else if (this.ruleNum === 2) {
+                        if (this.rules[0].genre === "shape") {
+                            rand = Math.floor(Math.random() * 4);
+                        } else {
+                            rand = Math.floor(Math.random() * ((6 - 4) + 1) + 4);
+                        }
+                        this.rules.push(new Rule(this.availableRules[rand]));
+                        this.ruleNum++;
+                    } else {
+                        rand = Math.floor(Math.random() * this.availableRules.length);
+                        this.rules.push(new Rule(this.availableRules[rand]));
                     }
-                    this.availableRules.splice(rand % 7, 1);
+                    this.availableRules.splice(rand % this.availableRules.length, 1);
                 };
             }
 
@@ -522,7 +548,7 @@
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
                         this.level++;
-                        if (this.level === 5 || this.level === 10) {
+                        if (this.level === 2 || this.level === 3) {
                             currentRules.newRule();
                         }
                         for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
@@ -559,7 +585,7 @@
                 var my = mouse.y;
                 var l = updateBuffer.length;
 
-                
+
                 //LOL
                 /*if (portrait === false || true) {
                 } else*/
@@ -1340,7 +1366,7 @@
 
                         if (name.length === 0)
                             return;
-                        
+
                         var timestampName = name + Date.now();
                         var userScoreRef = scoreListRef.child(timestampName);
 
