@@ -22,7 +22,8 @@
         </canvas>
         <script>
             var ctx = document.getElementById("canvas").getContext("2d"),
-             limit = 300,
+
+            limit = 300,
              lastFrameTimeMs = 0,
              maxFPS = 60,
              delta = 0,
@@ -54,6 +55,11 @@
                                "purplepink", "paint", "tealpink", "bigstar",
                                "rainbow", "bluemoon", "redspace"];
             var bgimgnum = 0;
+            var sf = new ShapeFactory();
+            var rs = new RuleSet();
+            var df = new Difficulty();
+            var updateBuffer = [];
+            var layerBuffer = [];
 
 
 
@@ -544,13 +550,14 @@
                 this.level = 1;
                 this.targetScore = 20;
                 this.numShapes = 1;
+                this.levelChangePeriod = false;
+                this.newGamePeriod = true;
 
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
                         this.level++;
-                        if (this.level === 2 || this.level === 3) {
-                            currentRules.newRule();
-                        }
+                        
+                        
                         for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
                             this.targetScore += 0.6 * Math.log2(i);
                         }
@@ -585,10 +592,10 @@
                 var my = mouse.y;
                 var l = updateBuffer.length;
 
-
                 //LOL
                 /*if (portrait === false || true) {
                 } else*/
+
                 if (mainMenuOptions === true) {
                     if (mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
                         mainMenuOptions = false;
@@ -667,12 +674,6 @@
 
             canvas.addEventListener('mouseup', function (e) { }, true);
 
-            var sf = new ShapeFactory();
-            var rs = new RuleSet();
-            var df = new Difficulty();
-            var updateBuffer = [];
-            var layerBuffer = [];
-
             /*TODO WTF?
             Shape.prototype.hit = function(mouse) {
             mx = getMouse(mouse).x;
@@ -703,22 +704,35 @@
                 var l = updateBuffer.length,
                  s = 0;
                 if (df.checkLevelChange() === true) {
+                    df.levelChangePeriod = true;
                     df.levelProgress(window.count);
+                    
                 }
-
+                if (entities === 0) {
+                    if (df.levelChangePeriod === true && df.level === 2 || df.level === 3) {
+                        currentRules.newRule();
+                    }
+                    df.levelChangePeriod = false;
+                    updateBuffer.push(sf.createShape("random"));
+                }
+                
                 for (var i = 0; i < l; i++) {
-
-                    //if its a shape do a spawnCheck and if it passes spawn a shape
-                    if (updateBuffer[i - s] instanceof Circle ||
-                             updateBuffer[i - s] instanceof Square ||
-                             updateBuffer[i - s] instanceof Triangle ||
-                             updateBuffer[i - s] instanceof Star) {
-                        if (updateBuffer[i - s].checked === false &&
-                                 sf.spawnCheck(updateBuffer[i - s]) === true) {
-                            updateBuffer.push(sf.createShape("random"));
-                            df.numShapes++;
+                    
+                    //lull period when game starts and when level changes
+                    if (df.levelChangePeriod === false && df.newGamePeriod === false) {
+                        //if its a shape do a spawnCheck and if it passes spawn a shape
+                        if (updateBuffer[i - s] instanceof Circle ||
+                                 updateBuffer[i - s] instanceof Square ||
+                                 updateBuffer[i - s] instanceof Triangle ||
+                                 updateBuffer[i - s] instanceof Star) {
+                            if (updateBuffer[i - s].checked === false &&
+                                     sf.spawnCheck(updateBuffer[i - s]) === true) {
+                                updateBuffer.push(sf.createShape("random"));
+                                df.numShapes++;
+                            }
                         }
                     }
+
                     if (updateBuffer[i - s].offScreen()) {
                         if (updateBuffer[i - s] instanceof scoreParticle) {
 
@@ -1148,7 +1162,6 @@
                 layerBuffer = [];
                 bgimgnum = 0;
                 backgroundImg.src = "img/backgrounds/" + backgrounds[bgimgnum] + "_background.png";
-                updateBuffer.push(sf.createShape("random"));
                 frameID = 0;
                 entities = 0;
                 mainMenuScreen = false;
@@ -1157,6 +1170,9 @@
                 pause = false;
                 window.count = 0;
                 window.combo = 0;
+                updateBuffer.push(sf.createShape("random"));
+                df.newGamePeriod = false;
+                df.numShapes++;
                 start();
             }
 
