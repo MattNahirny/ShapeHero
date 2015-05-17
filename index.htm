@@ -480,7 +480,7 @@
                 } else {
                     this.genre = "shape";
                 }
-                
+
 
                 Rule.prototype.toString = function ruleToString() {
                     var ret = this.type + "\n";
@@ -526,31 +526,6 @@
                 };
             }
 
-            //----------------------------------
-            //Fullscreen 
-            //----------------------------------
-            /* canvas.addEventListener('dblclick', function (e) {
-            fullscreen = false;
-            if (!fullscreen) {
-            if (ctx.canvas.webkitRequestFullScreen) {
-            fullscreen = true;
-            ctx.canvas.webkitRequestFullScreen();
-            } else {
-            fullscreen = true;
-            ctx.canvas.mozRequestFullScreen();
-            }
-            } else {
-            if(ctx.canvas.webkitExitFullscreen) {
-            fullscreen = false;
-            ctx.canvas.webkitExitFullscreen();
-            } else {
-            fullscreen = false;
-            ctx.canvas.mozCancelFullScreen();
-            }
-            }
-
-            }, true);*/
-
             //------------------------
             //Difficulty
             //------------------------
@@ -564,8 +539,8 @@
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
                         this.level++;
-                        
-                        
+
+
                         for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
                             this.targetScore += 0.6 * Math.log2(i);
                         }
@@ -621,6 +596,13 @@
                             ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         } else {
                             ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                        }
+                    } else if (mx >= 30 * ctx.canvas.width / 320 && mx <= 65 * ctx.canvas.width / 320 && my >= 190 * ctx.canvas.height / 480 && my <= 225 * ctx.canvas.height / 480) {
+                        fullScreen();
+                        if (fs === true) {
+                            ctx.drawImage(restoreButtonImg, 30 * ctx.canvas.width / 320, 190 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                        } else {
+                            ctx.drawImage(fullscreenButtonImg, 30 * ctx.canvas.width / 320, 190 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                         }
                     }
                 } else if (mainMenuScreen === true) {
@@ -714,14 +696,14 @@
                 if (df.checkLevelChange() === true) {
                     df.levelChangePeriod = true;
                     df.levelProgress(window.count);
-                    
+
                 }
                 if (entities === 0) {
                     if (df.level > 1 && df.level % 10 === 0) {
                         currentRules = new RuleSet();
                         currentRules.newRule();
                     }
-                    if (df.levelChangePeriod === true && df.level === 2 || 
+                    if (df.levelChangePeriod === true && df.level === 2 ||
                                                          df.level === 3 ||
                                                          df.level % 11 === 0 ||
                                                          df.level % 12 === 0) {
@@ -730,9 +712,9 @@
                     df.levelChangePeriod = false;
                     updateBuffer.push(sf.createShape("random"));
                 }
-                
+
                 for (var i = 0; i < l; i++) {
-                    
+
                     //lull period when game starts and when level changes
                     if (df.levelChangePeriod === false && df.newGamePeriod === false) {
                         //if its a shape do a spawnCheck and if it passes spawn a shape
@@ -917,8 +899,7 @@
                 }
                 ctx.textAlign = "start";
 
-                var pauseButtonImg = new Image();
-                pauseButtonImg.src = "img/pause.png";
+
                 ctx.drawImage(pauseButtonImg, 285 * ctx.canvas.width / 320, 0, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
 
 
@@ -1040,28 +1021,37 @@
                 }*/
             };
 
+            //------------------------
+            //Images load
+            //------------------------
             var backgroundImage = new Image();
             backgroundImage.src = "img/backgrounds/star_background.png";
             var logo = new Image();
             logo.src = "img/logo.png";
             var playButton = new Image();
-            playButton.src = "img/play_button.png";
+            playButton.src = "img/buttons/play_button.png";
             var leaderboardButton = new Image();
-            leaderboardButton.src = "img/leaderboard_button.png";
+            leaderboardButton.src = "img/buttons/leaderboard_button.png";
             var optionsButton = new Image();
-            optionsButton.src = "img/options_button.png";
+            optionsButton.src = "img/buttons/options_button.png";
             var menuButtonImg = new Image();
-            menuButtonImg.src = "img/mainmenu.png";
+            menuButtonImg.src = "img/buttons/mainmenu_button.png";
             var restartButtonImg = new Image();
-            restartButtonImg.src = "img/restart.png";
+            restartButtonImg.src = "img/buttons/restart_button.png";
             var closeButtonImg = new Image();
-            closeButtonImg.src = "img/close.png";
+            closeButtonImg.src = "img/buttons/close_button.png";
             var speakerImg = new Image();
-            speakerImg.src = "img/speaker.png";
+            speakerImg.src = "img/buttons/speaker_button.png";
             var muteImg = new Image();
-            muteImg.src = "img/mute.png";
+            muteImg.src = "img/buttons/mute_button.png";
             var submitImg = new Image();
-            submitImg.src = "img/submit.png";
+            submitImg.src = "img/buttons/submit_button.png";
+            var pauseButtonImg = new Image();
+            pauseButtonImg.src = "img/buttons/pause_button.png";
+            var fullscreenButtonImg = new Image();
+            fullscreenButtonImg.src = "img/buttons/fullscreen_button.png";
+            var restoreButtonImg = new Image();
+            restoreButtonImg.src = "img/buttons/restore_button.png";
 
             //---------------------------
             //Pause menu drawing
@@ -1094,12 +1084,13 @@
 
                 ctx.beginPath();
                 ctx.lineWidth = "2";
-                ctx.moveTo(30 * ctx.canvas.width / 320, 165 * ctx.canvas.height / 480);
-                ctx.lineTo(290 * ctx.canvas.width / 320, 165 * ctx.canvas.height / 480);
+                ctx.moveTo(30 * ctx.canvas.width / 320, 125 * ctx.canvas.height / 480);
+                ctx.lineTo(290 * ctx.canvas.width / 320, 125 * ctx.canvas.height / 480);
                 ctx.stroke();
 
                 ctx.fillText("Background Music", 70 * ctx.canvas.width / 320, 195 * ctx.canvas.height / 480);
                 ctx.fillText("Sound Effects", 70 * ctx.canvas.width / 320, 235 * ctx.canvas.height / 480);
+                ctx.fillText("Fullscreen", 70 * ctx.canvas.width / 320, 275 * ctx.canvas.height / 480);
 
                 if (bgm.muted === false) {
                     ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
@@ -1154,6 +1145,29 @@
                     new_sfx.play();
                 }
             }
+
+            //----------------------------------
+            //Fullscreen 
+            //----------------------------------
+            var fs = false;
+            function fullScreen() {
+                fs = !fs;
+                if (fs) {
+                    if (ctx.canvas.webkitRequestFullscreen) {
+                        ctx.canvas.webkitRequestFullscreen();
+                    } else {
+                        ctx.canvas.mozRequestFullScreen();
+                    }
+                } else {
+                    if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    } else {
+                        document.mozCancelFullScreen();
+                    }
+                }
+            }
+
+
             //-----------------
             //Main Menu
             //-----------------
@@ -1224,6 +1238,7 @@
                 ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Background Music", 70 * ctx.canvas.width / 320, 135 * ctx.canvas.height / 480);
                 ctx.fillText("Sound Effects", 70 * ctx.canvas.width / 320, 175 * ctx.canvas.height / 480);
+                ctx.fillText("Fullscreen", 70 * ctx.canvas.width / 320, 215 * ctx.canvas.height / 480);
 
                 if (bgm.muted === false) {
                     ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 110 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
@@ -1235,6 +1250,12 @@
                     ctx.drawImage(speakerImg, 30 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 } else {
                     ctx.drawImage(muteImg, 30 * ctx.canvas.width / 320, 150 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                }
+
+                if (fs === false) {
+                    ctx.drawImage(fullscreenButtonImg, 30 * ctx.canvas.width / 320, 190 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
+                } else {
+                    ctx.drawImage(restoreButtonImg, 30 * ctx.canvas.width / 320, 190 * ctx.canvas.height / 480, 35 * ctx.canvas.width / 320, 35 * ctx.canvas.height / 480);
                 }
 
                 ctx.drawImage(closeButtonImg, 280 * ctx.canvas.width / 320, 60 * ctx.canvas.height / 480, 30 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
