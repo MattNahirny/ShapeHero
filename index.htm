@@ -182,7 +182,14 @@
             window.addEventListener("resize", function () {
                 ctx.canvas.width = window.innerWidth;
                 ctx.canvas.height = window.innerHeight;
-                draw(delta / timestep);
+                if (mainMenuOptions) {
+                    mainMenu();
+                    optionsScreen();
+                } else if (mainMenuScreen) {
+                    mainMenu();
+                } else {
+                    draw(delta / timestep);
+                }
                 /*portrait = ctx.canvas.width < ctx.canvas.height;
                 if(!portrait) {
                 notPortrait();
@@ -1155,7 +1162,7 @@
                 if (fs) {
                     if (ctx.canvas.webkitRequestFullscreen) {
                         ctx.canvas.webkitRequestFullscreen();
-                    } else if (ctx.canvas.mozRequestFullScreen){
+                    } else if (ctx.canvas.mozRequestFullScreen) {
                         ctx.canvas.mozRequestFullScreen();
                     } else if (ctx.canvas.requestFullscreen) {
                         ctx.canvas.requestFullscreen();
