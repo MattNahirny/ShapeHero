@@ -1155,14 +1155,20 @@
                 if (fs) {
                     if (ctx.canvas.webkitRequestFullscreen) {
                         ctx.canvas.webkitRequestFullscreen();
-                    } else {
+                    } else if (ctx.canvas.mozRequestFullScreen){
                         ctx.canvas.mozRequestFullScreen();
+                    } else if (ctx.canvas.requestFullscreen) {
+                        ctx.canvas.requestFullscreen();
+                    } else if (ctx.canvas.msRequestFullscreen) {
+                        ctx.canvas.msRequestFullscreen();
                     }
                 } else {
                     if (document.webkitExitFullscreen) {
                         document.webkitExitFullscreen();
-                    } else {
+                    } else if (document.mozCancelFullScreen) {
                         document.mozCancelFullScreen();
+                    } else if (document.exitFullscreen) {
+                        document.exitFullscreen();
                     }
                 }
             }
