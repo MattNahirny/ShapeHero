@@ -76,7 +76,7 @@
             }
 
             function scoreParticle(x, y, score) {
-                this.xCurrent = x || 0;
+                this.xCurrent = x * ctx.canvas.width / 320;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -142,7 +142,7 @@
             }
 
             function particle(x, y, xVelocity, yVelocity) {
-                this.xCurrent = x || 0;
+                this.xCurrent = x * ctx.canvas.width / 320;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -187,6 +187,9 @@
                     optionsScreen();
                 } else if (mainMenuScreen) {
                     mainMenu();
+                } else if (pause) {
+                    draw(delta / timestep);
+                    pauseScreen();
                 } else {
                     draw(delta / timestep);
                 }
@@ -205,7 +208,7 @@
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
                 this.shapeType = "Circle";
-                this.xCurrent = x || 0;
+                this.xCurrent = x * ctx.canvas.width / 320;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -259,7 +262,7 @@
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
                 this.shapeType = "Square";
-                this.xCurrent = x || 0;
+                this.xCurrent = x * ctx.canvas.width / 320;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -312,7 +315,7 @@
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
                 this.shapeType = "Triangle";
-                this.xCurrent = x || 0;
+                this.xCurrent = x * ctx.canvas.width / 320;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -368,7 +371,7 @@
                 this.shapeType = "Star";
                 this.colour = "yellow";
                 bodyImg.src = "img/shapes/star/star.png";
-                this.xCurrent = x || 0;
+                this.xCurrent = x * ctx.canvas.width / 320;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -422,7 +425,7 @@
             //---------------------
             ShapeFactory.prototype.createShape = function createShape(type) {
                 var randomShape = ["Circle", "Square", "Triangle"];
-                var lane = [0, 64 * ctx.canvas.width / 320, 128 * ctx.canvas.width / 320, 192 * ctx.canvas.width / 320, 256 * ctx.canvas.width / 320];
+                var lane = [0, 64, 128, 192, 256];
                 if (type == "circle") {
                     return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                 } else if (type == "square") {
@@ -709,15 +712,19 @@
                     if (df.level > 1 && df.level % 10 === 0) {
                         currentRules = new RuleSet();
                         currentRules.newRule();
-                    }
-                    if (df.levelChangePeriod === true && df.level === 2 ||
+                        df.levelChangePeriod = false;
+                        updateBuffer.push(sf.createShape("random"));
+                    } else if (df.levelChangePeriod === true && df.level === 2 ||
                                                          df.level === 3 ||
                                                          df.level % 11 === 0 ||
                                                          df.level % 12 === 0) {
                         currentRules.newRule();
+                        df.levelChangePeriod = false;
+                        updateBuffer.push(sf.createShape("random"));
+                    } else {
+                        df.levelChangePeriod = false
+                        updateBuffer.push(sf.createShape("random"));
                     }
-                    df.levelChangePeriod = false;
-                    updateBuffer.push(sf.createShape("random"));
                 }
 
                 for (var i = 0; i < l; i++) {
@@ -726,11 +733,11 @@
                     if (df.levelChangePeriod === false && df.newGamePeriod === false) {
                         //if its a shape do a spawnCheck and if it passes spawn a shape
                         if (updateBuffer[i - s] instanceof Circle ||
-                                 updateBuffer[i - s] instanceof Square ||
-                                 updateBuffer[i - s] instanceof Triangle ||
-                                 updateBuffer[i - s] instanceof Star) {
+                            updateBuffer[i - s] instanceof Square ||
+                            updateBuffer[i - s] instanceof Triangle ||
+                            updateBuffer[i - s] instanceof Star) {
                             if (updateBuffer[i - s].checked === false &&
-                                     sf.spawnCheck(updateBuffer[i - s]) === true) {
+                                sf.spawnCheck(updateBuffer[i - s]) === true) {
                                 updateBuffer.push(sf.createShape("random"));
                                 df.numShapes++;
                             }
@@ -1345,7 +1352,7 @@
                 submitHS.setAttribute("value", "Enter your name");
                 submitHS.setAttribute("z-index", "1");
                 submitHS.setAttribute("id", "zergling");
-                submitHS.setAttribute("style", "background-image:url(img/submit.png); background-size:100% 100%;");
+                submitHS.setAttribute("style", "background-image:url(img/buttons/submit_button.png); background-size:100% 100%;");
                 submitHS.style.width = 89 * ctx.canvas.width / 320 + "px";
                 submitHS.style.height = 34 * ctx.canvas.height / 480 + "px";
                 document.getElementById("midscreenSubmit").appendChild(submitHS);
