@@ -112,10 +112,10 @@
                 }
             }
 
-            function explosion(x, y, size) {
+            function explosion(x, y, size, color) {
                 var explosionParticles = [];
                 for (var i = 0; i < size; i++) {
-                    explosionParticles.push(new particle(x, y, (Math.random() - 0.5) / 10, (Math.random() - 0.5) / 10));
+                    explosionParticles.push(new particle(x, y, (Math.random() - 0.5) / 10, (Math.random() - 0.5) / 10, color));
                 }
 
                 this.draw = function (interp) {
@@ -141,7 +141,7 @@
                 }
             }
 
-            function particle(x, y, xVelocity, yVelocity) {
+            function particle(x, y, xVelocity, yVelocity, color) {
                 this.xCurrent = x ;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
@@ -151,6 +151,7 @@
                 this.yVelocity = yVelocity * ctx.canvas.height / 480;
                 this.xAcceleration = 0;
                 this.yAcceleration = 0.0001;
+				this.color = color || "#000000";
 
                 this.update = function () {
                     this.xPrevious = this.xCurrent;
@@ -163,7 +164,7 @@
 
                 this.draw = function (interp) {
                     ctx.save();
-                    ctx.fillStyle = "yellow";
+                    ctx.fillStyle = color;
                     ctx.fillRect(this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 5 * ctx.canvas.width / 320, 5 * ctx.canvas.height / 480)
                     ctx.restore();
                 }
@@ -788,7 +789,7 @@
                             if (rulesetFailed === false) {
                                 rulePass();
                                 updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
-                                updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5));
+                                updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
                             }
                         } else {
                             //positive rules: on click, pass any rule = pass
@@ -798,7 +799,7 @@
                                     rulesetPassed = true;
                                     rulePass();
                                     updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
-                                    updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5));
+                                    updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
                                     break;
                                 }
                             }
