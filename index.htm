@@ -76,7 +76,7 @@
             }
 
             function scoreParticle(x, y, score) {
-                this.xCurrent = x * ctx.canvas.width / 320;
+                this.xCurrent = x ;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -142,7 +142,7 @@
             }
 
             function particle(x, y, xVelocity, yVelocity) {
-                this.xCurrent = x * ctx.canvas.width / 320;
+                this.xCurrent = x ;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -206,7 +206,7 @@
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
                 this.shapeType = "Circle";
-                this.xCurrent = x * ctx.canvas.width / 320;
+                this.xCurrent = x ;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -260,7 +260,7 @@
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
                 this.shapeType = "Square";
-                this.xCurrent = x * ctx.canvas.width / 320;
+                this.xCurrent = x ;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -313,7 +313,7 @@
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
                 this.shapeType = "Triangle";
-                this.xCurrent = x * ctx.canvas.width / 320;
+                this.xCurrent = x ;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -369,7 +369,7 @@
                 this.shapeType = "Star";
                 this.colour = "yellow";
                 bodyImg.src = "img/shapes/star/star.png";
-                this.xCurrent = x * ctx.canvas.width / 320;
+                this.xCurrent = x ;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -423,7 +423,7 @@
             //---------------------
             ShapeFactory.prototype.createShape = function createShape(type) {
                 var randomShape = ["Circle", "Square", "Triangle"];
-                var lane = [0, 64, 128, 192, 256];
+                var lane = [0, 64 * canvas.width / 320, 128 * canvas.width / 320, 192 * canvas.width / 320, 256 * canvas.width / 320];
                 if (type == "circle") {
                     return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                 } else if (type == "square") {
