@@ -190,13 +190,13 @@
                     pauseScreen();
                 } else {
                     draw(delta / timestep);
+                    start();
                 }
-                /*portrait = ctx.canvas.width < ctx.canvas.height;
+                portrait = ctx.canvas.width < ctx.canvas.height;
                 if(!portrait) {
-                notPortrait();
-                return;
-                } 
-                start();*/
+                    notPortrait();
+                    return;
+                }
             });
 
             //---------------------------------------
@@ -584,10 +584,8 @@
                 var l = updateBuffer.length;
 
                 //LOL
-                /*if (portrait === false || true) {
-                } else*/
-
-                if (mainMenuOptions === true) {
+                if (portrait === false) {
+                } else if (mainMenuOptions === true) {
                     if (mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
                         mainMenuOptions = false;
                         mainMenu();
@@ -1028,9 +1026,9 @@
             window.onload = function () {
                 mainMenu();
                 //breaks
-                /*if(!portrait) {
-                notPortrait();
-                }*/
+                if(!portrait) {
+                    notPortrait();
+                }
             };
 
             //------------------------
