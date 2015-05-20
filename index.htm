@@ -818,7 +818,7 @@
                             }
                             rulePass();
                             updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
-                            updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
+                            updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, null, true));
                         } else if (currentRules.rules[0].type.slice(0, 2) === "no" && rs.starTime === 0) {
                             //negative rules: on click, fail any rule = fail
                             var rulesetFailed = false;
