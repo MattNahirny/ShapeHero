@@ -45,7 +45,7 @@
             window.count = 0;
             window.combo = 0;
 			topStreak = 0;
-			topLevel = 0;
+			topLevel = 1;
 			
             ctx.canvas.width = window.innerWidth;
             ctx.canvas.height = window.innerHeight;
@@ -562,9 +562,7 @@
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
                         this.level++;
-						if (level>topLevel) {
-							topLevel=level;
-						}
+						topLevel++;
 
                         for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
                             this.targetScore += 0.6 * Math.log2(i);
@@ -1246,7 +1244,7 @@
                 window.count = 0;
                 window.combo = 0;
 				topStreak = 0;
-				topLevel = 0;
+				topLevel = 1;
                 updateBuffer.push(sf.createShape("random"));
                 df.newGamePeriod = false;
                 df.numShapes++;
