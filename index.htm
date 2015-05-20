@@ -1073,12 +1073,26 @@
 
                 ctx.fillStyle = "black";
                 ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
-                ctx.fillText("Current Rule: ", 25 * ctx.canvas.width / 320, 90 * ctx.canvas.height / 480);
-
+                ctx.fillText("Current Rules: ", 25 * ctx.canvas.width / 320, 90 * ctx.canvas.height / 480);
+                
+                for(var i = 0; i < currentRules.rules.length; i++) {
+                    var ruleText = "";
+                    if(currentRules.rules[i].type.slice(0, 2) === "no" && currentRules.rules[i].genre === "colour") {
+                        ruleText = "Don't tap on " + currentRules.rules[i].type.slice(2) + " shapes";
+                    } else if(currentRules.rules[i].type.slice(0, 2) === "no" && currentRules.rules[i].genre === "shape") {
+                        ruleText = "Don't tap on " + currentRules.rules[i].type.slice(2) + "s";
+                    } else if(currentRules.rules[i].genre === "color") {
+                        ruleText = "Tap on " + currentRules.rules[i].type + " shapes";
+                    } else if(currentRules.rules[i].genre === "shape") {
+                        ruleText = "Tap on " + currentRules.rules[i].type + "s";
+                    }
+                    ctx.fillText(ruleText, 35 * ctx.canvas.width / 320, (110 + 20 * i) * ctx.canvas.height / 480);
+                }
+                
                 ctx.beginPath();
                 ctx.lineWidth = "2";
-                ctx.moveTo(30 * ctx.canvas.width / 320, 125 * ctx.canvas.height / 480);
-                ctx.lineTo(290 * ctx.canvas.width / 320, 125 * ctx.canvas.height / 480);
+                ctx.moveTo(30 * ctx.canvas.width / 320, 165 * ctx.canvas.height / 480);
+                ctx.lineTo(290 * ctx.canvas.width / 320, 165 * ctx.canvas.height / 480);
                 ctx.stroke();
 
                 ctx.fillText("Background Music", 70 * ctx.canvas.width / 320, 195 * ctx.canvas.height / 480);
