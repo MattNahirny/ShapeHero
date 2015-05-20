@@ -809,17 +809,18 @@
                         entities--;
                     } else if (updateBuffer[i - s].clicked === true) {
                         if (updateBuffer[i - s].shapeType === "Star") {
-                            if (rs.starTime === 0) {
-                                rs.starTime = 2;
-                                for (var r = 0; r < updateBuffer.length; r++) {
-                                    if (updateBuffer[r] instanceof Circle ||
-                                        updateBuffer[r] instanceof Square ||
-                                        updateBuffer[r] instanceof Triangle ||
-                                        updateBuffer[r] instanceof Star) {
-                                        updateBuffer[r].clicked = true;
-                                    }
+                            rs.starTime = 2;
+                            for (var r = 0; r < updateBuffer.length; r++) {
+                                if (updateBuffer[r] instanceof Circle ||
+                                    updateBuffer[r] instanceof Square ||
+                                    updateBuffer[r] instanceof Triangle ||
+                                    updateBuffer[r] instanceof Star) {
+                                    updateBuffer[r].clicked = true;
                                 }
                             }
+                            rulePass();
+                            updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
+                            updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
                         } else if (currentRules.rules[0].type.slice(0, 2) === "no" && rs.starTime === 0) {
                             //negative rules: on click, fail any rule = fail
                             var rulesetFailed = false;
