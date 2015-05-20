@@ -77,7 +77,7 @@
             }
 
             function scoreParticle(x, y, score) {
-                this.xCurrent = x ;
+                this.xCurrent = x;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -143,7 +143,7 @@
             }
 
             function particle(x, y, xVelocity, yVelocity, color) {
-                this.xCurrent = x ;
+                this.xCurrent = x;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -152,7 +152,7 @@
                 this.yVelocity = yVelocity * ctx.canvas.height / 480;
                 this.xAcceleration = 0;
                 this.yAcceleration = 0.0001;
-				this.color = color || "#000000";
+                this.color = color || "#000000";
 
                 this.update = function () {
                     this.xPrevious = this.xCurrent;
@@ -195,7 +195,7 @@
                     start();
                 }
                 portrait = ctx.canvas.width < ctx.canvas.height;
-                if(!portrait) {
+                if (!portrait) {
                     notPortrait();
                     return;
                 }
@@ -208,7 +208,7 @@
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
                 this.shapeType = "Circle";
-                this.xCurrent = x ;
+                this.xCurrent = x;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -262,7 +262,7 @@
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
                 this.shapeType = "Square";
-                this.xCurrent = x ;
+                this.xCurrent = x;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -315,7 +315,7 @@
                 var randomColour = ["red", "blue", "green", "yellow"];
                 var bodyImg = new Image();
                 this.shapeType = "Triangle";
-                this.xCurrent = x ;
+                this.xCurrent = x;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -371,7 +371,7 @@
                 this.shapeType = "Star";
                 this.colour = "yellow";
                 bodyImg.src = "img/shapes/star/star.png";
-                this.xCurrent = x ;
+                this.xCurrent = x;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
                 this.yPrevious = this.yCurrent;
@@ -468,6 +468,16 @@
                     } else if (rs == "Triangle") {
                         return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                     }
+                } else if (type == "randomWithStar") {
+                    var rs = randomShape[Math.floor(Math.random() * 3)];
+
+                    if (rs == "Circle") {
+                        return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
+                    } else if (rs == "Square") {
+                        return new Square(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
+                    } else if (rs == "Triangle") {
+                        return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
+                    }
                 }
                 return;
             };
@@ -501,6 +511,7 @@
             function RuleSet() {
                 this.rules = [];
                 this.ruleNum = 1;
+                this.starTime;
                 this.availableRules = ["red", "blue", "green", "yellow", "Circle", "Square", "Triangle",
                                        "nored", "noblue", "nogreen", "noyellow", "noCircle", "noSquare", "noTriangle"];
 
@@ -570,7 +581,7 @@
                 };
 
                 Difficulty.prototype.checkLevelChange = function checkLevelChange() {
-                    if (this.numShapes === this.level * 20) {
+                    if (this.numShapes === this.level * 20 + this.level) {
                         return true;
                     } else {
                         return false;
@@ -584,7 +595,7 @@
                 var mx = mouse.x;
                 var my = mouse.y;
                 var l = updateBuffer.length;
-                
+
                 if (portrait === false) {
                 } else if (mainMenuOptions === true) {
                     if (mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
@@ -705,11 +716,22 @@
                                                          df.level % 10 === 2) {
                         currentRules.newRule();
                         df.levelChangePeriod = false;
-                        updateBuffer.push(sf.createShape("random"));
+                        if (df.level > 8) {
+                            updateBuffer.push(sf.createShape("randomWithStar"));
+                        } else {
+                            updateBuffer.push(sf.createShape("random"));
+                        }
+                        
                     } else {
-                        df.levelChangePeriod = false
-                        updateBuffer.push(sf.createShape("random"));
+                        df.levelChangePeriod = false;
+                        
+                        if (df.level > 8) {
+                            updateBuffer.push(sf.createShape("randomWithStar"));
+                        } else {
+                            updateBuffer.push(sf.createShape("random"));
+                        }
                     }
+                    df.numShapes++;
                 }
 
                 for (var i = 0; i < l; i++) {
@@ -723,7 +745,11 @@
                             updateBuffer[i - s] instanceof Star) {
                             if (updateBuffer[i - s].checked === false &&
                                 sf.spawnCheck(updateBuffer[i - s]) === true) {
-                                updateBuffer.push(sf.createShape("random"));
+                                if (df.level > 8) {
+                                    updateBuffer.push(sf.createShape("randomWithStar"));
+                                } else {
+                                    updateBuffer.push(sf.createShape("random"));
+                                }
                                 df.numShapes++;
                             }
                         }
@@ -1009,7 +1035,7 @@
 
             window.onload = function () {
                 mainMenu();
-                if(!portrait) {
+                if (!portrait) {
                     notPortrait();
                 }
             };
