@@ -44,7 +44,9 @@
              currentRules = null;
             window.count = 0;
             window.combo = 0;
-
+			topStreak = 0;
+			topLevel = 0;
+			
             ctx.canvas.width = window.innerWidth;
             ctx.canvas.height = window.innerHeight;
 
@@ -560,7 +562,9 @@
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
                         this.level++;
-
+						if (level>topLevel) {
+							topLevel=level;
+						}
 
                         for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
                             this.targetScore += 0.6 * Math.log2(i);
@@ -840,6 +844,9 @@
                     window.count += ++window.combo;
                 } else {
                     window.count += Math.ceil(Math.log2(++window.combo));
+					if (window.combo>topStreak) {
+						topStreak=window.combo;
+					}
                 }
                 validSFX();
             }
@@ -1238,6 +1245,8 @@
                 pause = false;
                 window.count = 0;
                 window.combo = 0;
+				topStreak = 0;
+				topLevel = 0;
                 updateBuffer.push(sf.createShape("random"));
                 df.newGamePeriod = false;
                 df.numShapes++;
@@ -1403,6 +1412,7 @@
 
                 newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val().name)));
                 newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
+				//ADD THE ACHIEVEMENT PICS TO THIS ROW
 
                 // Store a reference to the table row so we can get it again later.
                 htmlForPath[scoreSnapshot.key()] = newScoreRow;
@@ -1453,6 +1463,9 @@
                     $("#zergling").click(function () {
                         var newScore = window.count; //Number($("#scoreInput").val());
                         var name = $("#nameInput").val();
+						var streak = topStreak;
+						var level = topLevel;
+						
                         //$("#scoreInput").val("");
 
                         if (name.length === 0)
@@ -1462,7 +1475,7 @@
                         var userScoreRef = scoreListRef.child(timestampName);
 
                         // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
-                        userScoreRef.setWithPriority({ name: name, score: newScore }, newScore);
+                        userScoreRef.setWithPriority({ name: name, score: newScore, streak:streak, level:level }, newScore);
                         document.getElementById("midscreen").removeChild(textFieldHS);
                         document.getElementById("midscreenSubmit").removeChild(submitHS);
                     });
