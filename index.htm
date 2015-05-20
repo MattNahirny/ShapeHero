@@ -1400,9 +1400,7 @@
 
             var LEADERBOARD_SIZE = 100;
 			// THE ACHIEVEMENT PICS AS JQUERY OBJECTS
-			var $scoreCheev = $('<div style="background-image:url(img/achievements/trophy2.png); background-size:100% 100%; height:20px; width:20px;"></div>');
-			var $levelCheev = $('<div style="background-image:url(img/achievements/trophy3.png); background-size:100% 100%; height:20px; width:20px;"></div>');
-			var $streakCheev = $('<div style="background-image:url(img/achievements/trophy4.png); background-size:100% 100%; height:20px; width:20px;"></div>');
+			
 			
             // Create our Firebase reference
             var scoreListRef = new Firebase('https://zu1g1l7h60o.firebaseio-demo.com//scoreList');
@@ -1413,7 +1411,7 @@
             // Helper function that takes a new score snapshot and adds an appropriate row to our leaderboard table.
             function handleScoreAdded(scoreSnapshot, prevScoreName) {
 
-
+				
                 var newScoreRow = $("<tr/>");
                 newScoreRow.append($("<td/>").append($("<em/>").text("")));
                 newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val().name)));

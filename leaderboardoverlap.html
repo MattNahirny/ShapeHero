@@ -65,9 +65,7 @@
 
 <script>
   var LEADERBOARD_SIZE = 10;
-  var $scoreCheev = $('<div style="background-image:url(img/achievements/trophy2.png); background-size:100% 100%; height:20px; width:20px;"></div>');
-  var $levelCheev = $('<div style="background-image:url(img/achievements/trophy3.png); background-size:100% 100%; height:20px; width:20px;"></div>');
-  var $streakCheev = $('<div style="background-image:url(img/achievements/trophy4.png); background-size:100% 100%; height:20px; width:20px;"></div>');
+  
   // Create our Firebase reference
   var scoreListRef = new Firebase('https://zu1g1l7h60o.firebaseio-demo.com//scoreList');
 
@@ -77,6 +75,9 @@
   // Helper function that takes a new score snapshot and adds an appropriate row to our leaderboard table.
   function handleScoreAdded(scoreSnapshot, prevScoreName) {
   
+	var $scoreCheev = $('<div style="background-image:url(img/achievements/trophy2.png); background-size:100% 100%; height:20px; width:20px;"></div>');
+	var $levelCheev = $('<div style="background-image:url(img/achievements/trophy3.png); background-size:100% 100%; height:20px; width:20px;"></div>');
+	var $streakCheev = $('<div style="background-image:url(img/achievements/trophy4.png); background-size:100% 100%; height:20px; width:20px;"></div>');
 	//ADDING A ROW
     var newScoreRow = $("<tr/>");
 	newScoreRow.append($("<td/>").append($("<em/>").text("")));
@@ -85,7 +86,7 @@
 	//ADDING score
     newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
 	//ADDING achievement 1
-	if(scoreSnapshot.val().score > 3) {
+	if(scoreSnapshot.val().score > 2000) {
 		newScoreRow.append($("<td/>").append($scoreCheev)); 
 	} else {
 		newScoreRow.append($("<td/>").append($("<em/>").text("")));
