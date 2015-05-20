@@ -705,6 +705,7 @@
             function update(delta) {
                 var l = updateBuffer.length,
                  s = 0;
+                console.log(df.level, df.numShapes);
                 if (df.checkLevelChange() === true) {
                     df.levelChangePeriod = true;
                     df.levelProgress(window.count);
@@ -715,10 +716,10 @@
                         currentRules.newRule();
                         df.levelChangePeriod = false;
                         updateBuffer.push(sf.createShape("randomWithStar"));
-                    } else if (df.levelChangePeriod === true && df.level === 2 ||
+                    } else if (df.levelChangePeriod === true && (df.level === 2 ||
                                                          df.level === 3 ||
                                                          df.level % 10 === 1 ||
-                                                         df.level % 10 === 2) {
+                                                         df.level % 10 === 2)) {
                         currentRules.newRule();
                         df.levelChangePeriod = false;
                         if (df.level >= 2) {
