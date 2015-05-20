@@ -47,6 +47,7 @@
 			topStreak = 0;
 			topLevel = 1;
 			
+			
             ctx.canvas.width = window.innerWidth;
             ctx.canvas.height = window.innerHeight;
 
@@ -1398,6 +1399,7 @@
 
 
             var LEADERBOARD_SIZE = 100;
+			// THE ACHIEVEMENT PICS AS JQUERY OBJECTS
 			var $scoreCheev = $('<div style="background-image:url(img/achievements/trophy2.png); background-size:100% 100%; height:20px; width:20px;"></div>');
 			var $levelCheev = $('<div style="background-image:url(img/achievements/trophy3.png); background-size:100% 100%; height:20px; width:20px;"></div>');
 			var $streakCheev = $('<div style="background-image:url(img/achievements/trophy4.png); background-size:100% 100%; height:20px; width:20px;"></div>');
@@ -1416,17 +1418,6 @@
                 newScoreRow.append($("<td/>").append($("<em/>").text("")));
                 newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val().name)));
                 newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
-				//ADDING THE ACHIEVEMENT PICS TO THIS ROW
-				if(window.count > 3) {
-					newScoreRow.append($("<td/>").append($scoreCheev)); 
-				}
-				 else if(topLevel > 3) {
-					newScoreRow.append($("<td/>").append($levelCheev)); 
-				}
-				 else if(topStreak > 3) {
-					newScoreRow.append($("<td/>").append($streakCheev)); 
-				} else {
-				}
 
                 // Store a reference to the table row so we can get it again later.
                 htmlForPath[scoreSnapshot.key()] = newScoreRow;
