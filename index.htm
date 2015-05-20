@@ -471,8 +471,8 @@
                         return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                     }
                 } else if (type == "randomWithStar") {
-                    var rs = Math.floor(Math.random() * 100);
-                    if (rs === 1000) {
+                    var rs = Math.floor(Math.random() * 4);
+                    if (rs === 3) {
                         return new Star(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity());
                     } else {
                         rs = randomShape[Math.floor(Math.random() * 3)];
@@ -517,7 +517,7 @@
             function RuleSet() {
                 this.rules = [];
                 this.ruleNum = 1;
-                this.starTime = false;
+                this.starTime = 0;
                 this.availableRules = ["red", "blue", "green", "yellow", "Circle", "Square", "Triangle",
                                        "nored", "noblue", "nogreen", "noyellow", "noCircle", "noSquare", "noTriangle"];
 
@@ -739,21 +739,16 @@
                     df.numShapes++;
                 }
 
-                if (rs.starTime) {
+                /*if (rs.starTime) {
                     for (var r = 0; r < l; r++) {
-                        if (updateBuffer[r - s] instanceof explosion ||
-                            updateBuffer[r - s] instanceof scoreParticle) {
-                            continue;
-                        } else if (
-                            updateBuffer[r - s] instanceof Circle ||
+                        if (updateBuffer[r - s] instanceof Circle ||
                             updateBuffer[r - s] instanceof Square ||
                             updateBuffer[r - s] instanceof Triangle ||
                             updateBuffer[r - s] instanceof Star) {
                             updateBuffer[r - s].clicked = true;
-                            entities--;
                         }
                     }
-                }
+                }*/
 
                 for (var i = 0; i < l; i++) {
 
@@ -814,10 +809,18 @@
                         entities--;
                     } else if (updateBuffer[i - s].clicked === true) {
                         if (updateBuffer[i - s].shapeType === "Star") {
-                            if (rs.starTime === false) {
-                                rs.starTime = true;
+                            if (rs.starTime === 0) {
+                                rs.starTime = 2;
+                                for (var r = 0; r < updateBuffer.length; r++) {
+                                    if (updateBuffer[r] instanceof Circle ||
+                                        updateBuffer[r] instanceof Square ||
+                                        updateBuffer[r] instanceof Triangle ||
+                                        updateBuffer[r] instanceof Star) {
+                                        updateBuffer[r].clicked = true;
+                                    }
+                                }
                             }
-                        } else if (currentRules.rules[0].type.slice(0, 2) === "no") {
+                        } else if (currentRules.rules[0].type.slice(0, 2) === "no" && rs.starTime === 0) {
                             //negative rules: on click, fail any rule = fail
                             var rulesetFailed = false;
                             for (var j = 0; j < currentRules.rules.length; j++) {
@@ -827,7 +830,7 @@
                                     break;
                                 }
                             }
-                            if (rulesetFailed === false || rs.starTime) {
+                            if (rulesetFailed === false || rs.starTime !== 0) {
                                 rulePass();
                                 updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
                                 updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
@@ -836,7 +839,7 @@
                             //positive rules: on click, pass any rule = pass
                             var rulesetPassed = false;
                             for (var j = 0; j < currentRules.rules.length; j++) {
-                                if (currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour || rs.starTime) {
+                                if (currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour || rs.starTime !== 0) {
                                     rulesetPassed = true;
                                     rulePass();
                                     updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
@@ -856,6 +859,9 @@
                         updateBuffer[i - s].update(delta);
                         layerBuffer.push(updateBuffer[i - s]);
                     }
+                }
+                if (rs.starTime !== 0) {
+                    rs.starTime--;
                 }
                 layerBuffer.sort(function (a, b) {
                     return b.layer - a.layer;
