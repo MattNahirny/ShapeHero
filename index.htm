@@ -115,10 +115,10 @@
                 }
             }
 
-            function explosion(x, y, size, color) {
+            function explosion(x, y, size, color, star) {
                 var explosionParticles = [];
                 for (var i = 0; i < size; i++) {
-                    explosionParticles.push(new particle(x, y, (Math.random() - 0.5) / 10, (Math.random() - 0.5) / 10, color));
+                    explosionParticles.push(new particle(x, y, (Math.random() - 0.5) / 10, (Math.random() - 0.5) / 10, color, star));
                 }
 
                 this.draw = function (interp) {
@@ -144,7 +144,7 @@
                 }
             }
 
-            function particle(x, y, xVelocity, yVelocity, color) {
+            function particle(x, y, xVelocity, yVelocity, color, star) {
                 this.xCurrent = x;
                 this.xPrevious = this.xCurrent;
                 this.yCurrent = y || -64 * ctx.canvas.height / 480;
@@ -155,7 +155,11 @@
                 this.xAcceleration = 0;
                 this.yAcceleration = 0.0001;
                 this.color = color || "#000000";
-
+                this.star = star;
+                if (star) {
+                    this.starImg = new Image();
+                    this.starImg.src = "img/shapes/star/tinyStar.png";
+                }
                 this.update = function () {
                     this.xPrevious = this.xCurrent;
                     this.yPrevious = this.yCurrent;
@@ -167,8 +171,12 @@
 
                 this.draw = function (interp) {
                     ctx.save();
-                    ctx.fillStyle = color;
-                    ctx.fillRect(this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 5 * ctx.canvas.width / 320, 5 * ctx.canvas.height / 480)
+                    if (this.star) {
+                        ctx.drawImage(this.starImg, this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 16 * ctx.canvas.width / 320, 16 * ctx.canvas.height / 480);
+                    } else {
+                        ctx.fillStyle = color;
+                        ctx.fillRect(this.xPrevious + (this.xCurrent - this.xPrevious) * interp, this.yPrevious + (this.yCurrent - this.yPrevious) * interp, 5 * ctx.canvas.width / 320, 5 * ctx.canvas.height / 480)
+                    }
                     ctx.restore();
                 }
 
@@ -739,17 +747,6 @@
                     df.numShapes++;
                 }
 
-                /*if (rs.starTime) {
-                    for (var r = 0; r < l; r++) {
-                        if (updateBuffer[r - s] instanceof Circle ||
-                            updateBuffer[r - s] instanceof Square ||
-                            updateBuffer[r - s] instanceof Triangle ||
-                            updateBuffer[r - s] instanceof Star) {
-                            updateBuffer[r - s].clicked = true;
-                        }
-                    }
-                }*/
-
                 for (var i = 0; i < l; i++) {
 
                     //lull period when game starts and when level changes
@@ -761,7 +758,7 @@
                             updateBuffer[i - s] instanceof Star) {
                             if (updateBuffer[i - s].checked === false &&
                                 sf.spawnCheck(updateBuffer[i - s]) === true) {
-                                if (df.level > 8) {
+                                if (df.level > 1) {
                                     updateBuffer.push(sf.createShape("random"));
                                 } else {
                                     updateBuffer.push(sf.createShape("randomWithStar"));
@@ -834,7 +831,11 @@
                             if (rulesetFailed === false || rs.starTime !== 0) {
                                 rulePass();
                                 updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
-                                updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
+                                if (rs.starTime !== 0) {
+                                    updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, null, true));
+                                } else {
+                                    updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
+                                }
                             }
                         } else {
                             //positive rules: on click, pass any rule = pass
@@ -844,7 +845,11 @@
                                     rulesetPassed = true;
                                     rulePass();
                                     updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
-                                    updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
+                                    if (rs.starTime !== 0) {
+                                        updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, null, true));
+                                    } else {
+                                        updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
+                                    }
                                     break;
                                 }
                             }
