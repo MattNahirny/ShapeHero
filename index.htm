@@ -584,8 +584,7 @@
                 var mx = mouse.x;
                 var my = mouse.y;
                 var l = updateBuffer.length;
-
-                //LOL
+                
                 if (portrait === false) {
                 } else if (mainMenuOptions === true) {
                     if (mx >= 280 * ctx.canvas.width / 320 && mx <= 310 * ctx.canvas.width / 320 && my >= 60 * ctx.canvas.height / 480 && my <= 90 * ctx.canvas.height / 480) {
@@ -670,16 +669,6 @@
                 }
             }, true);
 
-            canvas.addEventListener('mouseup', function (e) { }, true);
-
-            /*TODO WTF?
-            Shape.prototype.hit = function(mouse) {
-            mx = getMouse(mouse).x;
-            my = getMouse(mouse).y;
-            ctx.fillText("x: " + x, 180, 480);
-            ctx.fillText("y: " + entities, 180, 480);
-            }*/
-
             getMouse = function (mouseEvent) {
                 var element = this.canvas, offsetX = 0, offsetY = 0, mx, my;
                 if (element.offsetParent !== undefined) {
@@ -688,10 +677,8 @@
                         offsetY += element.offsetTop;
                     } while ((element = element.offsetParent));
                 }
-                //offsetX += this.stylePaddingLeft + this.styleBorderLeft + this.htmlLeft;
-                //offsetY += this.stylePaddingTop + this.styleBorderTop + this.htmlTop;
-                mx = mouseEvent.pageX; // - offsetX;
-                my = mouseEvent.pageY; // - offsetY;
+                mx = mouseEvent.pageX;
+                my = mouseEvent.pageY;
                 return { x: mx, y: my };
             }
 
@@ -955,9 +942,6 @@
                 ctx.fillText("Panic", 100 * ctx.canvas.width / 320, 200 * ctx.canvas.height / 480);
             }
 
-            //function begin() {
-            //}
-
             function end(fps) {
                 /*if (fps < 25) {
                 entities = 0;
@@ -994,8 +978,6 @@
                 delta += timestamp - lastFrameTimeMs;
                 lastFrameTimeMs = timestamp;
 
-                //begin(timestamp, delta);
-
                 if (timestamp > lastFpsUpdate + 1000) {
                     fps = 0.25 * framesThisSecond + 0.75 * fps;
 
@@ -1027,7 +1009,6 @@
 
             window.onload = function () {
                 mainMenu();
-                //breaks
                 if(!portrait) {
                     notPortrait();
                 }
