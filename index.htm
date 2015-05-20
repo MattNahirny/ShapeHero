@@ -701,8 +701,8 @@
                         updateBuffer.push(sf.createShape("random"));
                     } else if (df.levelChangePeriod === true && df.level === 2 ||
                                                          df.level === 3 ||
-                                                         df.level % 11 === 0 ||
-                                                         df.level % 12 === 0) {
+                                                         df.level % 10 === 1 ||
+                                                         df.level % 10 === 2) {
                         currentRules.newRule();
                         df.levelChangePeriod = false;
                         updateBuffer.push(sf.createShape("random"));
