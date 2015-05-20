@@ -45,8 +45,8 @@
              topLevel = 1;
             window.count = 0;
             window.combo = 0;
-			
-			
+
+
             ctx.canvas.width = window.innerWidth;
             ctx.canvas.height = window.innerHeight;
 
@@ -471,14 +471,18 @@
                         return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                     }
                 } else if (type == "randomWithStar") {
-                    var rs = randomShape[Math.floor(Math.random() * 3)];
-
-                    if (rs == "Circle") {
-                        return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
-                    } else if (rs == "Square") {
-                        return new Square(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
-                    } else if (rs == "Triangle") {
-                        return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
+                    var rs = Math.floor(Math.random() * 100);
+                    if (rs === 1000) {
+                        return new Star(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity());
+                    } else {
+                        rs = randomShape[Math.floor(Math.random() * 3)];
+                        if (rs == "Circle") {
+                            return new Circle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
+                        } else if (rs == "Square") {
+                            return new Square(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
+                        } else if (rs == "Triangle") {
+                            return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
+                        }
                     }
                 }
                 return;
@@ -513,7 +517,7 @@
             function RuleSet() {
                 this.rules = [];
                 this.ruleNum = 1;
-                this.starTime;
+                this.starTime = false;
                 this.availableRules = ["red", "blue", "green", "yellow", "Circle", "Square", "Triangle",
                                        "nored", "noblue", "nogreen", "noyellow", "noCircle", "noSquare", "noTriangle"];
 
@@ -562,7 +566,7 @@
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
                         this.level++;
-						topLevel++;
+                        topLevel++;
 
                         for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
                             this.targetScore += 0.6 * Math.log2(i);
@@ -704,36 +708,51 @@
                 if (df.checkLevelChange() === true) {
                     df.levelChangePeriod = true;
                     df.levelProgress(window.count);
-
                 }
                 if (entities === 0) {
                     if (df.level > 1 && df.level % 10 === 0) {
                         currentRules = new RuleSet();
                         currentRules.newRule();
                         df.levelChangePeriod = false;
-                        updateBuffer.push(sf.createShape("random"));
+                        updateBuffer.push(sf.createShape("randomWithStar"));
                     } else if (df.levelChangePeriod === true && df.level === 2 ||
                                                          df.level === 3 ||
                                                          df.level % 10 === 1 ||
                                                          df.level % 10 === 2) {
                         currentRules.newRule();
                         df.levelChangePeriod = false;
-                        if (df.level > 8) {
-                            updateBuffer.push(sf.createShape("randomWithStar"));
-                        } else {
+                        if (df.level >= 2) {
                             updateBuffer.push(sf.createShape("random"));
+                        } else {
+                            updateBuffer.push(sf.createShape("randomWithStar"));
                         }
-                        
+
                     } else {
                         df.levelChangePeriod = false;
-                        
-                        if (df.level > 8) {
-                            updateBuffer.push(sf.createShape("randomWithStar"));
-                        } else {
+
+                        if (df.level >= 2) {
                             updateBuffer.push(sf.createShape("random"));
+                        } else {
+                            updateBuffer.push(sf.createShape("randomWithStar"));
                         }
                     }
                     df.numShapes++;
+                }
+
+                if (rs.starTime) {
+                    for (var r = 0; r < l; r++) {
+                        if (updateBuffer[r - s] instanceof explosion ||
+                            updateBuffer[r - s] instanceof scoreParticle) {
+                            continue;
+                        } else if (
+                            updateBuffer[r - s] instanceof Circle ||
+                            updateBuffer[r - s] instanceof Square ||
+                            updateBuffer[r - s] instanceof Triangle ||
+                            updateBuffer[r - s] instanceof Star) {
+                            updateBuffer[r - s].clicked = true;
+                            entities--;
+                        }
+                    }
                 }
 
                 for (var i = 0; i < l; i++) {
@@ -748,14 +767,16 @@
                             if (updateBuffer[i - s].checked === false &&
                                 sf.spawnCheck(updateBuffer[i - s]) === true) {
                                 if (df.level > 8) {
-                                    updateBuffer.push(sf.createShape("randomWithStar"));
-                                } else {
                                     updateBuffer.push(sf.createShape("random"));
+                                } else {
+                                    updateBuffer.push(sf.createShape("randomWithStar"));
                                 }
                                 df.numShapes++;
                             }
                         }
                     }
+
+
 
                     if (updateBuffer[i - s].offScreen()) {
                         if (updateBuffer[i - s] instanceof scoreParticle) {
@@ -792,7 +813,11 @@
                         s++;
                         entities--;
                     } else if (updateBuffer[i - s].clicked === true) {
-                        if (currentRules.rules[0].type.slice(0, 2) === "no") {
+                        if (updateBuffer[i - s].shapeType === "Star") {
+                            if (rs.starTime === false) {
+                                rs.starTime = true;
+                            }
+                        } else if (currentRules.rules[0].type.slice(0, 2) === "no") {
                             //negative rules: on click, fail any rule = fail
                             var rulesetFailed = false;
                             for (var j = 0; j < currentRules.rules.length; j++) {
@@ -802,7 +827,7 @@
                                     break;
                                 }
                             }
-                            if (rulesetFailed === false) {
+                            if (rulesetFailed === false || rs.starTime) {
                                 rulePass();
                                 updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
                                 updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
@@ -811,7 +836,7 @@
                             //positive rules: on click, pass any rule = pass
                             var rulesetPassed = false;
                             for (var j = 0; j < currentRules.rules.length; j++) {
-                                if (currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour) {
+                                if (currentRules.rules[j].type === updateBuffer[i - s].shapeType || currentRules.rules[j].type === updateBuffer[i - s].colour || rs.starTime) {
                                     rulesetPassed = true;
                                     rulePass();
                                     updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
@@ -843,8 +868,8 @@
                 } else {
                     window.count += Math.ceil(Math.log2(++window.combo));
                 }
-                if (window.combo>topStreak) {
-                    topStreak=window.combo;
+                if (window.combo > topStreak) {
+                    topStreak = window.combo;
                 }
                 validSFX();
             }
@@ -1076,12 +1101,12 @@
             fullscreenButtonImg.src = "img/buttons/fullscreen_button.png";
             var restoreButtonImg = new Image();
             restoreButtonImg.src = "img/buttons/restore_button.png";
-			var scoreCheevImg = new Image();
-			scoreCheevImg.src = "img/achievements/trophy2.png";
-			var levelCheevImg = new Image();
-			levelCheevImg.src = "img/achievements/trophy3.png";
-			var streakCheevImg = new Image();
-			streakCheevImg.src = "img/achievements/trophy4.png";
+            var scoreCheevImg = new Image();
+            scoreCheevImg.src = "img/achievements/trophy2.png";
+            var levelCheevImg = new Image();
+            levelCheevImg.src = "img/achievements/trophy3.png";
+            var streakCheevImg = new Image();
+            streakCheevImg.src = "img/achievements/trophy4.png";
 
             //---------------------------
             //Pause menu drawing
@@ -1111,21 +1136,21 @@
                 ctx.fillStyle = "black";
                 ctx.font = 20 * ctx.canvas.height / 480 + "px Calibri";
                 ctx.fillText("Current Rules: ", 25 * ctx.canvas.width / 320, 90 * ctx.canvas.height / 480);
-                
-                for(var i = 0; i < currentRules.rules.length; i++) {
+
+                for (var i = 0; i < currentRules.rules.length; i++) {
                     var ruleText = "";
-                    if(currentRules.rules[i].type.slice(0, 2) === "no" && currentRules.rules[i].genre === "colour") {
+                    if (currentRules.rules[i].type.slice(0, 2) === "no" && currentRules.rules[i].genre === "colour") {
                         ruleText = "Don't tap on " + currentRules.rules[i].type.slice(2) + " shapes";
-                    } else if(currentRules.rules[i].type.slice(0, 2) === "no" && currentRules.rules[i].genre === "shape") {
+                    } else if (currentRules.rules[i].type.slice(0, 2) === "no" && currentRules.rules[i].genre === "shape") {
                         ruleText = "Don't tap on " + currentRules.rules[i].type.slice(2) + "s";
-                    } else if(currentRules.rules[i].genre === "colour") {
+                    } else if (currentRules.rules[i].genre === "colour") {
                         ruleText = "Tap on " + currentRules.rules[i].type + " shapes";
-                    } else if(currentRules.rules[i].genre === "shape") {
+                    } else if (currentRules.rules[i].genre === "shape") {
                         ruleText = "Tap on " + currentRules.rules[i].type + "s";
                     }
                     ctx.fillText(ruleText, 35 * ctx.canvas.width / 320, (110 + 20 * i) * ctx.canvas.height / 480);
                 }
-                
+
                 ctx.beginPath();
                 ctx.lineWidth = "2";
                 ctx.moveTo(30 * ctx.canvas.width / 320, 165 * ctx.canvas.height / 480);
@@ -1249,8 +1274,8 @@
                 pause = false;
                 window.count = 0;
                 window.combo = 0;
-				topStreak = 0;
-				topLevel = 1;
+                topStreak = 0;
+                topLevel = 1;
                 updateBuffer.push(sf.createShape("random"));
                 df.newGamePeriod = false;
                 df.numShapes++;
@@ -1386,7 +1411,7 @@
                 document.getElementById("midscreenSubmit").style.left = 39 * ctx.canvas.width / 320 + "px";
                 clickity();
             }
-			
+
             // Create our Firebase reference
             var scoreListRef = new Firebase('https://zu1g1l7h60o.firebaseio-demo.com//scoreList');
 
@@ -1400,9 +1425,9 @@
                     $("#zergling").click(function () {
                         var newScore = window.count; //Number($("#scoreInput").val());
                         var name = $("#nameInput").val();
-						var streak = topStreak;
-						var level = topLevel;
-						
+                        var streak = topStreak;
+                        var level = topLevel;
+
                         //$("#scoreInput").val("");
 
                         if (name.length === 0)
@@ -1411,7 +1436,7 @@
                         var userScoreRef = scoreListRef.child(name + Date.now());
 
                         // Use setWithPriority to put the name / score in Firebase, and set the priority to be the score.
-                        userScoreRef.setWithPriority({ name: name, score: newScore, streak:streak, level:level }, newScore);
+                        userScoreRef.setWithPriority({ name: name, score: newScore, streak: streak, level: level }, newScore);
                         document.getElementById("midscreen").removeChild(textFieldHS);
                         document.getElementById("midscreenSubmit").removeChild(submitHS);
                     });
