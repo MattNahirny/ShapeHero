@@ -31,9 +31,11 @@
             var rank = LEADERBOARD_SIZE;
             function handleScoreAdded(scoreSnapshot, prevScoreName) {
                 
-                var $scoreCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy2.png); background-size:100% 100%; height:20px; width:20px;" title="Achievement for getting a score above 2000!"></div>');
-                var $levelCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy3.png); background-size:100% 100%; height:20px; width:20px;" title="Achievement for getting to level 30!"></div>');
-                var $streakCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy4.png); background-size:100% 100%; height:20px; width:20px;" title="Achievement for getting a streak above 200!"></div>');
+                var $scoreGCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy2.png); background-size:100% 100%; height:40px; width:40px;" title="Achievement for getting a score above 6000!"></div>');
+                var $scoreSCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy3.png); background-size:100% 100%; height:40px; width:40px;" title="Achievement for getting a score above 2500!"></div>');
+				var $scoreBCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy4.png); background-size:100% 100%; height:40px; width:40px;" title="Achievement for getting a score above 1000!"></div>');
+				var $levelCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/lvl30.png); background-size:100% 100%; height:40px; width:40px;" title="Achievement for getting to level 30!"></div>');
+                var $streakCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/x200.png); background-size:100% 100%; height:40px; width:40px;" title="Achievement for getting a streak above 200!"></div>');
                 //ADDING A ROW
                 var newScoreRow = $("<tr/>");
                 
@@ -44,18 +46,42 @@
                 //ADDING score
                 newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
                 //ADDING achievement display logic
-                if(scoreSnapshot.val().score > 2000) {
+                if(scoreSnapshot.val().score > 1000) {
 					if(scoreSnapshot.val().level > 30) {
 						if(scoreSnapshot.val().streak > 200) {
-							newScoreRow.append($("<td align='center'/>").append($scoreCheev).append($levelCheev).append($streakCheev));
+							if(scoreSnapshot.val().score > 6000) {
+								newScoreRow.append($("<td align='center'/>").append($scoreGCheev).append($levelCheev).append($streakCheev));
+							} else if (scoreSnapshot.val().score > 2500) {
+								newScoreRow.append($("<td align='center'/>").append($scoreSCheev).append($levelCheev).append($streakCheev));
+							} else {
+								newScoreRow.append($("<td align='center'/>").append($scoreBCheev).append($levelCheev).append($streakCheev));
+							}
 						} else {
-							newScoreRow.append($("<td align='center'/>").append($scoreCheev).append($levelCheev));
+							if(scoreSnapshot.val().score > 6000) {
+								newScoreRow.append($("<td align='center'/>").append($scoreGCheev).append($levelCheev));
+							} else if (scoreSnapshot.val().score > 2500) {
+								newScoreRow.append($("<td align='center'/>").append($scoreSCheev).append($levelCheev));
+							} else {
+								newScoreRow.append($("<td align='center'/>").append($scoreBCheev).append($levelCheev));
+							}
 						}
 					} else {
 						if(scoreSnapshot.val().streak > 200) {
-							newScoreRow.append($("<td align='center'/>").append($scoreCheev).append($streakCheev));
+							if(scoreSnapshot.val().score > 6000) {
+								newScoreRow.append($("<td align='center'/>").append($scoreGCheev).append($streakCheev));
+							} else if (scoreSnapshot.val().score > 2500) {
+								newScoreRow.append($("<td align='center'/>").append($scoreSCheev).append($streakCheev));
+							} else {
+								newScoreRow.append($("<td align='center'/>").append($scoreBCheev).append($streakCheev));
+							}
 						} else {
-							newScoreRow.append($("<td align='center'/>").append($scoreCheev)); 
+							if(scoreSnapshot.val().score > 6000) {
+								newScoreRow.append($("<td align='center'/>").append($scoreGCheev)); 
+							} else if (scoreSnapshot.val().score > 2500) {
+								newScoreRow.append($("<td align='center'/>").append($scoreSCheev)); 
+							} else {
+								newScoreRow.append($("<td align='center'/>").append($scoreBCheev)); ;
+							}
 						}
 					}
                 } else if (scoreSnapshot.val().level > 30){
