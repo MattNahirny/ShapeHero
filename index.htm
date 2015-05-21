@@ -585,7 +585,7 @@
 
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
-                        updateBuffer.push(new particle(0, -66 * ctx.canvas.height / 480, 0, this.getVelocity() / ctx.canvas.height * 480, null, "newLevel"));
+                        updateBuffer.push(new particle(0, -132 * ctx.canvas.height / 480, 0, this.getVelocity() / ctx.canvas.height * 480, null, "newLevel"));
                         this.level++;
                         topLevel++;
                         for (var i = this.numShapes; i < this.numShapes + 20 + this.level; i++) {
