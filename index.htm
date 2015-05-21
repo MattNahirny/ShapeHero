@@ -202,6 +202,9 @@
                 } else if (pause) {
                     draw(delta / timestep);
                     pauseScreen();
+                } else if (gameOver) {
+                    draw(delta / timestep);
+                    gameOverScreen();
                 } else {
                     draw(delta / timestep);
                     start();
@@ -580,7 +583,6 @@
                         for (var i = this.numShapes; i < this.numShapes + 20 + this.level; i++) {
                             this.targetScore += 0.6 * Math.log2(i);
                         }
-                        console.log(this.targetScore);
                     } else {
                         gameOver = true;
                     }
