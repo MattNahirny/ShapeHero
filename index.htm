@@ -479,8 +479,8 @@
                         return new Triangle(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity(), "random");
                     }
                 } else if (type == "randomWithStar") {
-                    var rs = Math.floor(Math.random() * 4);
-                    if (rs === 3) {
+                    var rs = Math.floor(Math.random() * 100);
+                    if (rs <= 3) {
                         return new Star(lane[Math.floor(Math.random() * 5)], -64 * ctx.canvas.height / 480, null, null, df.getVelocity());
                     } else {
                         rs = randomShape[Math.floor(Math.random() * 3)];
@@ -729,19 +729,19 @@
                                                          df.level % 10 === 2)) {
                         currentRules.newRule();
                         df.levelChangePeriod = false;
-                        if (df.level >= 2) {
-                            updateBuffer.push(sf.createShape("random"));
-                        } else {
+                        if (df.level >= 8) {
                             updateBuffer.push(sf.createShape("randomWithStar"));
+                        } else {
+                            updateBuffer.push(sf.createShape("random"));
                         }
 
                     } else {
                         df.levelChangePeriod = false;
 
-                        if (df.level >= 2) {
-                            updateBuffer.push(sf.createShape("random"));
-                        } else {
+                        if (df.level >= 8) {
                             updateBuffer.push(sf.createShape("randomWithStar"));
+                        } else {
+                            updateBuffer.push(sf.createShape("random"));
                         }
                     }
                     df.numShapes++;
@@ -758,10 +758,10 @@
                             updateBuffer[i - s] instanceof Star) {
                             if (updateBuffer[i - s].checked === false &&
                                 sf.spawnCheck(updateBuffer[i - s]) === true) {
-                                if (df.level > 1) {
-                                    updateBuffer.push(sf.createShape("random"));
-                                } else {
+                                if (df.level >= 8) {
                                     updateBuffer.push(sf.createShape("randomWithStar"));
+                                } else {
+                                    updateBuffer.push(sf.createShape("random"));
                                 }
                                 df.numShapes++;
                             }

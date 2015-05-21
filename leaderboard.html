@@ -13,9 +13,8 @@
                     <th>Rank</th>
                     <th align="left">Player</th>
                     <th align="left">Score</th>
-                    <th align="left">Cheev 1</th>
-                    <th align="left">Cheev 2</th>
-                    <th align="left">Cheev 3</th>
+                    <th align="left">Achievements</th>
+                    
                 </tr>
             </table>
         </div>
@@ -32,9 +31,9 @@
             var rank = LEADERBOARD_SIZE;
             function handleScoreAdded(scoreSnapshot, prevScoreName) {
                 
-                var $scoreCheev = $('<div style="background-image:url(img/achievements/trophy2.png); background-size:100% 100%; height:20px; width:20px;"></div>');
-                var $levelCheev = $('<div style="background-image:url(img/achievements/trophy3.png); background-size:100% 100%; height:20px; width:20px;"></div>');
-                var $streakCheev = $('<div style="background-image:url(img/achievements/trophy4.png); background-size:100% 100%; height:20px; width:20px;"></div>');
+                var $scoreCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy2.png); background-size:100% 100%; height:20px; width:20px;" title="Achievement for getting a score above 2000!"></div>');
+                var $levelCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy3.png); background-size:100% 100%; height:20px; width:20px;" title="Achievement for getting to level 30!"></div>');
+                var $streakCheev = $('<div style="margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy4.png); background-size:100% 100%; height:20px; width:20px;" title="Achievement for getting a streak above 200!"></div>');
                 //ADDING A ROW
                 var newScoreRow = $("<tr/>");
                 
@@ -44,25 +43,33 @@
                 newScoreRow.append($("<td/>").append($("<em/>").text(scoreSnapshot.val().name)));
                 //ADDING score
                 newScoreRow.append($("<td/>").text(scoreSnapshot.val().score));
-                //ADDING achievement 1
+                //ADDING achievement display logic
                 if(scoreSnapshot.val().score > 2000) {
-                    newScoreRow.append($("<td align='center'/>").append($scoreCheev)); 
-                } else {
-                    newScoreRow.append($("<td/>").append($("<em/>").text("")));
-                }
-                //ADDING achievement 2
-                if(scoreSnapshot.val().level > 3) {
-                    newScoreRow.append($("<td align='center'/>").append($levelCheev)); 
-                } else {
-                    newScoreRow.append($("<td/>").append($("<em/>").text("")));
-                }
-                //ADDING achievement 3
-                if(scoreSnapshot.val().streak > 3) {
-                    newScoreRow.append($("<td align='center'/>").append($streakCheev)); 
-                } else {
-                    newScoreRow.append($("<td/>").append($("<em/>").text("")));
-                }
-
+					if(scoreSnapshot.val().level > 30) {
+						if(scoreSnapshot.val().streak > 200) {
+							newScoreRow.append($("<td align='center'/>").append($scoreCheev).append($levelCheev).append($streakCheev));
+						} else {
+							newScoreRow.append($("<td align='center'/>").append($scoreCheev).append($levelCheev));
+						}
+					} else {
+						if(scoreSnapshot.val().streak > 200) {
+							newScoreRow.append($("<td align='center'/>").append($scoreCheev).append($streakCheev));
+						} else {
+							newScoreRow.append($("<td align='center'/>").append($scoreCheev)); 
+						}
+					}
+                } else if (scoreSnapshot.val().level > 30){
+					if(scoreSnapshot.val().streak > 200) {
+						newScoreRow.append($("<td align='center'/>").append($levelCheev).append($streakCheev));
+					} else {
+						newScoreRow.append($("<td align='center'/>").append($levelCheev));
+					}
+                } else if (scoreSnapshot.val().streak > 200){
+					newScoreRow.append($("<td align='center'/>").append($streakCheev));
+				} else {
+					newScoreRow.append($("<td/>").append($("<em/>").text("")));
+				}
+                
                 // Store a reference to the table row so we can get it again later.
                 htmlForPath[scoreSnapshot.key()] = newScoreRow;
 
