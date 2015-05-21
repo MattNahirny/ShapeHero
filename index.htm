@@ -868,7 +868,7 @@
                                     rulePass();
                                     updateBuffer.push(new scoreParticle(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, window.combo));
                                     if (rs.starTime !== 0) {
-                                        updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, null, true));
+                                        updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, null, "star"));
                                     } else {
                                         updateBuffer.push(new explosion(updateBuffer[i - s].xCurrent + 32 * ctx.canvas.width / 320, updateBuffer[i - s].yCurrent + 32 * ctx.canvas.height / 480, 5, updateBuffer[i - s].colour));
                                     }
