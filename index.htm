@@ -597,7 +597,7 @@
                 };
 
                 Difficulty.prototype.checkLevelChange = function checkLevelChange() {
-                    if (this.numShapes === this.level * 20 + this.level) {
+                    if (this.numShapes === (this.level) * (this.level + 1) / 2 + this.level * 19) {
                         return true;
                     } else {
                         return false;
