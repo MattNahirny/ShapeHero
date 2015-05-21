@@ -158,6 +158,7 @@
                 this.yAcceleration = 0.0001;
                 this.color = color || "#000000";
                 this.type = type;
+                
                 if (type === "star") {
                     this.Img = new Image();
                     this.Img.src = "img/shapes/star/tinyStar.png";
@@ -584,7 +585,7 @@
 
                 Difficulty.prototype.levelProgress = function levelProgress(score) {
                     if (score > this.targetScore) {
-                        updateBuffer.push(new particle(0, -66 * ctx.canvas.height / 480, 0, this.getVelocity(), null, "newLevel"));
+                        updateBuffer.push(new particle(0, -66 * ctx.canvas.height / 480, 0, this.getVelocity() / ctx.canvas.height * 480, null, "newLevel"));
                         this.level++;
                         topLevel++;
                         for (var i = this.numShapes; i < this.numShapes + 20 + this.level; i++) {
@@ -790,8 +791,10 @@
 
 
                     if (updateBuffer[i - s].offScreen()) {
-                        if (updateBuffer[i - s] instanceof scoreParticle || updateBuffer[i - s] instanceof particle) {
-
+                        if (updateBuffer[i - s] instanceof scoreParticle) {
+                        
+                        } else if (updateBuffer[i - s] instanceof particle) {
+                            continue;
                         } else if (currentRules.rules[0].type.slice(0, 2) === "no") {
                             //negative rules: on offscreen, pass any = pass
                             var rulesetPassed = false;
@@ -951,8 +954,8 @@
                 }
                 layerBuffer = [];
                 ctx.fillStyle = "white";
-                ctx.fillText("FPS: " + Math.round(fps), 180 * ctx.canvas.width / 320, 410 * ctx.canvas.height / 480);
-                //ctx.fillText("Entities: " + entities,180,440);
+                //ctx.fillText("FPS: " + Math.round(fps), 180 * ctx.canvas.width / 320, 410 * ctx.canvas.height / 480);
+                //ctx.fillText("Entities: " + entities, 180 * ctx.canvas.width / 320, 440 * ctx.canvas.height / 480);
 
                 // ** Add stuff you want drawn on top all the time here **
                 //----------------
