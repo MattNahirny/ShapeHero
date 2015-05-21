@@ -15,6 +15,8 @@
 		<!--current ===========================================================================-->
 		<div id="midscreenSubmit" style="position:absolute; left: 39px; top:200px;">
 		</div>	
+		<div id="achievePos" style="position:absolute; left: 89px; top:200px;">
+		</div>	
         <audio id="background_audio" autoplay="autoplay" loop="loop">
             <source src="audio/strike_the_earth.mp3" type="audio/mpeg" />
         </audio>
@@ -650,12 +652,18 @@
                         if (document.getElementById("nameInput") != null) {
                             document.getElementById("midscreen").removeChild(textFieldHS);
                             document.getElementById("midscreenSubmit").removeChild(submitHS);
+							while (document.getElementById("achievePos").firstChild) {
+							 document.getElementById("achievePos").removeChild(document.getElementById("achievePos").firstChild);
+							}
                         }
                         mainMenu();
                     } else if (mx >= 160 * ctx.canvas.width / 320 && mx <= 300 * ctx.canvas.width / 320 && my >= 250 * ctx.canvas.height / 480 && my <= 294 * ctx.canvas.height / 480) {
                         if (document.getElementById("nameInput") != null) {
                             document.getElementById("midscreen").removeChild(textFieldHS);
                             document.getElementById("midscreenSubmit").removeChild(submitHS);
+							while (document.getElementById("achievePos").firstChild) {
+							 document.getElementById("achievePos").removeChild(document.getElementById("achievePos").firstChild);
+							}
                         }
                         newGame();
                     }
@@ -1197,7 +1205,7 @@
             bgm.muted = true;
             function toggleBGM() {
                 bgm.muted = !bgm.muted;
-                bgm.play();
+				bgm.play();
             }
 
             //-------------------------------------------------------
@@ -1391,7 +1399,19 @@
                 ctx.fillText("Submit your score", 40 * ctx.canvas.width / 320, 170 * ctx.canvas.height / 480);
                 nameInputHS();
                 submit();
-
+				if(window.count>6000) {
+					GScore();
+				} else if (window.count>2500) {
+					SScore();
+				} else if (window.count>1000) {
+					BScore();
+				}
+				if(topLevel > 30) {
+					achvLevel();
+				}
+				if(topStreak > 200) {
+					achvStreak();
+				}
                 ctx.drawImage(menuButtonImg, 20 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
                 ctx.drawImage(restartButtonImg, 160 * ctx.canvas.width / 320, 250 * ctx.canvas.height / 480, 140 * ctx.canvas.width / 320, 44 * ctx.canvas.height / 480);
             }
@@ -1424,7 +1444,72 @@
                 document.getElementById("midscreenSubmit").style.left = 39 * ctx.canvas.width / 320 + "px";
                 clickity();
             }
-
+			var achieveGScore = document.createElement("div");
+            function GScore() {
+				achieveGScore.setAttribute("type", "text");
+                achieveGScore.setAttribute("value", "Enter your name");
+                achieveGScore.setAttribute("z-index", "1");
+                achieveGScore.setAttribute("style", "margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy2.png); background-size:100% 100%;");
+				achieveGScore.setAttribute("title", "Achievement for getting a score above 6000!");
+                achieveGScore.style.width = 40 * ctx.canvas.width / 320 + "px";
+                achieveGScore.style.height = 40 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").appendChild(achieveGScore);
+                document.getElementById("achievePos").style.top = 197 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").style.left = 143 * ctx.canvas.width / 320 + "px";
+            }
+			var achieveSScore = document.createElement("div");
+            function SScore() {
+				achieveSScore.setAttribute("type", "text");
+                achieveSScore.setAttribute("value", "Enter your name");
+                achieveSScore.setAttribute("z-index", "1");
+                achieveSScore.setAttribute("style", "margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy3.png); background-size:100% 100%;");
+				achieveSScore.setAttribute("title", "Achievement for getting a score above 2500!");
+                achieveSScore.style.width = 40 * ctx.canvas.width / 320 + "px";
+                achieveSScore.style.height = 40 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").appendChild(achieveSScore);
+                document.getElementById("achievePos").style.top = 197 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").style.left = 143 * ctx.canvas.width / 320 + "px";
+            }
+			var achieveBScore = document.createElement("div");
+            function BScore() {
+				achieveBScore.setAttribute("type", "text");
+                achieveBScore.setAttribute("value", "Enter your name");
+                achieveBScore.setAttribute("z-index", "1");
+                achieveBScore.setAttribute("style", "margin-right:4px; display:inline-block; background-image:url(img/achievements/trophy4.png); background-size:100% 100%;");
+				achieveBScore.setAttribute("title", "Achievement for getting a score above 1000!");
+                achieveBScore.style.width = 40 * ctx.canvas.width / 320 + "px";
+                achieveBScore.style.height = 40 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").appendChild(achieveBScore);
+                document.getElementById("achievePos").style.top = 197 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").style.left = 143 * ctx.canvas.width / 320 + "px";
+            }
+			var achieveLevel = document.createElement("div");
+            function achvLevel() {
+				achieveLevel.setAttribute("type", "text");
+                achieveLevel.setAttribute("value", "Enter your name");
+                achieveLevel.setAttribute("z-index", "1");
+                achieveLevel.setAttribute("style", "margin-right:4px; display:inline-block; background-image:url(img/achievements/lvl30.png); background-size:100% 100%;");
+				achieveLevel.setAttribute("title", "Achievement for getting to level 30!");
+                achieveLevel.style.width = 40 * ctx.canvas.width / 320 + "px";
+                achieveLevel.style.height = 40 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").appendChild(achieveLevel);
+                document.getElementById("achievePos").style.top = 197 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").style.left = 143 * ctx.canvas.width / 320 + "px";
+            }
+			var achieveStreak = document.createElement("div");
+            function achvStreak() {
+				achieveStreak.setAttribute("type", "text");
+                achieveStreak.setAttribute("value", "Enter your name");
+                achieveStreak.setAttribute("z-index", "1");
+                achieveStreak.setAttribute("style", "margin-right:4px; display:inline-block; background-image:url(img/achievements/x200.png); background-size:100% 100%;");
+				achieveStreak.setAttribute("title", "Achievement for getting a streak above 200!");
+                achieveStreak.style.width = 40 * ctx.canvas.width / 320 + "px";
+                achieveStreak.style.height = 40 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").appendChild(achieveStreak);
+                document.getElementById("achievePos").style.top = 197 * ctx.canvas.height / 480 + "px";
+                document.getElementById("achievePos").style.left = 143 * ctx.canvas.width / 320 + "px";
+            }
+			
             // Create our Firebase reference
             var scoreListRef = new Firebase('https://zu1g1l7h60o.firebaseio-demo.com//scoreList');
 
@@ -1452,6 +1537,9 @@
                         userScoreRef.setWithPriority({ name: name, score: newScore, streak: streak, level: level }, newScore);
                         document.getElementById("midscreen").removeChild(textFieldHS);
                         document.getElementById("midscreenSubmit").removeChild(submitHS);
+						while (document.getElementById("achievePos").firstChild) {
+							 document.getElementById("achievePos").removeChild(document.getElementById("achievePos").firstChild);
+						}
                     });
                 });
             }
