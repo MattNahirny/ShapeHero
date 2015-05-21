@@ -208,6 +208,9 @@
                 } else if (pause) {
                     draw(delta / timestep);
                     pauseScreen();
+                } else if (gameOver) {
+                    draw(delta / timestep);
+                    gameOverScreen();
                 } else {
                     draw(delta / timestep);
                     start();
@@ -584,7 +587,7 @@
                         updateBuffer.push(new particle(0, -66 * ctx.canvas.height / 480, 0, this.getVelocity(), null, "newLevel"));
                         this.level++;
                         topLevel++;
-                        for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
+                        for (var i = this.numShapes; i < this.numShapes + 20 + this.level; i++) {
                             this.targetScore += 0.6 * Math.log2(i);
                         }
                     } else {
