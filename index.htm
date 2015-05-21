@@ -577,10 +577,10 @@
                     if (score > this.targetScore) {
                         this.level++;
                         topLevel++;
-
-                        for (var i = (this.level - 1) * 20; i < this.level * 20; i++) {
+                        for (var i = this.numShapes; i < this.numShapes + 20 + this.level; i++) {
                             this.targetScore += 0.6 * Math.log2(i);
                         }
+                        console.log(this.targetScore);
                     } else {
                         gameOver = true;
                     }
