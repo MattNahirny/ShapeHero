@@ -589,7 +589,7 @@
                         this.level++;
                         topLevel++;
                         for (var i = this.numShapes; i < this.numShapes + 20 + this.level; i++) {
-                            this.targetScore += 0.6 * Math.log2(i);
+                            this.targetScore += 0.6 * Math.log(i) / Math.log(2);
                         }
                     } else {
                         gameOver = true;
@@ -900,7 +900,7 @@
                 if (window.combo === 0) {
                     window.count += ++window.combo;
                 } else {
-                    window.count += Math.ceil(Math.log2(++window.combo));
+                    window.count += Math.ceil(Math.log(++window.combo) / Math.log(2));
                 }
                 if (window.combo > topStreak) {
                     topStreak = window.combo;
@@ -984,7 +984,7 @@
                 if (window.combo <= 1) {
                     ctx.fillText(window.combo + "x", 280 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
                 } else {
-                    ctx.fillText(Math.ceil(Math.log2(window.combo)) + "x", 280 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
+                    ctx.fillText(Math.ceil(Math.log(window.combo)/Math.log(2)) + "x", 280 * ctx.canvas.width / 320, 30 * ctx.canvas.height / 480);
                 }
                 ctx.textAlign = "start";
 
