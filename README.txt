@@ -5,7 +5,11 @@ Team: 32 - Team Void Star
 
 Team Members: Cameron Bethell, Johnathan De Maeseneer, Allen Tsang, Gaston Beaucage, Matthew Nahirny
 -------------------------------------
+Project Overview
+-------------------------------------
 
+The project goal is to develop a fun and immersive brain game called Shape Hero. Additionally, the objective of this game is to aid in the improvement of cognitive flexibility, pattern recognition and reactionary speed. The user must tap on the correct falling shapes to gain enough points to continue onto
+further levels. The rules change and the user must adapt to continue.
 
 -------------------------------------
 Execution
@@ -71,13 +75,18 @@ Within the script tag the events order is:
 	-GameOver screen function
 	-Leaderboard functionality
 	
------------------
-leaderboardoverlap.html
------------------
+----------------------------
+leaderboard.htm
+----------------------------
 This file is basic html that uses a firebase javascript library.
 
 Within this file is the source code that allows the game to talk to the database to hold high scores.
 
+----------------------------
+Known Bugs
+----------------------------
+-Sound Effects on mobile devices
+-Submit button disappears on mobile while in fullscreen
 
 
 
