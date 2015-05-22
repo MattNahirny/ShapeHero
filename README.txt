@@ -12,8 +12,10 @@ Execution
 -------------------------------------
 
 In order to run the program execute index.htm in a browser.
+	-Chrome browswer works best
 
 Resize to the desired game board width and height then refresh.
+	-320x480 native resolution
 
 Click play to have fun.
 
@@ -35,7 +37,7 @@ Code Structure
 -------------------------------------
 There are two main code files: 
 	--Index.htm: The main game source code.
-	--leaderboardoverlap.html
+	--leaderboard.htm: The leaderboard page
 
 -----------------
 Index.htm
@@ -45,6 +47,7 @@ The entire file is structured in html but the majority of the source code is jav
 
 Within the script tag the events order is:
 	-Global context variables are made
+	-Portrait orientation check 
 	-Particle systems
 	-Shape constructors
 	-Shape spawn method
@@ -53,7 +56,7 @@ Within the script tag the events order is:
 	-RuleSet object
 	-Difficulty logic
 	-Mouse click functions
-		-Button listeners
+	-Button listeners
 	-Update Buffer
 	-Rule methods
 	-Drawing of assets
